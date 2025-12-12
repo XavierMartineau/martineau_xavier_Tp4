@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Boss 
 
 # --- CONFIGURATION PRELOAD ---
-const PROJECTILE_ENEMIE = preload("res://Scenes/projectile_enemie.tscn") 
+const PROJECTILE_ENEMIE = preload("res://scenes/projectile_enemie.tscn") 
 
 # --- GESTION DE LA VIE ---
 const MAX_HEALTH = 300 
@@ -21,12 +21,21 @@ var cooldown_restant: float = 0.0
 @onready var audio_hit: AudioStreamPlayer2D = $hit # Référence au nœud audio "hit"
 @onready var death_sound_player: AudioStreamPlayer2D = $death
 
-# CHEMIN DE RÉFÉRENCE CORRECT : Le HUD est un enfant du nœud racine 'BOSS'
-@onready var health_label: Label = get_tree().root.get_node("BOSS/HUD/HBoxContainer/label_boss") 
+# CHEMIN DE RÉFÉRENCE DYNAMIQUE : Le HUD est cherché dans la scène actuelle
+var health_label: Label = null 
 
 
 func _ready() -> void:
 	current_health = MAX_HEALTH
+	
+	# Trouver le HUD dans la hiérarchie de la scène
+	# Commence par chercher dans le owner (la scène qui contient le boss)
+	var scene_root = owner if owner else get_parent()
+	if scene_root:
+		var hud = scene_root.get_node_or_null("HUD")
+		if hud:
+			health_label = hud.get_node_or_null("HBoxContainer/label_boss")
+	
 	if animated_sprite:
 		animated_sprite.animation_finished.connect(_on_animation_finished)
 		animated_sprite.animation_finished.connect(_on_hurt_animation_finished) 

@@ -2,8 +2,8 @@ extends CharacterBody2D
 class_name Joueur
 
 # --- NÉCESSAIRE : Chemins de la scène ---
-const PROJECTILE_SCENE = preload("res://Scenes/Projectile.tscn") # Le projectile du joueur
-const FAIL_SCENE_PATH = "res://Scenes/fail.tscn" 
+const PROJECTILE_SCENE = preload("res://scenes/Projectile.tscn") # Le projectile du joueur
+const FAIL_SCENE_PATH = "res://scenes/fail.tscn" 
 
 # --- CONFIGURATION DE LA VIE et AFFICHAGE ---
 @export var max_coeurs = 100 
@@ -26,8 +26,8 @@ const GRAVITY = 800.0
 @onready var death_sound_player: AudioStreamPlayer2D = $Death
 @onready var hurt_sound_player: AudioStreamPlayer2D = $hurt 
 
-# RÉFÉRENCE AU LABEL DE VIE DANS LE HUD FIXE
-@onready var health_label: Label = get_tree().root.get_node("BOSS/HUD/HBoxContainer/label_perso")
+# RÉFÉRENCE AU LABEL DE VIE DANS LE HUD (cherché dynamiquement)
+var health_label: Label = null
 
 
 # --- Variables d'État ---
@@ -45,6 +45,15 @@ enum Etat {
 func _ready() -> void:
 	animated_sprite.animation_finished.connect(_on_animation_finished)
 	nombre_coeurs = max_coeurs
+	
+	# Trouver le HUD dans la hiérarchie de la scène
+	# Commence par chercher dans le owner (la scène qui contient le joueur)
+	var scene_root = owner if owner else get_parent()
+	if scene_root:
+		var hud = scene_root.get_node_or_null("HUD")
+		if hud:
+			health_label = hud.get_node_or_null("HBoxContainer/label_perso")
+	
 	update_health_display() 
 
 
@@ -176,7 +185,14 @@ func die():
 	
 	await get_tree().create_timer(2.0).timeout 
 	
-	get_tree().change_scene_to_file(FAIL_SCENE_PATH)
+	# Sécurité : vérifier que l'arbre existe toujours
+	if get_tree():
+		# Chercher le noeud Main pour changer de scène
+		var main = get_tree().root.get_node_or_null("Main")
+		if main and main.has_method("changer_vers_scene"):
+			main.changer_vers_scene(FAIL_SCENE_PATH)
+		else:
+			get_tree().change_scene_to_file(FAIL_SCENE_PATH)
 
 
 # --- FONCTION D'ATTAQUE DU JOUEUR (Lance le projectile avec 1 argument) ---

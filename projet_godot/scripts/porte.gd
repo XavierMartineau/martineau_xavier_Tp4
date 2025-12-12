@@ -33,6 +33,13 @@ func _changer_de_scene() -> void:
 	
 	if chemin_scene != "":
 		print("🚀 Changement de scène vers :", chemin_scene)
-		get_tree().change_scene_to_file(chemin_scene)
+		# Sécurité : vérifier que l'arbre existe
+		if get_tree():
+			# Chercher le noeud Main pour changer de scène
+			var main = get_tree().root.get_node_or_null("Main")
+			if main and main.has_method("changer_vers_scene"):
+				main.changer_vers_scene(chemin_scene)
+			else:
+				get_tree().change_scene_to_file(chemin_scene)
 	else:
 		push_warning("Le chemin de la scène n'est pas défini !")

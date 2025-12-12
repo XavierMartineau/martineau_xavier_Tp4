@@ -17,7 +17,7 @@ var velocity = Vector2.ZERO
 func _ready():
 	# 1. Lancer l'animation
 	if $AnimatedSprite2D:
-		$AnimatedSprite2D.play("Projectile")
+		$AnimatedSprite2D.play("projectile_enemie")
 	
 	# 2. Démarrer le minuteur de destruction (Sécurité)
 	await get_tree().create_timer(LIFETIME).timeout

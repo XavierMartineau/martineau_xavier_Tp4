@@ -1,0 +1,11 @@
+res://scripts/boss_perso.gd
+res://scripts/joueur.gd
+res://scripts/projectile_enemie.gd
+res://scripts/canvas_layer.gd
+res://scripts/main.gd
+res://scripts/porte.gd
+res://scripts/fin.gd
+res://scripts/porte01.gd
+res://scripts/porte3.gd
+res://scripts/porte4.gd
+res://scripts/VICTOIRE.gd
