@@ -10,7 +10,7 @@ func _ready() -> void:
 		push_warning("HUD introuvable, le lock ne pourra pas surveiller les étoiles.")
 
 func _process(delta: float) -> void:
-	if hud and hud.nb_stars >= 13:
+	if hud and hud.nb_stars >= 2:
 		disparaitre()
 
 func disparaitre() -> void:

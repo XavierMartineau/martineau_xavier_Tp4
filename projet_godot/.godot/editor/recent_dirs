@@ -1,11 +1,11 @@
+res://scripts
+res://scenes
 /Users/gllm/src/github/martineau_xavier_Tp4/docs
 res://assets/audio/SFX
 res://assets/spritesheets
-res://scenes
 res://assets/audio/Backround_2
 res://assets/audio/SFX/ice
 res://assets/audio/SFX/Fire
-res://scripts
 res://assets/spritesheets/backround/bulkhead-walls-files/bulkhead-walls-files/layers
 res://assets/spritesheets/backround
 res://assets/sprites
@@ -20,4 +20,3 @@ res://assets/spritesheets/character/Wraith_03/PNG Sequences/Attacking
 res://assets/spritesheets/character/Wraith_03/PNG Sequences/Casting Spells
 res://assets/spritesheets/character/Wraith_03/PNG Sequences/Idle Blink
 res://assets/spritesheets/character/Wraith_03/PNG Sequences/Walking
-res://assets/spritesheets/character/Wraith_03/PNG Sequences/Dying

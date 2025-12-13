@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://bd31k8vyyq0nd"]
+[gd_scene load_steps=11 format=4 uid="uid://bd31k8vyyq0nd"]
 
 [ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_gnlxy"]
 [ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="2_3nuqx"]
@@ -8,7 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://3fro72ew8ojq" path="res://scenes/porte.tscn" id="5_ka1gb"]
 [ext_resource type="Script" uid="uid://clhqyp8j0u0v4" path="res://scripts/helper.gd" id="6_gnlxy"]
 [ext_resource type="AudioStream" uid="uid://oriih64q1i36" path="res://assets/audio/SFX/cartoon-phone-voice-88637.mp3" id="7_0h2h2"]
-[ext_resource type="Script" uid="uid://dup2p3amfb2u" path="res://scripts/porte4.gd" id="8_api2p"]
+[ext_resource type="Script" uid="uid://b1g238xfip51c" path="res://scripts/packedporte01.gd" id="9_0h2h2"]
+[ext_resource type="PackedScene" uid="uid://olm42ocwnnkg" path="res://scenes/BOSS.tscn" id="10_ka1gb"]
 
 [node name="niveau_3" type="Node"]
 
@@ -54,7 +55,8 @@ position = Vector2(-141, 207)
 
 [node name="Porte" parent="Teleport" instance=ExtResource("5_ka1gb")]
 position = Vector2(766, 5045)
-script = ExtResource("8_api2p")
+script = ExtResource("9_0h2h2")
+nouvelle_scene = ExtResource("10_ka1gb")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -127.0
@@ -67,3 +69,5 @@ Pour ataquer Appuyer sur la touche \"E\"
 
 Bonne chanches "
 uppercase = true
+
+[connection signal="body_entered" from="Teleport/Porte" to="Teleport/Porte" method="_on_body_entered"]

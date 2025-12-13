@@ -1,0 +1,30 @@
+[gd_scene load_steps=10 format=3 uid="uid://4ijmsqjgopc5"]
+
+[ext_resource type="PackedScene" uid="uid://df4o6yn6uk8hi" path="res://scenes/niveau_test.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bv5bojyq47wl8" path="res://scripts/main.gd" id="1_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://j05okgtuaimk" path="res://scenes/menu_controle.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://ci8ioa0gfxyhk" path="res://scenes/niveau_2.tscn" id="3_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://bd31k8vyyq0nd" path="res://scenes/niveau_3.tscn" id="5_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://olm42ocwnnkg" path="res://scenes/BOSS.tscn" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://bk0avaorue68x" path="res://scenes/fail.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://dxfqrh1kg0d1f" path="res://scenes/fin.tscn" id="7_tipki"]
+[ext_resource type="PackedScene" uid="uid://dendgdbyw2wcw" path="res://scenes/victoire.tscn" id="9_85g3d"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_jyhfs")
+
+[node name="NiveauTest" parent="." instance=ExtResource("1_ig7tw")]
+
+[node name="MenuControle" parent="." instance=ExtResource("2_0wfyh")]
+
+[node name="niveau_2" parent="." instance=ExtResource("3_jyhfs")]
+
+[node name="niveau_3" parent="." instance=ExtResource("5_tbgi4")]
+
+[node name="BOSS" parent="." instance=ExtResource("6_tefeu")]
+
+[node name="fin" parent="." instance=ExtResource("7_tipki")]
+
+[node name="fail" parent="." instance=ExtResource("7_o6xl0")]
+
+[node name="victoire" parent="." instance=ExtResource("9_85g3d")]

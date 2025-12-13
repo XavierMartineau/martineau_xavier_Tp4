@@ -1,8 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://3fro72ew8ojq"]
+[gd_scene load_steps=3 format=3 uid="uid://3fro72ew8ojq"]
 
 [ext_resource type="Texture2D" uid="uid://efn0tt2sjmms" path="res://assets/sprites/door_open_top.png" id="1_cbvu1"]
-[ext_resource type="AudioStream" uid="uid://c3wdfmwpeo4o" path="res://assets/audio/SFX/Level_up.mp3" id="2_cbvu1"]
-[ext_resource type="AudioStream" uid="uid://bnb12wh0mvv0g" path="res://assets/audio/SFX/letx27s-go-352481.mp3" id="3_m0o0n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xfqfg"]
 size = Vector2(29, 67)
@@ -17,9 +15,3 @@ texture = ExtResource("1_cbvu1")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(32.5, 77.5)
 shape = SubResource("RectangleShape2D_xfqfg")
-
-[node name="Level_up" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_cbvu1")
-
-[node name="lesgo" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_m0o0n")

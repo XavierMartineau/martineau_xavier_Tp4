@@ -1,12 +1,9 @@
-[gd_scene load_steps=8 format=4 uid="uid://bk0avaorue68x"]
+[gd_scene load_steps=5 format=4 uid="uid://bk0avaorue68x"]
 
 [ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_2quyr"]
 [ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="2_27ouh"]
 [ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="3_qh6bp"]
-[ext_resource type="PackedScene" uid="uid://3fro72ew8ojq" path="res://scenes/porte.tscn" id="4_eeerp"]
 [ext_resource type="AudioStream" uid="uid://bt2ycg421pfi3" path="res://assets/audio/SFX/brass-fail-8-b-207131.mp3" id="4_qh6bp"]
-[ext_resource type="Script" uid="uid://dup2p3amfb2u" path="res://scripts/porte4.gd" id="5_7l0fn"]
-[ext_resource type="Script" uid="uid://5us2j16a18ho" path="res://scripts/porte01.gd" id="6_27ouh"]
 
 [node name="fail" type="Node"]
 
@@ -33,14 +30,6 @@ script = ExtResource("3_qh6bp")
 [node name="Teleport" type="Node2D" parent="."]
 position = Vector2(-141, 207)
 
-[node name="Porte" parent="Teleport" instance=ExtResource("4_eeerp")]
-position = Vector2(1323, 819)
-script = ExtResource("5_7l0fn")
-
-[node name="Porte2" parent="Teleport" instance=ExtResource("4_eeerp")]
-position = Vector2(-784, 837)
-script = ExtResource("6_27ouh")
-
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="Label" type="Label" parent="Node2D"]
@@ -49,19 +38,9 @@ offset_top = 1059.0
 offset_right = 586.0
 offset_bottom = 1134.0
 pivot_offset = Vector2(665, 1243)
-text = "vous avez perdu. 
-Pour recommencer le niveaux aller a gauche
-Pour retourner  au niveaux 1 aller a droite"
+text = "vous avez perdu
 
-[node name="Label2" type="Label" parent="Node2D"]
-offset_left = -230.0
-offset_top = 1061.0
-offset_right = 114.0
-offset_bottom = 1136.0
-pivot_offset = Vector2(665, 1243)
-text = "vous avez perdu. 
-Pour recommencer le niveaux aller a gauche
-Pour retourner  au niveaux 1 aller a droite"
+Droite = Recommencer / Gauche = Recommense boss"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(-338, 1099)
@@ -69,3 +48,6 @@ stream = ExtResource("4_qh6bp")
 volume_db = 10.214
 autoplay = true
 max_distance = 775.0
+
+[node name="Teleport2" type="Node2D" parent="."]
+position = Vector2(-141, 207)

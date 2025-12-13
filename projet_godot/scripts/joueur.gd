@@ -170,29 +170,42 @@ func prendre_degats(amount: int):
 
 
 # --- FONCTION DE MORT (Jouer 'death' + son + Transition) ---
+
+# Déclaration de la PackedScene pour l'écran de défaite
+# Cela rend la variable visible dans l'Inspecteur
+@export var scene_defaite: PackedScene 
+
+# ... (autres variables et fonctions)
+
 func die():
 	if is_dead: return
 		
 	is_dead = true
 	etat_courant = Etat.MORT
 	
-	animated_sprite.play("death") 
+	animated_sprite.play("death")
 	
 	if is_instance_valid(death_sound_player) and death_sound_player.stream != null:
 		death_sound_player.play()
 	
 	set_physics_process(false)
 	
-	await get_tree().create_timer(2.0).timeout 
+	# Attendre que l'animation de mort se termine (2.0 secondes)
 	
 	# Sécurité : vérifier que l'arbre existe toujours
 	if get_tree():
-		# Chercher le noeud Main pour changer de scène
-		var main = get_tree().root.get_node_or_null("Main")
-		if main and main.has_method("changer_vers_scene"):
-			main.changer_vers_scene(FAIL_SCENE_PATH)
-		else:
-			get_tree().change_scene_to_file(FAIL_SCENE_PATH)
+		
+		# 1. Vérification de sécurité : La PackedScene est-elle liée ?
+		if scene_defaite == null:
+			push_error("Erreur: La scène de défaite (PackedScene) n'est pas liée dans l'Inspecteur du Joueur.")
+			return
+			
+		# 2. OBTENIR LE NŒUD RACINE 'MAIN' (Comme pour la porte)
+		var main_node = get_tree().root.get_child(0)
+		
+		# 3. CHANGER DE SCÈNE en utilisant la fonction du script Main.gd
+		# Nous passons la PackedScene que nous avons liée dans l'Inspecteur
+		main_node.changer_scene(scene_defaite)
 
 
 # --- FONCTION D'ATTAQUE DU JOUEUR (Lance le projectile avec 1 argument) ---
