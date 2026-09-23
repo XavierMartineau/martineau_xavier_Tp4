@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=4 uid="uid://dendgdbyw2wcw"]
+
+[ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_33ski"]
+[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="4_gk77l"]
+[ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="5_ujobb"]
+[ext_resource type="AudioStream" uid="uid://bnb12wh0mvv0g" path="res://assets/audio/SFX/letx27s-go-352481.mp3" id="6_diygs"]
+[ext_resource type="AudioStream" uid="uid://d3fe6e213xto8" path="res://assets/audio/Backround_2/evil-aura-219114.mp3" id="6_pemao"]
+[ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/hud.tscn" id="7_6rq0c"]
+
+[node name="victoire" type="Node"]
+
+[node name="PlancherTileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(9, -2)
+tile_map_data = PackedByteArray("AAAKAAwAAAABAAcAAAAMAAoAAAABAAcAAAANAAoAAAABAAcAAAAOAAoAAAABAAcAAAAPAAoAAAABAAcAAAAQAAoAAAABAAcAAAARAAoAAAABAAcAAAASAAoAAAABAAcAAAALAAoAAAABAAcAAAAKAAoAAAABAAcAAAAJAAoAAAABAAcAAAAJAAkAAAABAAcAAAAJAAgAAAABAAcAAAAJAAcAAAABAAcAAAAJAAYAAAABAAcAAAAJAAUAAAABAAcAAAAKAAUAAAABAAcAAAALAAUAAAABAAcAAAAMAAUAAAABAAcAAAAMAAYAAAABAAcAAAANAAYAAAABAAcAAAAOAAYAAAABAAcAAAAPAAYAAAABAAcAAAAQAAYAAAABAAcAAAARAAYAAAABAAcAAAASAAYAAAABAAcAAAASAAcAAAABAAcAAAASAAgAAAABAAcAAAASAAkAAAABAAcAAAA=")
+tile_set = ExtResource("1_33ski")
+
+[node name="Joueur" parent="." instance=ExtResource("4_gk77l")]
+position = Vector2(1097, 635)
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="Joueur"]
+texture_filter = 1
+position = Vector2(5, -1)
+limit_left = -10000009
+position_smoothing_enabled = true
+editor_draw_limits = true
+script = ExtResource("5_ujobb")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Joueur"]
+position = Vector2(-24, -72)
+stream = ExtResource("6_pemao")
+volume_db = 13.929
+autoplay = true
+
+[node name="HUD" parent="." instance=ExtResource("7_6rq0c")]
+
+[node name="gg" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-12808, 27140)
+stream = ExtResource("6_diygs")
+volume_db = 4.945
+autoplay = true

@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=4 uid="uid://bk0avaorue68x"]
+
+[ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_2quyr"]
+[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="2_27ouh"]
+[ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="3_qh6bp"]
+[ext_resource type="AudioStream" uid="uid://bt2ycg421pfi3" path="res://assets/audio/SFX/brass-fail-8-b-207131.mp3" id="4_qh6bp"]
+
+[node name="fail" type="Node"]
+
+[node name="PlancherTileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(9, -2)
+tile_map_data = PackedByteArray("AAABABIAAAABAAsAAAACABIAAAABAAsAAAADABIAAAABAAsAAAAEABIAAAABAAsAAAAFABIAAAABAAsAAAAGABIAAAABAAsAAAAHABIAAAABAAsAAAAIABIAAAABAAsAAAAJABIAAAABAAsAAAABAA8AAAABAAsAADACAA8AAAABAAsAADADAA8AAAABAAsAADAEAA8AAAABAAsAADAFAA8AAAABAAsAADAGAA8AAAABAAsAADAHAA8AAAABAAsAADAIAA8AAAABAAsAADAJAA8AAAABAAsAADAKAA8AAAABAAsAADALAA8AAAABAAsAADALABIAAAABAAsAAAAKABIAAAABAAsAAAAMAA8AAAABAAsAADANAA8AAAABAAsAADAOAA8AAAABAAsAADAPAA8AAAABAAsAADAQAA8AAAABAAsAADARAA8AAAABAAsAADASAA8AAAABAAsAADATAA8AAAABAAsAADAMABIAAAABAAsAAAANABIAAAABAAsAAAAOABIAAAABAAsAAAAPABIAAAABAAsAAAAQABIAAAABAAsAAAARABIAAAABAAsAAAASABIAAAABAAsAAAATABIAAAABAAsAAAAUABIAAAABAAsAAGAUABEAAAABAAsAAGAUABAAAAABAAsAAGAUAA8AAAABAAsAAGAAAA8AAAABAAsAADD//w8AAAABAAsAADD+/w8AAAABAAsAADD9/w8AAAABAAsAADD8/w8AAAABAAsAADD7/w8AAAABAAsAADD6/w8AAAABAAsAADAAABIAAAABAAsAAAD//xIAAAABAAsAAAD+/xIAAAABAAsAAAD9/xIAAAABAAsAAAD8/xIAAAABAAsAAAD7/xIAAAABAAsAAAD6/xIAAAABAAsAAAD5/xIAAAABAAsAAAD4/xIAAAABAAsAAAD3/xIAAAABAAsAAAD2/xIAAAABAAsAAAD1/xIAAAABAAsAAAD0/xIAAAABAAsAAADz/xIAAAABAAsAAADy/xIAAAABAAsAAAD5/w8AAAABAAsAADD4/w8AAAABAAsAADD3/w8AAAABAAsAADD2/w8AAAABAAsAADD1/w8AAAABAAsAADD0/w8AAAABAAsAADDz/w8AAAABAAsAADDy/w8AAAABAAsAADDx/w8AAAABAAsAADDw/w8AAAABAAsAAFDw/xAAAAABAAsAAFDw/xEAAAABAAsAAFDw/xIAAAABAAsAAADx/xIAAAABAAsAAAA=")
+tile_set = ExtResource("1_2quyr")
+
+[node name="group-audio-positionnel" type="Node2D" parent="."]
+position = Vector2(851, 505)
+
+[node name="Joueur" parent="." instance=ExtResource("2_27ouh")]
+position = Vector2(181, 1147)
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="Joueur"]
+texture_filter = 1
+position = Vector2(5, -1)
+limit_left = -10000009
+position_smoothing_enabled = true
+editor_draw_limits = true
+script = ExtResource("3_qh6bp")
+
+[node name="Teleport" type="Node2D" parent="."]
+position = Vector2(-141, 207)
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="Node2D"]
+offset_left = 242.0
+offset_top = 1059.0
+offset_right = 586.0
+offset_bottom = 1134.0
+pivot_offset = Vector2(665, 1243)
+text = "vous avez perdu
+
+Droite = Recommencer / Gauche = Recommense boss"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-338, 1099)
+stream = ExtResource("4_qh6bp")
+volume_db = 10.214
+autoplay = true
+max_distance = 775.0
+
+[node name="Teleport2" type="Node2D" parent="."]
+position = Vector2(-141, 207)

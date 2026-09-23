@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://dac4xe4qj0kyy"]
+
+[ext_resource type="Texture2D" uid="uid://5ml2kdj76fn7" path="res://assets/spritesheets/character/Flying Demon 2D Pixel Art/Sprites/with_outline/IDLE.png" id="1_8avu8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1b23i"]
+atlas = ExtResource("1_8avu8")
+region = Rect2(0, 0, 81, 71)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwlo1"]
+atlas = ExtResource("1_8avu8")
+region = Rect2(81, 0, 81, 71)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o31g5"]
+atlas = ExtResource("1_8avu8")
+region = Rect2(162, 0, 81, 71)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iiyj"]
+atlas = ExtResource("1_8avu8")
+region = Rect2(243, 0, 81, 71)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yl8xg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1b23i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwlo1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o31g5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1iiyj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Helper" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(211, 235)
+scale = Vector2(2.75285, 2.75285)
+sprite_frames = SubResource("SpriteFrames_yl8xg")
+animation = &"idle"
+flip_h = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 336.0
+offset_top = 168.0
+offset_right = 891.0
+offset_bottom = 295.0
+text = "Salut à toi ! J'ai grand besoin de tes services.
+
+Un preneur d'âmes détient un trésor d'une valeur inestimable.
+
+Récupère cet objet précieux, et une récompense t'attend."
+uppercase = true
+metadata/_edit_use_anchors_ = true

@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://bu32uoqhm7aph"]
+
+[ext_resource type="Script" uid="uid://c2qoy7ytiaun2" path="res://scripts/powerup.gd" id="1_406cw"]
+[ext_resource type="Texture2D" uid="uid://dcepbid2o8w4k" path="res://assets/spritesheets/spritesheet-tiles-default.png" id="2_406cw"]
+[ext_resource type="AudioStream" uid="uid://cdetpe22k48gg" path="res://assets/audio/powerup.wav" id="3_406cw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_efcy8"]
+size = Vector2(58, 51)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kd50q"]
+atlas = ExtResource("2_406cw")
+region = Rect2(832, 0, 64, 64)
+filter_clip = true
+
+[node name="powerup" type="Area2D"]
+script = ExtResource("1_406cw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_efcy8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = SubResource("AtlasTexture_kd50q")
+region_rect = Rect2(0, 0, 1152, 1152)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_406cw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

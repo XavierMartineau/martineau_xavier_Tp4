@@ -1,0 +1,158 @@
+[gd_scene load_steps=9 format=3 uid="uid://j05okgtuaimk"]
+
+[ext_resource type="Script" uid="uid://be02vcw1pg0va" path="res://scripts/menu_controle.gd" id="1_5qrj1"]
+[ext_resource type="Texture2D" uid="uid://crhkoo4vld02q" path="res://assets/spritesheets/close_icon.tres" id="2_5qrj1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cixlm"]
+bg_color = Color(0.498039, 0.498039, 0.498039, 0.682353)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.137255, 0.0980392, 0.286275, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kftfl"]
+bg_color = Color(0.320686, 0.310028, 0.462429, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.137255, 0.0980392, 0.286275, 1)
+
+[sub_resource type="InputEventKey" id="InputEventKey_5qrj1"]
+device = -1
+pressed = true
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_kftfl"]
+events = [SubResource("InputEventKey_5qrj1")]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lq5ci"]
+load_path = "res://.godot/imported/ui_icons.png-2465fb4e2ba361975cb4c8d0751e0d19.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cixlm"]
+atlas = SubResource("CompressedTexture2D_lq5ci")
+region = Rect2(350, 350, 50, 50)
+
+[node name="MenuControle" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_5qrj1")
+metadata/_edit_vertical_guides_ = [512.0]
+
+[node name="PauseMenu" type="Panel" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cixlm")
+
+[node name="ShowInstructionsButton" type="Button" parent="PauseMenu"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -146.0
+offset_top = -35.0
+offset_right = 143.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Instructions"
+
+[node name="ContinueButton" type="Button" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -146.0
+offset_top = 65.0
+offset_right = 143.0
+offset_bottom = 138.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Continuer"
+
+[node name="InstructionsScreen" type="Panel" parent="PauseMenu"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 218.0
+offset_top = 191.0
+offset_right = -217.0
+offset_bottom = -221.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kftfl")
+
+[node name="CloseButton" type="Button" parent="PauseMenu/InstructionsScreen"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -72.0
+offset_top = 17.0
+offset_right = -22.0
+offset_bottom = 75.0
+grow_horizontal = 0
+icon = ExtResource("2_5qrj1")
+
+[node name="InstructionsLabel" type="Label" parent="PauseMenu/InstructionsScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 158.0
+offset_right = -22.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "A ou D : Marche
+Espace : Saut
+Échapper : Pause"
+
+[node name="InstructionsTitle" type="Label" parent="PauseMenu/InstructionsScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 17.0
+offset_right = -22.0
+offset_bottom = -253.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "Instructions"
+
+[node name="PauseButton" type="Button" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -86.0
+offset_top = 26.0
+offset_right = -28.0
+offset_bottom = 84.0
+grow_horizontal = 0
+focus_mode = 0
+toggle_mode = true
+shortcut = SubResource("Shortcut_kftfl")
+icon = SubResource("AtlasTexture_cixlm")
+flat = true
+
+[connection signal="pressed" from="PauseMenu/ShowInstructionsButton" to="." method="_on_show_instructions_button_pressed"]
+[connection signal="pressed" from="PauseMenu/ContinueButton" to="." method="continuer"]
+[connection signal="pressed" from="PauseMenu/InstructionsScreen/CloseButton" to="." method="_on_close_instructions_button_pressed"]
+[connection signal="toggled" from="PauseButton" to="." method="_on_pause_button_toggled"]

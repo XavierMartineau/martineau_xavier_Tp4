@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://3fro72ew8ojq"]
+
+[ext_resource type="Texture2D" uid="uid://efn0tt2sjmms" path="res://assets/sprites/door_open_top.png" id="1_cbvu1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xfqfg"]
+size = Vector2(29, 67)
+
+[node name="porte" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(33, 56)
+scale = Vector2(1, 1.70313)
+texture = ExtResource("1_cbvu1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(32.5, 77.5)
+shape = SubResource("RectangleShape2D_xfqfg")

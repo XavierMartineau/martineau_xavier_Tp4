@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://be3r7vo7buj1l"]
+
+[ext_resource type="Texture2D" uid="uid://d1dg2l8ll7wlo" path="res://assets/sprites/block_coin_active.png" id="1_3u8ya"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dw7mk"]
+size = Vector2(67, 67)
+
+[node name="StaticBody2D" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3u8ya")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.5, 1.5)
+shape = SubResource("RectangleShape2D_dw7mk")

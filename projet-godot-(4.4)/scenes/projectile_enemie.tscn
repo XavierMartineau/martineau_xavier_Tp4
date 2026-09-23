@@ -1,0 +1,64 @@
+[gd_scene load_steps=13 format=3 uid="uid://cryv8klibh8b"]
+
+[ext_resource type="Script" uid="uid://c6nv23cq3e1ot" path="res://scripts/projectile_enemie.gd" id="1_3wi2e"]
+[ext_resource type="Texture2D" uid="uid://dblqmf7o2025w" path="res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Water Arrow/PNG/Water Arrow_Frame_01.png" id="2_4wkv8"]
+[ext_resource type="Texture2D" uid="uid://iffkxkwpyxy6" path="res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Water Arrow/PNG/Water Arrow_Frame_02.png" id="3_t0hao"]
+[ext_resource type="Texture2D" uid="uid://bnkn5lxb8evcc" path="res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Water Arrow/PNG/Water Arrow_Frame_03.png" id="4_57lpv"]
+[ext_resource type="Texture2D" uid="uid://cjgwpl66s700x" path="res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Water Arrow/PNG/Water Arrow_Frame_04.png" id="5_lj7rp"]
+[ext_resource type="Texture2D" uid="uid://llto5x077t8m" path="res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Water Arrow/PNG/Water Arrow_Frame_05.png" id="6_qslrw"]
+[ext_resource type="Texture2D" uid="uid://b1h1oby6yyc7u" path="res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Water Arrow/PNG/Water Arrow_Frame_06.png" id="7_guhn1"]
+[ext_resource type="Texture2D" uid="uid://b68l8idwyg6pu" path="res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Water Arrow/PNG/Water Arrow_Frame_07.png" id="8_73hk7"]
+[ext_resource type="Texture2D" uid="uid://dy8blg4l4wwwa" path="res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Water Arrow/PNG/Water Arrow_Frame_08.png" id="9_uyx5y"]
+[ext_resource type="AudioStream" uid="uid://uxy7bbsh2s75" path="res://assets/audio/SFX/ice/ice-ball-1.mp3" id="10_4wkv8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k7twy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4wkv8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_t0hao")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_57lpv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_lj7rp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qslrw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_guhn1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_73hk7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_uyx5y")
+}],
+"loop": true,
+"name": &"projectile_enemie",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qbawu"]
+radius = 12.0416
+
+[node name="projectile_enemie" type="Area2D"]
+script = ExtResource("1_3wi2e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(38, -1)
+scale = Vector2(0.194444, 0.194444)
+sprite_frames = SubResource("SpriteFrames_k7twy")
+animation = &"projectile_enemie"
+frame_progress = 0.355437
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, 0)
+shape = SubResource("CircleShape2D_qbawu")
+
+[node name="ice" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_4wkv8")

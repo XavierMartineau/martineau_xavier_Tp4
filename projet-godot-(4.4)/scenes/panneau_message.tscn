@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://de82iea1y2ek7"]
+
+[ext_resource type="Script" uid="uid://dq8ea2it5b7wq" path="res://scripts/panneau_message.gd" id="1_kd50q"]
+[ext_resource type="Texture2D" uid="uid://dcepbid2o8w4k" path="res://assets/spritesheets/spritesheet-tiles-default.png" id="1_shbub"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_efcy8"]
+size = Vector2(62, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kd50q"]
+atlas = ExtResource("1_shbub")
+region = Rect2(640, 832, 64, 64)
+filter_clip = true
+
+[node name="PanneauMessage" type="Area2D"]
+script = ExtResource("1_kd50q")
+message = "Pour aller au lvl 2 ouvre les 2 lock"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(22, 31.5)
+shape = SubResource("RectangleShape2D_efcy8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(22, 29)
+texture = SubResource("AtlasTexture_kd50q")
+
+[node name="Message" type="Node2D" parent="."]
+visible = false
+
+[node name="Fond" type="ColorRect" parent="Message"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -232.0
+offset_top = -232.0
+offset_right = 232.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.101961, 0.101961, 0.101961, 0.788235)
+metadata/_edit_group_ = true
+
+[node name="Etiquette" type="Label" parent="Message/Fond"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[connection signal="body_exited" from="." to="." method="hide_message"]

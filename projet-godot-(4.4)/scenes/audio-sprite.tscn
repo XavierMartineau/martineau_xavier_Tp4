@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://dtyfonpxvcerq"]
+
+[ext_resource type="Texture2D" uid="uid://dcepbid2o8w4k" path="res://assets/spritesheets/spritesheet-tiles-default.png" id="1_tph5m"]
+[ext_resource type="Script" uid="uid://cd64dchs2iigf" path="res://scripts/audio_sprite.gd" id="1_x4c60"]
+[ext_resource type="AudioStream" uid="uid://cn8ii3ex8xokn" path="res://assets/audio/Wood Burning in Fireplace 4 - QuickSounds.com.mp3" id="2_x4c60"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kmuj"]
+atlas = ExtResource("1_tph5m")
+region = Rect2(0, 384, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4c60"]
+atlas = ExtResource("1_tph5m")
+region = Rect2(0, 448, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_17vh4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kmuj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4c60")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Audio-sprite" type="Node2D"]
+script = ExtResource("1_x4c60")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_x4c60")
+autoplay = true
+max_distance = 200.0
+panning_strength = 10.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_17vh4")
+frame_progress = 0.144169

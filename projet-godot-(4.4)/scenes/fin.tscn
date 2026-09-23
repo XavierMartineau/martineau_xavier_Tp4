@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=4 uid="uid://dxfqrh1kg0d1f"]
+
+[ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_2aqyk"]
+[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="2_imhjk"]
+[ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="3_whqpg"]
+[ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/hud.tscn" id="6_tr124"]
+[ext_resource type="PackedScene" uid="uid://d0u8cs5711vdj" path="res://scenes/helper_fin.tscn" id="7_sxbsd"]
+[ext_resource type="AudioStream" uid="uid://bnb12wh0mvv0g" path="res://assets/audio/SFX/letx27s-go-352481.mp3" id="8_2aqyk"]
+[ext_resource type="Script" uid="uid://clhqyp8j0u0v4" path="res://scripts/helper.gd" id="8_xx68v"]
+[ext_resource type="AudioStream" uid="uid://y7gl8l5qrlmn" path="res://assets/audio/Backround_2/alarm.mp3" id="9_imhjk"]
+
+[node name="fin" type="Node"]
+
+[node name="PlancherTileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(9, -2)
+tile_map_data = PackedByteArray("AADq/wUAAAABAAcAAADp/wUAAAABAAcAAADo/wUAAAABAAcAAADo/wYAAAABAAcAAADn/wYAAAABAAcAAADm/wcAAAABAAcAAADl/wgAAAABAAcAAADk/wkAAAABAAcAAADj/woAAAABAAcAAADi/wsAAAABAAcAAADh/wwAAAABAAcAAADg/w0AAAABAAcAAADf/w4AAAABAAcAAADe/w8AAAABAAcAAADd/xAAAAABAAcAAADc/xEAAAABAAcAAADr/wQAAAABAAcAAADr/wMAAAABAAcAAADr/wIAAAABAAcAAADq/wEAAAABAAcAAADp/wEAAAABAAcAAADo/wEAAAABAAcAAADn/wEAAAABAAcAAADm/wEAAAABAAcAAADl/wIAAAABAAcAAADk/wMAAAABAAcAAADj/wQAAAABAAcAAADi/wUAAAABAAcAAADh/wYAAAABAAcAAADg/wcAAAABAAcAAADf/wgAAAABAAcAAADe/wkAAAABAAcAAADd/woAAAABAAcAAADc/wsAAAABAAcAAADb/wwAAAABAAcAAADa/w0AAAABAAcAAADZ/w4AAAABAAcAAADY/w8AAAABAAcAAADb/xIAAAABAAcAAADa/xIAAAABAAcAAADZ/xIAAAABAAcAAADY/xIAAAABAAcAAADX/xIAAAABAAcAAADW/xIAAAABAAcAAADV/xIAAAABAAcAAADU/xIAAAABAAcAAADT/xIAAAABAAcAAADS/xIAAAABAAcAAADX/w8AAAABAAcAAADW/w8AAAABAAcAAADV/w8AAAABAAcAAADU/w8AAAABAAcAAADT/w8AAAABAAcAAADS/w8AAAABAAcAAADR/w8AAAABAAcAAADR/xIAAAABAAcAAADQ/xIAAAABAAcAAADP/xIAAAABAAcAAADO/xIAAAABAAcAAADN/xIAAAABAAcAAADM/xIAAAABAAcAAADL/xIAAAABAAcAAADK/xIAAAABAAcAAADJ/xIAAAABAAcAAADQ/w8AAAABAAcAAADP/w8AAAABAAcAAADO/w8AAAABAAcAAADN/w8AAAABAAcAAADM/w8AAAABAAcAAADL/w8AAAABAAcAAADK/w8AAAABAAcAAADJ/w8AAAABAAcAAADI/w8AAAABAAcAAADI/xMAAAABAAcAAADH/xMAAAABAAcAAADG/xMAAAABAAcAAADF/xMAAAABAAcAAADE/xMAAAABAAcAAADD/xMAAAABAAcAAADC/xMAAAABAAcAAADB/xMAAAABAAcAAADA/xMAAAABAAcAAAC//xMAAAABAAcAAAC+/xMAAAABAAcAAAC9/xMAAAABAAcAAAC8/xMAAAABAAcAAAC7/xMAAAABAAcAAADH/w4AAAABAAcAAAC6/xMAAAABAAcAAAC5/xMAAAABAAcAAAC4/xMAAAABAAcAAAC3/xMAAAABAAcAAAC2/xMAAAABAAcAAAC1/xMAAAABAAcAAAC0/xMAAAABAAcAAACz/xMAAAABAAcAAACy/xMAAAABAAcAAACx/xMAAAABAAcAAACw/xMAAAABAAcAAACv/xMAAAABAAcAAACu/xMAAAABAAcAAACu/w8AAAABAAoAAFCu/w4AAAABAAoAAFCu/w0AAAABAAoAAFDH/w0AAAABAAcAAADH/wwAAAABAAcAAADH/wsAAAABAAcAAADH/woAAAABAAcAAADH/wkAAAABAAcAAADH/wgAAAABAAcAAADG/wgAAAABAAcAAADF/wgAAAABAAcAAADE/wgAAAABAAcAAADD/wgAAAABAAcAAADC/wgAAAABAAcAAADB/wgAAAABAAcAAADA/wgAAAABAAcAAAC//wgAAAABAAcAAAC+/wgAAAABAAcAAAC9/wgAAAABAAcAAAC8/wgAAAABAAcAAAC7/wgAAAABAAcAAAC6/wgAAAABAAcAAAC5/wgAAAABAAcAAAC4/wgAAAABAAcAAAC3/wgAAAABAAcAAAC2/wgAAAABAAcAAAC1/wgAAAABAAcAAAC0/wgAAAABAAcAAACz/wgAAAABAAcAAACy/wgAAAABAAcAAACx/wgAAAABAAcAAACw/wgAAAABAAcAAACv/wgAAAABAAcAAACu/wgAAAABAAcAAACu/wkAAAABAAoAAFCu/woAAAABAAoAAFCu/wsAAAABAAoAAFCu/wwAAAABAAoAAFCt/xMAAAABAAcAAACs/xMAAAABAAcAAACr/xMAAAABAAcAAACq/xMAAAABAAcAAACp/xMAAAABAAcAAACo/xMAAAABAAcAAACn/xMAAAABAAcAAACm/xMAAAABAAcAAACl/xMAAAABAAcAAACk/xMAAAABAAcAAACj/xMAAAABAAcAAACi/xMAAAABAAcAAACh/xMAAAABAAcAAACg/xMAAAABAAcAAACf/xMAAAABAAcAAACt/w8AAAABAAoAADCs/w8AAAABAAoAADCr/w8AAAABAAoAADCq/w8AAAABAAoAADCp/w8AAAABAAoAADCo/w8AAAABAAoAADCn/w8AAAABAAoAADCm/w8AAAABAAoAADCl/w8AAAABAAoAADCk/w8AAAABAAoAADCj/w8AAAABAAoAADCi/w8AAAABAAoAADCh/w8AAAABAAoAADCg/w8AAAABAAoAADCf/w8AAAABAAoAADCf/xAAAAABAAoAAFCf/xEAAAABAAoAAFCf/xIAAAABAAoAAFA=")
+tile_set = ExtResource("1_2aqyk")
+
+[node name="group-audio-positionnel" type="Node2D" parent="."]
+position = Vector2(851, 505)
+
+[node name="Joueur" parent="." instance=ExtResource("2_imhjk")]
+position = Vector2(-1392, 298)
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="Joueur"]
+texture_filter = 1
+position = Vector2(5, -1)
+limit_left = -10000009
+position_smoothing_enabled = true
+editor_draw_limits = true
+script = ExtResource("3_whqpg")
+
+[node name="groupe_boss" type="Node2D" parent="."]
+
+[node name="Teleport" type="Node2D" parent="."]
+position = Vector2(-141, 207)
+
+[node name="groupe_tresor" type="Node2D" parent="."]
+
+[node name="HUD" parent="." instance=ExtResource("6_tr124")]
+
+[node name="groupe_help" type="Node2D" parent="."]
+
+[node name="Helper_fin" parent="groupe_help" instance=ExtResource("7_sxbsd")]
+position = Vector2(-4699, 842)
+script = ExtResource("8_xx68v")
+
+[node name="Groupe_clee_fin" type="Node2D" parent="."]
+position = Vector2(-8, -3)
+
+[node name="Groupe_mur" type="Node2D" parent="."]
+position = Vector2(-13, 7)
+
+[node name="Alarm" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-4454, 981)
+stream = ExtResource("9_imhjk")
+volume_db = 11.142
+autoplay = true
+max_distance = 1690.0
+attenuation = 1.51572
+parameters/looping = true
+
+[node name="gg" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-6085, 1141)
+stream = ExtResource("8_2aqyk")
+volume_db = 4.945
+autoplay = true

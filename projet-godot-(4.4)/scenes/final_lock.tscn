@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://bccrrjcnxdfj3"]
+
+[ext_resource type="Texture2D" uid="uid://o72khkjkbdgt" path="res://assets/sprites/block_spikes.png" id="1_rik83"]
+
+[sub_resource type="GDScript" id="GDScript_rik83"]
+script/source = "extends StaticBody2D
+class_name Finalock
+
+@onready var hud = get_tree().current_scene.get_node_or_null(\"HUD\")
+
+func _ready() -> void:
+	if not hud:
+		push_warning(\"HUD introuvable ! Le FinalLock ne pourra pas vérifier les conditions.\")
+		return
+
+	# Vérifie immédiatement si la condition est déjà remplie
+	_check_conditions()
+
+	# Connecte aux signaux pour que le lock réagisse aux changements
+	hud.connect(\"star_added\", Callable(self, \"_check_conditions\"))
+
+func _check_conditions() -> void:
+	if hud.nb_stars >= 12:
+		disparaitre()
+
+func disparaitre() -> void:
+	print(\"🔓 FinalLock débloqué !\")
+	var tween = create_tween()
+	tween.tween_property(self, \"scale\", Vector2.ZERO, 0.5)
+	tween.finished.connect(Callable(self, \"queue_free\"))
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lfacc"]
+size = Vector2(65, 67)
+
+[node name="StaticBody2D" type="StaticBody2D"]
+script = SubResource("GDScript_rik83")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 11)
+texture = ExtResource("1_rik83")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 12.5)
+shape = SubResource("RectangleShape2D_lfacc")

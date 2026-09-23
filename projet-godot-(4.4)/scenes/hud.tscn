@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://dv4y14r0nply4"]
+
+[ext_resource type="Script" uid="uid://bynldl35cuwf1" path="res://scripts/hud.gd" id="1_oo0fn"]
+[ext_resource type="Texture2D" uid="uid://b4rnhjjhju8nf" path="res://assets/sprites/star.png" id="2_oo0fn"]
+[ext_resource type="Texture2D" uid="uid://b57v0ip7q07p5" path="res://assets/sprites/hud_coin.png" id="4_6fi6k"]
+[ext_resource type="Texture2D" uid="uid://ckrcfxjihbeo4" path="res://assets/sprites/ZeeResizer (1).png" id="4_uo2fv"]
+[ext_resource type="Texture2D" uid="uid://c0e1fyy454t1a" path="res://assets/sprites/ZeeResizer.png" id="5_047uy"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_oo0fn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 645.0
+offset_bottom = 82.0
+size_flags_horizontal = 4
+size_flags_stretch_ratio = 0.3
+alignment = 1
+
+[node name="stars" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_oo0fn")
+stretch_mode = 3
+
+[node name="label_stars" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="coins" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_6fi6k")
+
+[node name="label_coin" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="SPACE" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "                                     "
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Barre de vie: "
+
+[node name="stars2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_uo2fv")
+stretch_mode = 3
+
+[node name="label_perso" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "100"
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_047uy")
+
+[node name="label_boss" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "300"

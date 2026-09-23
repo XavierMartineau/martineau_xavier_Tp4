@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2rrdss4arcjk"]
+
+[ext_resource type="Texture2D" uid="uid://b57v0ip7q07p5" path="res://assets/sprites/hud_coin.png" id="1_owubc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kyq3r"]
+radius = 24.0
+
+[node name="Coin" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(60, 53)
+texture = ExtResource("1_owubc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(60, 53)
+shape = SubResource("CircleShape2D_kyq3r")

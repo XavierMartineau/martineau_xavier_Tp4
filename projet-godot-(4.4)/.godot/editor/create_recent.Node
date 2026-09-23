@@ -1,0 +1,14 @@
+CollisionShape2D
+AnimatedSprite2D
+Node2D
+AudioStreamPlayer2D
+Node
+TileMap
+StaticBody2D
+Area2D
+CharacterBody2D
+Label
+HUD
+ColorRect
+ProgressBar
+Sprite2D
