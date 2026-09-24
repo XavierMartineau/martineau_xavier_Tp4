@@ -5,6 +5,7 @@ class_name HUD # permet de l'identifier et de l'instancier facilement
 # ATTENTION : Assurez-vous que les noms des nœuds dans l'HBoxContainer sont bien corrects
 @onready var label_stars: Label = $HBoxContainer/label_stars
 @onready var label_coin: Label = $HBoxContainer/label_coin
+@onready var health_title: Label = $HBoxContainer/Label
 
 
 # Compteurs
@@ -16,6 +17,7 @@ func _ready() -> void:
 	# Initialise l'affichage au démarrage
 	label_stars.text = str(nb_stars)
 	label_coin.text = str(nb_coin)
+	health_title.text = Main.translate_text(health_title.text)
 
 	
 # Méthode pour ajouter une étoile

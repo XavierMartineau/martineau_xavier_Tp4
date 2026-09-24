@@ -11,7 +11,7 @@ func _ready() -> void:
 func show_message(_body):
 	$Timer.start()
 	$Message.show()
-	$Message/Fond/Etiquette.text = message
+	$Message/Fond/Etiquette.text = Main.translate_text(message)
 	await $Timer.timeout
 	$Message.hide()
 

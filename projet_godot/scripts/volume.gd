@@ -11,11 +11,11 @@ func _ready() -> void:
 	set_pressed_no_signal(AudioServer.is_bus_mute(master_bus_idx))
 	_update_icon()
 
-func _on_toggled(button_pressed: bool) -> void:
+func _on_toggled(pressed_state: bool) -> void:
 	var master_bus_idx = AudioServer.get_bus_index("Master")
 	if master_bus_idx == -1:
 		return
-	AudioServer.set_bus_mute(master_bus_idx, button_pressed)
+	AudioServer.set_bus_mute(master_bus_idx, pressed_state)
 	_update_icon()
 
 

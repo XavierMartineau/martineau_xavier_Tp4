@@ -5,9 +5,9 @@ const PAUSE_ICON = preload("res://assets/spritesheets/pause_icon.tres")
 
 @onready var pause_button: Button = $PauseButton
 @onready var pause_menu: Panel = $PauseMenu
-@onready var instructions_screen: Panel = %InstructionsScreen
-@onready var instructions_button: Button = %ShowInstructionsButton
-@onready var continue_button: Button = %ContinueButton
+@onready var instructions_screen: Panel = $PauseMenu/InstructionsScreen
+@onready var instructions_button: Button = $PauseMenu/ShowInstructionsButton
+@onready var continue_button: Button = $PauseMenu/ContinueButton
 @onready var device_menu: Panel = $DeviceMenu
 @onready var mobile_controls: Control = $MobileControls
 @onready var volume_button: Button = $Volume
@@ -70,7 +70,7 @@ func continuer() -> void:
 
 func _on_show_instructions_button_pressed() -> void:
 	instructions_screen.show()
-	%InstructionsScreen/CloseButton.grab_focus.call_deferred()
+	$PauseMenu/InstructionsScreen/CloseButton.grab_focus.call_deferred()
 
 
 func _on_close_instructions_button_pressed() -> void:
@@ -127,4 +127,6 @@ func _apply_language(language: String) -> void:
 	$PauseMenu/InstructionsScreen/InstructionsLabel.text = "A / D: Move\nSpace: Jump\nEscape: Pause" if is_english else "A / D : Marcher\nEspace : Sauter\nÉchap : Pause"
 	pause_button.tooltip_text = "Pause the game" if is_english else "Mettre le jeu en pause"
 	volume_button.tooltip_text = "Mute or unmute sound" if is_english else "Activer ou couper le son"
+	$DeviceMenu/LanguageLabel.text = "Language" if is_english else "Langue"
 	mobile_controls.set_language(language)
+	Main.translate_tree(get_tree().current_scene)
