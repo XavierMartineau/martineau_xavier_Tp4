@@ -1,0 +1,4 @@
+res://scenes/fail.tscn
+res://scripts/main.gd
+res://scripts/menu_controle.gd
+res://scripts/mobile_controls.gd

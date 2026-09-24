@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" uid="uid://be02vcw1pg0va" path="res://scripts/menu_controle.gd" id="1_5qrj1"]
 [ext_resource type="Texture2D" uid="uid://crhkoo4vld02q" path="res://assets/spritesheets/close_icon.tres" id="2_5qrj1"]
-[ext_resource type="Texture2D" uid="uid://c46jyp4agryk5" path="res://assets/sprites/volume-up.png" id="3_gmyl1"]
-[ext_resource type="Script" uid="uid://cikkibg3qr18i" path="res://scripts/volume.gd" id="4_lghl3"]
-[ext_resource type="Texture2D" uid="uid://tcg6f5b4aswb" path="res://assets/sprites/volume-down.png" id="5_lghl3"]
 [ext_resource type="Script" path="res://scripts/mobile_controls.gd" id="6_mobile"]
+[ext_resource type="PackedScene" path="res://scenes/audio_toggle.tscn" id="7_audio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cixlm"]
 bg_color = Color(0.498039, 0.498039, 0.498039, 0.682353)
@@ -81,9 +79,6 @@ load_path = "res://.godot/imported/ui_icons.png-2465fb4e2ba361975cb4c8d0751e0d19
 [sub_resource type="AtlasTexture" id="AtlasTexture_cixlm"]
 atlas = SubResource("CompressedTexture2D_lq5ci")
 region = Rect2(350, 350, 50, 50)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yxbbr"]
-load_path = "res://.godot/imported/volume-up.png-3bdd6feac2bb7d731f2282af532e8d83.ctex"
 
 [node name="MenuControle" type="CanvasLayer" unique_id=816335875]
 process_mode = 3
@@ -434,24 +429,16 @@ icon = SubResource("AtlasTexture_cixlm")
 flat = true
 tooltip_text = "Mettre le jeu en pause"
 
-[node name="Volume" type="Button" parent="." unique_id=1807266703]
-custom_minimum_size = Vector2(40, 40)
+[node name="Volume" parent="." unique_id=1807266703 instance=ExtResource("7_audio")]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -140.0
+offset_left = -142.0
 offset_top = 35.0
 offset_right = -100.0
 offset_bottom = 75.0
 grow_horizontal = 0
-toggle_mode = true
-icon = ExtResource("3_gmyl1")
-flat = true
-icon_alignment = 1
 tooltip_text = "Activer ou couper le son"
-script = ExtResource("4_lghl3")
-texture_active = SubResource("CompressedTexture2D_yxbbr")
-texture_mute = ExtResource("5_lghl3")
 
 [connection signal="pressed" from="PauseMenu/ShowInstructionsButton" to="." method="_on_show_instructions_button_pressed"]
 [connection signal="pressed" from="PauseMenu/ContinueButton" to="." method="continuer"]

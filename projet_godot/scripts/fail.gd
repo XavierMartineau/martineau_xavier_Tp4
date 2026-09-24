@@ -8,7 +8,7 @@ extends Node
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = false
-	var language := Main.language if "Main" in ProjectSettings.get_section_keys("autoload") else "fr"
+	var language: String = Main.language
 	_apply_language(language)
 	boss_button.grab_focus.call_deferred()
 
