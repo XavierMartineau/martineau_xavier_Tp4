@@ -13,6 +13,7 @@ const PAUSE_ICON = preload("res://assets/spritesheets/pause_icon.tres")
 @onready var volume_button: Button = $Volume
 @onready var language_option: OptionButton = $DeviceMenu/LanguageOption
 @onready var start_button: Button = $DeviceMenu/StartButton
+@onready var orientation_warning: Panel = $OrientationWarning
 
 var device_selection_started := false
 
@@ -27,6 +28,7 @@ func _ready() -> void:
 	language_option.select(1 if Main.language == "en" else 0)
 	language_option.item_selected.connect(_on_language_selected)
 	_apply_language(Main.language)
+	_update_orientation_warning()
 	if Main.game_configured and not _is_configuration_scene():
 		device_menu.hide()
 		mobile_controls.visible = Main.is_mobile
@@ -41,6 +43,19 @@ func _ready() -> void:
 	volume_button.hide()
 	get_tree().paused = true
 	start_button.grab_focus.call_deferred()
+
+
+func _process(_delta: float) -> void:
+	_update_orientation_warning()
+
+
+func _update_orientation_warning() -> void:
+	if not is_instance_valid(orientation_warning):
+		return
+	if not OS.has_feature("mobile"):
+		orientation_warning.hide()
+		return
+	orientation_warning.visible = get_viewport().get_visible_rect().size.x < get_viewport().get_visible_rect().size.y
 
 
 func _is_configuration_scene() -> bool:
@@ -78,6 +93,13 @@ func _on_close_instructions_button_pressed() -> void:
 	instructions_button.grab_focus.call_deferred()
 
 
+func _on_quit_button_pressed() -> void:
+	Main.game_configured = false
+	Main.is_mobile = false
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/configuration_jeu.tscn")
+
+
 func _on_portable_button_pressed() -> void:
 	_select_device(false)
 
@@ -87,10 +109,16 @@ func _on_mobile_button_pressed() -> void:
 
 
 func _on_start_button_pressed() -> void:
+	if OS.has_feature("mobile") and orientation_warning.visible:
+		return
 	device_selection_started = true
 	start_button.hide()
+	$DeviceMenu/LanguageLabel.hide()
+	language_option.hide()
 	$DeviceMenu/PortableButton.show()
 	$DeviceMenu/MobileButton.show()
+	$DeviceMenu/PortableControls.show()
+	$DeviceMenu/MobileControlsHint.show()
 	_apply_language(Main.language)
 	$DeviceMenu/PortableButton.grab_focus.call_deferred()
 
@@ -116,13 +144,19 @@ func _apply_language(language: String) -> void:
 	var is_english := language == "en"
 	Main.language = language
 	$DeviceMenu/Title.text = ("CHOOSE YOUR CONTROL" if is_english else "CHOISIS TON CONTRÔLE") if device_selection_started else ("READY TO PLAY?" if is_english else "PRÊT À JOUER ?")
-	$DeviceMenu/Description.text = ("Laptop: arrow keys, Space to jump, E to attack\nMobile: touch buttons on screen" if is_english else "Portable : flèches, Espace pour sauter, E pour attaquer\nMobile : boutons tactiles à l'écran") if device_selection_started else ("Choose your language, then press Play." if is_english else "Choisis ta langue, puis appuie sur Jouer.")
+	$DeviceMenu/Description.text = ("Choose one control mode:" if is_english else "Choisis un mode de contrôle :") if device_selection_started else ("Choose your language, then press Play." if is_english else "Choisis ta langue, puis appuie sur Jouer.")
 	start_button.text = "PLAY" if is_english else "JOUER"
-	$DeviceMenu/PortableButton.text = "LAPTOP" if is_english else "PORTABLE"
-	$DeviceMenu/MobileButton.text = "MOBILE"
+	$DeviceMenu/PortableButton.text = "PORTABLE / PC" if is_english else "PORTABLE / PC"
+	$DeviceMenu/MobileButton.text = "MOBILE / PHONE" if is_english else "MOBILE / TÉLÉPHONE"
+	$DeviceMenu/PortableControls/Left.text = "← / A"
+	$DeviceMenu/PortableControls/Right.text = "→ / D"
+	$DeviceMenu/PortableControls/Jump.text = "SPACE" if is_english else "ESPACE"
+	$DeviceMenu/PortableControls/Attack.text = "E"
+	$DeviceMenu/MobileControlsHint/Touch.text = "TOUCH CONTROLS" if is_english else "CONTRÔLES TACTILES"
 	$PauseMenu/PauseTitle.text = "PAUSE"
 	$PauseMenu/ShowInstructionsButton.text = "Instructions"
 	$PauseMenu/ContinueButton.text = "Resume" if is_english else "Continuer"
+	$PauseMenu/QuitButton.text = "Quit" if is_english else "Quitter"
 	$PauseMenu/InstructionsScreen/InstructionsTitle.text = "Instructions"
 	$PauseMenu/InstructionsScreen/InstructionsLabel.text = "A / D: Move\nSpace: Jump\nEscape: Pause" if is_english else "A / D : Marcher\nEspace : Sauter\nÉchap : Pause"
 	pause_button.tooltip_text = "Pause the game" if is_english else "Mettre le jeu en pause"
