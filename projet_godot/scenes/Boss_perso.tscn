@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://d1fcgld5i13ji"]
+[gd_scene format=3 uid="uid://bh2uc784bi5de"]
 
 [ext_resource type="Texture2D" uid="uid://dprfwgo58bjdk" path="res://assets/spritesheets/character/Golems_Free_Version/Golem_1/Orange/White_Swoosh_VFX/Golem_1_idle.png" id="1_24bq8"]
 [ext_resource type="Script" uid="uid://dt3hr0v676ja" path="res://scripts/boss_perso.gd" id="1_jp2tc"]

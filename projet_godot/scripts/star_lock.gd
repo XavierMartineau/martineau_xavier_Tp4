@@ -1,5 +1,4 @@
 extends StaticBody2D
-class_name Lock  # permet de l'identifier facilement
 
 @onready var hud = get_tree().current_scene.get_node_or_null("HUD")
 
@@ -9,7 +8,7 @@ func _ready() -> void:
 	else:
 		push_warning("HUD introuvable, le lock ne pourra pas surveiller les étoiles.")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if hud and hud.nb_stars >= 1:
 		disparaitre()
 

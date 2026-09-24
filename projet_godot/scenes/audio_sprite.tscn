@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dtyfonpxvcerq"]
+[gd_scene format=3 uid="uid://dtyfonpxvcerq"]
 
 [ext_resource type="Texture2D" uid="uid://dcepbid2o8w4k" path="res://assets/spritesheets/spritesheet-tiles-default.png" id="1_tph5m"]
 [ext_resource type="Script" uid="uid://cd64dchs2iigf" path="res://scripts/audio_sprite.gd" id="1_x4c60"]

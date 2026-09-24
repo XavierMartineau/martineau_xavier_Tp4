@@ -5,3 +5,8 @@ res://scripts/mobile_controls.gd
 res://scenes/hud.tscn
 res://scenes/menu_controle.tscn
 res://scripts/fail.gd
+res://scenes/niveau_2.tscn
+res://scenes/niveau_3.tscn
+res://scenes/niveau_test.tscn
+res://scripts/joueur.gd
+res://scenes/projectile.tscn

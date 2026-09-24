@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cv62pol4y6ejl"]
+[gd_scene format=3 uid="uid://ct5cugxqpbv5d"]
 
 [ext_resource type="Texture2D" uid="uid://c01rp200vvtwb" path="res://assets/spritesheets/character/Wraith_03/PNG Sequences/Attacking/FB00_nyknck/FB001.png" id="1_du7tx"]
 [ext_resource type="Script" uid="uid://bq2mqy0rjyyfw" path="res://scripts/projectile.gd" id="1_qjnh8"]

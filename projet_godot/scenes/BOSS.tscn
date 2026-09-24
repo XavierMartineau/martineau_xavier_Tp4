@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://olm42ocwnnkg"]
+[gd_scene format=4 uid="uid://0n1a5x15ulqf"]
 
 [ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_16us7"]
 [ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="2_idwny"]
