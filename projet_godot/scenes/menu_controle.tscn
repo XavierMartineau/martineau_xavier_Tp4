@@ -21,6 +21,14 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.137255, 0.0980392, 0.286275, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start_screen"]
+bg_color = Color(0.070588, 0.086275, 0.117647, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.278431, 0.776471, 0.721569, 0.85)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause_button"]
 bg_color = Color(0.164706, 0.239216, 0.270588, 1)
 corner_radius_top_left = 8
@@ -65,6 +73,42 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.980392, 0.768627, 0.360784, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mobile_button"]
+bg_color = Color(0.086275, 0.211765, 0.235294, 0.94)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.278431, 0.776471, 0.721569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mobile_button_hover"]
+bg_color = Color(0.14902, 0.4, 0.4, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.980392, 0.768627, 0.360784, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mobile_button_pressed"]
+bg_color = Color(0.980392, 0.768627, 0.360784, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+
 [sub_resource type="InputEventKey" id="InputEventKey_5qrj1"]
 device = -1
 pressed = true
@@ -100,7 +144,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_cixlm")
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_start_screen")
 
 [node name="Title" type="Label" parent="DeviceMenu"]
 layout_mode = 1
@@ -255,9 +300,11 @@ offset_bottom = -58.0
 grow_vertical = 0
 mouse_filter = 0
 theme_override_font_sizes/font_size = 42
-theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pause_button_pressed")
-text = "←"
+theme_override_styles/normal = SubResource("StyleBoxFlat_mobile_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mobile_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mobile_button_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mobile_button_hover")
+text = "◀"
 
 [node name="RightButton" type="Button" parent="MobileControls"]
 layout_mode = 1
@@ -273,9 +320,11 @@ offset_bottom = -58.0
 grow_vertical = 0
 mouse_filter = 0
 theme_override_font_sizes/font_size = 42
-theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pause_button_pressed")
-text = "→"
+theme_override_styles/normal = SubResource("StyleBoxFlat_mobile_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mobile_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mobile_button_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mobile_button_hover")
+text = "▶"
 
 [node name="JumpButton" type="Button" parent="MobileControls"]
 layout_mode = 1
@@ -292,8 +341,10 @@ grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 0
 theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pause_button_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mobile_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mobile_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mobile_button_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mobile_button_hover")
 text = "ESPACE\nSAUT"
 
 [node name="AttackButton" type="Button" parent="MobileControls"]
@@ -311,8 +362,10 @@ grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 0
 theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pause_button_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mobile_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mobile_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mobile_button_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mobile_button_hover")
 text = "E\nATTAQUE"
 
 [node name="ShowInstructionsButton" type="Button" parent="PauseMenu" unique_id=1453097659]

@@ -22,8 +22,21 @@ func set_language(language: String) -> void:
 		attack_button.text = "E\nATTAQUE"
 
 func _bind_button(button: Button, action: StringName) -> void:
-	button.button_down.connect(func() -> void: Input.action_press(action))
-	button.button_up.connect(func() -> void: Input.action_release(action))
+	button.button_down.connect(func() -> void:
+		Input.action_press(action)
+		_animate_button(button, true)
+	)
+	button.button_up.connect(func() -> void:
+		Input.action_release(action)
+		_animate_button(button, false)
+	)
+
+
+func _animate_button(button: Button, is_pressed: bool) -> void:
+	var target_color := Color(1.0, 0.9, 0.55, 1.0) if is_pressed else Color.WHITE
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(button, "modulate", target_color, 0.08)
 
 func release_all() -> void:
 	Input.action_release("promener_gauche")

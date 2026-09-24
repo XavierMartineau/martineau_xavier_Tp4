@@ -22,18 +22,29 @@ func _ready() -> void:
 	pause_menu.hide()
 	instructions_screen.hide()
 	mobile_controls.hide()
+	language_option.add_item("Français")
+	language_option.add_item("English")
+	language_option.select(1 if Main.language == "en" else 0)
+	language_option.item_selected.connect(_on_language_selected)
+	_apply_language(Main.language)
+	if Main.game_configured and not _is_configuration_scene():
+		device_menu.hide()
+		mobile_controls.visible = Main.is_mobile
+		pause_button.show()
+		volume_button.show()
+		get_tree().paused = false
+		return
 	device_menu.show()
 	$DeviceMenu/PortableButton.hide()
 	$DeviceMenu/MobileButton.hide()
 	pause_button.hide()
 	volume_button.hide()
 	get_tree().paused = true
-	language_option.add_item("Français")
-	language_option.add_item("English")
-	language_option.select(0)
-	language_option.item_selected.connect(_on_language_selected)
-	_apply_language("fr")
 	start_button.grab_focus.call_deferred()
+
+
+func _is_configuration_scene() -> bool:
+	return get_tree().current_scene.scene_file_path == "res://scenes/configuration_jeu.tscn"
 
 
 func _on_pause_button_toggled(toggled_on: bool) -> void:
@@ -85,10 +96,15 @@ func _on_start_button_pressed() -> void:
 
 
 func _select_device(is_mobile: bool) -> void:
+	Main.game_configured = true
+	Main.is_mobile = is_mobile
 	device_menu.hide()
 	mobile_controls.visible = is_mobile
 	pause_button.show()
 	volume_button.show()
+	if _is_configuration_scene():
+		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		return
 	get_tree().paused = false
 
 

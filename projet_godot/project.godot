@@ -15,9 +15,9 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="projet_godot"
-run/main_scene="uid://4ijmsqjgopc5"
+run/main_scene="res://scenes/configuration_jeu.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/main_scene="uid://4ijmsqjgopc5"
+config/main_scene="res://scenes/configuration_jeu.tscn"
 
 [autoload]
 
@@ -25,10 +25,15 @@ Main="*res://scripts/main.gd"
 
 [display]
 
+window/size/mode=3
 window/size/viewport_height=768
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/stretch/scale_mode="integer"
+
+[input_devices]
+
+pointing/emulate_mouse_from_touch=true
 
 [input]
 

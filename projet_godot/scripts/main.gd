@@ -2,6 +2,8 @@
 extends Node
 
 var language: String = "fr"
+var game_configured := false
+var is_mobile := false
 
 # Fonction appelée par la porte, recevant la PackedScene en paramètre.
 func changer_scene(target_scene: PackedScene) -> void:

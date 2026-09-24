@@ -32,4 +32,5 @@ func _on_retry_boss_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/boss.tscn")
 
 func _on_retry_level_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	Main.game_configured = false
+	get_tree().change_scene_to_file("res://scenes/configuration_jeu.tscn")

@@ -11,3 +11,4 @@ res://scenes/niveau_test.tscn
 res://scripts/joueur.gd
 res://scenes/projectile.tscn
 res://scripts/star_lock.gd
+res://assets/spritesheets/paysage_tile_set.tres
