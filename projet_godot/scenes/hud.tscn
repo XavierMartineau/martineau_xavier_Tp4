@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dv4y14r0nply4"]
+[gd_scene load_steps=6 format=3 uid="uid://dv4y14r0nply4"]
 
 [ext_resource type="Script" uid="uid://bynldl35cuwf1" path="res://scripts/hud.gd" id="1_oo0fn"]
 [ext_resource type="Texture2D" uid="uid://b4rnhjjhju8nf" path="res://assets/sprites/star.png" id="2_oo0fn"]
 [ext_resource type="Texture2D" uid="uid://b57v0ip7q07p5" path="res://assets/sprites/hud_coin.png" id="4_6fi6k"]
 [ext_resource type="Texture2D" uid="uid://ckrcfxjihbeo4" path="res://assets/sprites/ZeeResizer (1).png" id="4_uo2fv"]
 [ext_resource type="Texture2D" uid="uid://c0e1fyy454t1a" path="res://assets/sprites/ZeeResizer.png" id="5_047uy"]
-[ext_resource type="PackedScene" path="res://scenes/audio_toggle.tscn" id="6_audio"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_oo0fn")
@@ -16,16 +15,6 @@ offset_top = 24.0
 offset_right = 700.0
 offset_bottom = 84.0
 theme_override_constants/separation = 12
-
-[node name="Volume" parent="." instance=ExtResource("6_audio")]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -66.0
-offset_top = 24.0
-offset_right = -24.0
-offset_bottom = 66.0
-grow_horizontal = 0
 
 [node name="stars" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2

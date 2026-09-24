@@ -26,10 +26,11 @@ Main="*res://scripts/main.gd"
 [display]
 
 window/size/mode=3
+window/size/viewport_width=1280
 window/size/viewport_height=768
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
-window/stretch/scale_mode="integer"
+window/stretch/scale_mode="fractional"
 
 [input_devices]
 

@@ -14,3 +14,4 @@ res://scripts/star_lock.gd
 res://assets/spritesheets/paysage_tile_set.tres
 res://scripts/hud.gd
 res://scripts/panneau_message.gd
+res://scripts/volume.gd
