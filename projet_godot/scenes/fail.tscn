@@ -4,8 +4,46 @@
 [ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="2_27ouh"]
 [ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="3_qh6bp"]
 [ext_resource type="AudioStream" uid="uid://bt2ycg421pfi3" path="res://assets/audio/SFX/brass-fail-8-b-207131.mp3" id="4_qh6bp"]
+[ext_resource type="Script" path="res://scripts/fail.gd" id="5_fail"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_death_panel"]
+bg_color = Color(0.086275, 0.101961, 0.129412, 0.96)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.980392, 0.356863, 0.364706, 0.9)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_death_button"]
+bg_color = Color(0.164706, 0.239216, 0.270588, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.278431, 0.776471, 0.721569, 0.9)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_death_button_hover"]
+bg_color = Color(0.223529, 0.356863, 0.360784, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.980392, 0.768627, 0.360784, 1)
 
 [node name="fail" type="Node"]
+script = ExtResource("5_fail")
 
 [node name="PlancherTileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(9, -2)
@@ -51,3 +89,69 @@ max_distance = 775.0
 
 [node name="Teleport2" type="Node2D" parent="."]
 position = Vector2(-141, 207)
+
+[node name="DeathMenu" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="Panel" type="Panel" parent="DeathMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -210.0
+offset_right = 320.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_death_panel")
+
+[node name="Title" type="Label" parent="DeathMenu/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 38.0
+offset_right = 616.0
+offset_bottom = 108.0
+theme_override_colors/font_color = Color(0.980392, 0.356863, 0.364706, 1)
+theme_override_font_sizes/font_size = 46
+text = "VOUS ÊTES MORT"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="DeathMenu/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 125.0
+offset_right = 616.0
+offset_bottom = 165.0
+theme_override_colors/font_color = Color(0.92549, 0.956863, 0.945098, 1)
+theme_override_font_sizes/font_size = 20
+text = "Choisissez où vous souhaitez continuer."
+horizontal_alignment = 1
+
+[node name="RetryBossButton" type="Button" parent="DeathMenu/Panel"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 218.0
+offset_right = 578.0
+offset_bottom = 286.0
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_death_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_death_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_death_button_hover")
+text = "RÉESSAYER LE BOSS"
+
+[node name="RetryLevelButton" type="Button" parent="DeathMenu/Panel"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 306.0
+offset_right = 578.0
+offset_bottom = 374.0
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_death_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_death_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_death_button_hover")
+text = "RÉESSAYER LE NIVEAU"
+
+[connection signal="pressed" from="DeathMenu/Panel/RetryBossButton" to="." method="_on_retry_boss_button_pressed"]
+[connection signal="pressed" from="DeathMenu/Panel/RetryLevelButton" to="." method="_on_retry_level_button_pressed"]

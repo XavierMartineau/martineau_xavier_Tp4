@@ -1,6 +1,8 @@
 # Main.gd
 extends Node
 
+var language: String = "fr"
+
 # Fonction appelée par la porte, recevant la PackedScene en paramètre.
 func changer_scene(target_scene: PackedScene) -> void:
 	# On vérifie si la PackedScene a bien été liée dans l'Inspecteur

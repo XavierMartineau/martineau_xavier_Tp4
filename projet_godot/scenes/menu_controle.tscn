@@ -122,7 +122,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.980392, 0.768627, 0.360784, 1)
 theme_override_font_sizes/font_size = 48
-text = "CHOISIS TON CONTROLE"
+text = "CHOISIS TON CONTRÔLE"
 horizontal_alignment = 1
 
 [node name="Description" type="Label" parent="DeviceMenu"]
@@ -140,8 +140,42 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.92549, 0.956863, 0.945098, 1)
 theme_override_font_sizes/font_size = 24
-text = "Portable : fleches, Espace pour sauter, E pour attaquer\nMobile : boutons tactiles a l'ecran"
+text = "Portable : flèches, Espace pour sauter, E pour attaquer\nMobile : boutons tactiles à l'écran"
 horizontal_alignment = 1
+
+[node name="LanguageLabel" type="Label" parent="DeviceMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -25.0
+offset_right = -30.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.92549, 0.956863, 0.945098, 1)
+theme_override_font_sizes/font_size = 22
+text = "Langue / Language"
+horizontal_alignment = 2
+
+[node name="LanguageOption" type="OptionButton" parent="DeviceMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -25.0
+offset_right = 180.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+item_count = 0
 
 [node name="PortableButton" type="Button" parent="DeviceMenu" unique_id=300000002]
 layout_mode = 1
@@ -366,9 +400,9 @@ offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 32
-text = "A ou D : Marche
-Espace : Saut
-Échapper : Pause"
+text = "A ou D : Marcher
+Espace : Sauter
+Échap : Pause"
 
 [node name="InstructionsTitle" type="Label" parent="PauseMenu/InstructionsScreen" unique_id=2100875591]
 layout_mode = 1
@@ -401,14 +435,14 @@ flat = true
 tooltip_text = "Mettre le jeu en pause"
 
 [node name="Volume" type="Button" parent="." unique_id=1807266703]
-custom_minimum_size = Vector2(58, 58)
+custom_minimum_size = Vector2(40, 40)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -158.0
-offset_top = 26.0
+offset_left = -140.0
+offset_top = 35.0
 offset_right = -100.0
-offset_bottom = 84.0
+offset_bottom = 75.0
 grow_horizontal = 0
 toggle_mode = true
 icon = ExtResource("3_gmyl1")

@@ -11,6 +11,15 @@ func _ready() -> void:
 	_bind_button(right_button, "promener_droite")
 	_bind_button(jump_button, "sauter")
 	_bind_button(attack_button, "Ataquer")
+	set_language("fr")
+
+func set_language(language: String) -> void:
+	if language == "en":
+		jump_button.text = "SPACE\nJUMP"
+		attack_button.text = "E\nATTACK"
+	else:
+		jump_button.text = "ESPACE\nSAUT"
+		attack_button.text = "E\nATTAQUE"
 
 func _bind_button(button: Button, action: StringName) -> void:
 	button.button_down.connect(func() -> void: Input.action_press(action))
