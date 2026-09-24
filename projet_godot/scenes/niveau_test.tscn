@@ -1,14 +1,14 @@
 [gd_scene load_steps=12 format=4 uid="uid://df4o6yn6uk8hi"]
 
-[ext_resource type="Script" uid="uid://dt35rjhky77k6" path="res://scenes/niveau_test.gd" id="1_eph2o"]
+[ext_resource type="Script" uid="uid://dt35rjhky77k6" path="res://scripts/niveau_test.gd" id="1_eph2o"]
 [ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_lbg1e"]
 [ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="2_ktk5d"]
 [ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="4_5hoti"]
-[ext_resource type="Script" uid="uid://b1g238xfip51c" path="res://scripts/packedporte01.gd" id="10_efbda"]
+[ext_resource type="Script" uid="uid://b1g238xfip51c" path="res://scripts/packed_porte.gd" id="10_efbda"]
 [ext_resource type="PackedScene" uid="uid://ci8ioa0gfxyhk" path="res://scenes/niveau_2.tscn" id="11_7e15m"]
 [ext_resource type="AudioStream" uid="uid://d3fe6e213xto8" path="res://assets/audio/Backround_2/evil-aura-219114.mp3" id="13_eph2o"]
 [ext_resource type="PackedScene" uid="uid://bu32uoqhm7aph" path="res://scenes/powerup.tscn" id="13_rewv3"]
-[ext_resource type="PackedScene" uid="uid://dtyfonpxvcerq" path="res://scenes/audio-sprite.tscn" id="14_duk5p"]
+[ext_resource type="PackedScene" uid="uid://dtyfonpxvcerq" path="res://scenes/audio_sprite.tscn" id="14_duk5p"]
 [ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/hud.tscn" id="16_vlrp8"]
 [ext_resource type="PackedScene" uid="uid://3fro72ew8ojq" path="res://scenes/porte.tscn" id="20_5kbji"]
 

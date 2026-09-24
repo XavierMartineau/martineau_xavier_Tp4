@@ -12,6 +12,9 @@ const PAUSE_ICON = preload("res://assets/spritesheets/pause_icon.tres")
 @onready var mobile_controls: Control = $MobileControls
 @onready var volume_button: Button = $Volume
 @onready var language_option: OptionButton = $DeviceMenu/LanguageOption
+@onready var start_button: Button = $DeviceMenu/StartButton
+
+var device_selection_started := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -20,6 +23,8 @@ func _ready() -> void:
 	instructions_screen.hide()
 	mobile_controls.hide()
 	device_menu.show()
+	$DeviceMenu/PortableButton.hide()
+	$DeviceMenu/MobileButton.hide()
 	pause_button.hide()
 	volume_button.hide()
 	get_tree().paused = true
@@ -28,7 +33,7 @@ func _ready() -> void:
 	language_option.select(0)
 	language_option.item_selected.connect(_on_language_selected)
 	_apply_language("fr")
-	$DeviceMenu/PortableButton.grab_focus.call_deferred()
+	start_button.grab_focus.call_deferred()
 
 
 func _on_pause_button_toggled(toggled_on: bool) -> void:
@@ -70,6 +75,15 @@ func _on_mobile_button_pressed() -> void:
 	_select_device(true)
 
 
+func _on_start_button_pressed() -> void:
+	device_selection_started = true
+	start_button.hide()
+	$DeviceMenu/PortableButton.show()
+	$DeviceMenu/MobileButton.show()
+	_apply_language(Main.language)
+	$DeviceMenu/PortableButton.grab_focus.call_deferred()
+
+
 func _select_device(is_mobile: bool) -> void:
 	device_menu.hide()
 	mobile_controls.visible = is_mobile
@@ -85,8 +99,9 @@ func _on_language_selected(index: int) -> void:
 func _apply_language(language: String) -> void:
 	var is_english := language == "en"
 	Main.language = language
-	$DeviceMenu/Title.text = "CHOOSE YOUR CONTROL" if is_english else "CHOISIS TON CONTRÔLE"
-	$DeviceMenu/Description.text = "Laptop: arrow keys, Space to jump, E to attack\nMobile: touch buttons on screen" if is_english else "Portable : flèches, Espace pour sauter, E pour attaquer\nMobile : boutons tactiles à l'écran"
+	$DeviceMenu/Title.text = ("CHOOSE YOUR CONTROL" if is_english else "CHOISIS TON CONTRÔLE") if device_selection_started else ("READY TO PLAY?" if is_english else "PRÊT À JOUER ?")
+	$DeviceMenu/Description.text = ("Laptop: arrow keys, Space to jump, E to attack\nMobile: touch buttons on screen" if is_english else "Portable : flèches, Espace pour sauter, E pour attaquer\nMobile : boutons tactiles à l'écran") if device_selection_started else ("Choose your language, then press Play." if is_english else "Choisis ta langue, puis appuie sur Jouer.")
+	start_button.text = "PLAY" if is_english else "JOUER"
 	$DeviceMenu/PortableButton.text = "LAPTOP" if is_english else "PORTABLE"
 	$DeviceMenu/MobileButton.text = "MOBILE"
 	$PauseMenu/PauseTitle.text = "PAUSE"

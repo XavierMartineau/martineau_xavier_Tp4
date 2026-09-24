@@ -84,13 +84,14 @@ Droite = Recommencer / Gauche = Recommense boss"
 position = Vector2(-338, 1099)
 stream = ExtResource("4_qh6bp")
 volume_db = 10.214
-autoplay = true
+autoplay = false
 max_distance = 775.0
 
 [node name="Teleport2" type="Node2D" parent="."]
 position = Vector2(-141, 207)
 
 [node name="DeathMenu" type="CanvasLayer" parent="."]
+visible = false
 process_mode = 3
 
 [node name="Panel" type="Panel" parent="DeathMenu"]

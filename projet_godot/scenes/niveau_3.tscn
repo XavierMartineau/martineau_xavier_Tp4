@@ -4,12 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="2_3nuqx"]
 [ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="3_api2p"]
 [ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/hud.tscn" id="4_0h2h2"]
-[ext_resource type="PackedScene" uid="uid://dac4xe4qj0kyy" path="res://scenes/Helper.tscn" id="5_1pio5"]
+[ext_resource type="PackedScene" uid="uid://dac4xe4qj0kyy" path="res://scenes/helper.tscn" id="5_1pio5"]
 [ext_resource type="PackedScene" uid="uid://3fro72ew8ojq" path="res://scenes/porte.tscn" id="5_ka1gb"]
 [ext_resource type="Script" uid="uid://clhqyp8j0u0v4" path="res://scripts/helper.gd" id="6_gnlxy"]
 [ext_resource type="AudioStream" uid="uid://oriih64q1i36" path="res://assets/audio/SFX/cartoon-phone-voice-88637.mp3" id="7_0h2h2"]
-[ext_resource type="Script" uid="uid://b1g238xfip51c" path="res://scripts/packedporte01.gd" id="9_0h2h2"]
-[ext_resource type="PackedScene" uid="uid://olm42ocwnnkg" path="res://scenes/BOSS.tscn" id="10_ka1gb"]
+[ext_resource type="Script" uid="uid://b1g238xfip51c" path="res://scripts/packed_porte.gd" id="9_0h2h2"]
+[ext_resource type="PackedScene" uid="uid://olm42ocwnnkg" path="res://scenes/boss.tscn" id="10_ka1gb"]
 
 [node name="niveau_3" type="Node"]
 

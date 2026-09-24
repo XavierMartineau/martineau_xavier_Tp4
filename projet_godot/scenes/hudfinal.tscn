@@ -1,23 +1,36 @@
-[gd_scene load_steps=4 format=3 uid="uid://bh4g4p3rj50k2"]
+[gd_scene load_steps=5 format=3 uid="uid://bh4g4p3rj50k2"]
 
 [ext_resource type="Script" uid="uid://bynldl35cuwf1" path="res://scripts/hud.gd" id="1_xqp3i"]
 [ext_resource type="Texture2D" uid="uid://ckrcfxjihbeo4" path="res://assets/sprites/ZeeResizer (1).png" id="2_d3pa7"]
 [ext_resource type="Texture2D" uid="uid://c0e1fyy454t1a" path="res://assets/sprites/ZeeResizer.png" id="3_53gn6"]
+[ext_resource type="PackedScene" path="res://scenes/audio_toggle.tscn" id="4_audio"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_xqp3i")
 metadata/_custom_type_script = "uid://bynldl35cuwf1"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_right = 645.0
-offset_bottom = 82.0
-size_flags_horizontal = 4
-size_flags_stretch_ratio = 0.3
-alignment = 1
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 700.0
+offset_bottom = 84.0
+theme_override_constants/separation = 12
+
+[node name="Volume" parent="." instance=ExtResource("4_audio")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -66.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 66.0
+grow_horizontal = 0
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
-text = "Barre de vie: "
+theme_override_colors/font_color = Color(0.92549, 0.956863, 0.945098, 1)
+theme_override_font_sizes/font_size = 22
+text = "Barre de vie : "
 
 [node name="stars" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
@@ -26,6 +39,8 @@ stretch_mode = 3
 
 [node name="label_perso" type="Label" parent="HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.278431, 0.776471, 0.721569, 1)
+theme_override_font_sizes/font_size = 24
 text = "100"
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
@@ -34,4 +49,6 @@ texture = ExtResource("3_53gn6")
 
 [node name="label_boss" type="Label" parent="HBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.980392, 0.356863, 0.364706, 1)
+theme_override_font_sizes/font_size = 24
 text = "300"

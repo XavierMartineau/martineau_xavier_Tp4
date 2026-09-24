@@ -172,7 +172,27 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 20
 item_count = 0
 
+[node name="StartButton" type="Button" parent="DeviceMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = 24.0
+offset_right = 170.0
+offset_bottom = 99.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pause_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pause_button_hover")
+text = "JOUER"
+
 [node name="PortableButton" type="Button" parent="DeviceMenu" unique_id=300000002]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -192,6 +212,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_pause_button_hover")
 text = "PORTABLE"
 
 [node name="MobileButton" type="Button" parent="DeviceMenu" unique_id=300000003]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -447,3 +468,4 @@ tooltip_text = "Activer ou couper le son"
 [connection signal="toggled" from="Volume" to="Volume" method="_on_toggled"]
 [connection signal="pressed" from="DeviceMenu/PortableButton" to="." method="_on_portable_button_pressed"]
 [connection signal="pressed" from="DeviceMenu/MobileButton" to="." method="_on_mobile_button_pressed"]
+[connection signal="pressed" from="DeviceMenu/StartButton" to="." method="_on_start_button_pressed"]

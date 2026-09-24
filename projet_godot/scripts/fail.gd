@@ -8,6 +8,10 @@ extends Node
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = false
+	if get_tree().current_scene != self:
+		$DeathMenu.hide()
+		return
+	$DeathMenu.show()
 	var language: String = Main.language
 	_apply_language(language)
 	boss_button.grab_focus.call_deferred()
@@ -25,7 +29,7 @@ func _apply_language(language: String) -> void:
 		level_button.text = "RÉESSAYER LE NIVEAU"
 
 func _on_retry_boss_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/BOSS.tscn")
+	get_tree().change_scene_to_file("res://scenes/boss.tscn")
 
 func _on_retry_level_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/main.tscn")

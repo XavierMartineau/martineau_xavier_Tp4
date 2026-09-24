@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Joueur
 
 # --- NÉCESSAIRE : Chemins de la scène ---
-const PROJECTILE_SCENE = preload("res://scenes/Projectile.tscn") # Le projectile du joueur
+const PROJECTILE_SCENE = preload("res://scenes/projectile.tscn") # Le projectile du joueur
 const FAIL_SCENE_PATH = "res://scenes/fail.tscn" 
 
 # --- CONFIGURATION DE LA VIE et AFFICHAGE ---

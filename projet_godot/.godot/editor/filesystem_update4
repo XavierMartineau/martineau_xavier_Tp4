@@ -2,3 +2,6 @@ res://scenes/fail.tscn
 res://scripts/main.gd
 res://scripts/menu_controle.gd
 res://scripts/mobile_controls.gd
+res://scenes/hud.tscn
+res://scenes/menu_controle.tscn
+res://scripts/fail.gd
