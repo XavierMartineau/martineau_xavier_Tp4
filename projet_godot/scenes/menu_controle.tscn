@@ -465,7 +465,6 @@ tooltip_text = "Activer ou couper le son"
 [connection signal="pressed" from="PauseMenu/ContinueButton" to="." method="continuer"]
 [connection signal="pressed" from="PauseMenu/InstructionsScreen/CloseButton" to="." method="_on_close_instructions_button_pressed"]
 [connection signal="toggled" from="PauseButton" to="." method="_on_pause_button_toggled"]
-[connection signal="toggled" from="Volume" to="Volume" method="_on_toggled"]
 [connection signal="pressed" from="DeviceMenu/PortableButton" to="." method="_on_portable_button_pressed"]
 [connection signal="pressed" from="DeviceMenu/MobileButton" to="." method="_on_mobile_button_pressed"]
 [connection signal="pressed" from="DeviceMenu/StartButton" to="." method="_on_start_button_pressed"]
