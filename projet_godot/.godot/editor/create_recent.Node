@@ -1,3 +1,4 @@
+Button
 CollisionShape2D
 AnimatedSprite2D
 Node2D
@@ -11,4 +12,3 @@ Label
 HUD
 ColorRect
 ProgressBar
-Sprite2D

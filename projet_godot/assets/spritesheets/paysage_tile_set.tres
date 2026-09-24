@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://cwqycux5h0q2u"]
+[gd_resource type="TileSet" format=3 uid="uid://cwqycux5h0q2u"]
 
 [ext_resource type="Texture2D" uid="uid://dcepbid2o8w4k" path="res://assets/spritesheets/spritesheet-tiles-default.png" id="1_3pm5f"]
 [ext_resource type="Texture2D" uid="uid://b2p87t2f2sklk" path="res://assets/spritesheets/backround/bulkhead-walls-files/bulkhead-walls-files/layers/bulkhead-walls-back.png" id="3_u12n3"]

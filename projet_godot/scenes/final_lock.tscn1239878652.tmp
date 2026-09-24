@@ -4,6 +4,7 @@
 
 [sub_resource type="GDScript" id="GDScript_rik83"]
 script/source = "extends StaticBody2D
+class_name Finallock
 
 @onready var hud = get_tree().current_scene.get_node_or_null(\"HUD\")
 

@@ -1,7 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://j05okgtuaimk"]
+[gd_scene format=3 uid="uid://j05okgtuaimk"]
 
 [ext_resource type="Script" uid="uid://be02vcw1pg0va" path="res://scripts/menu_controle.gd" id="1_5qrj1"]
 [ext_resource type="Texture2D" uid="uid://crhkoo4vld02q" path="res://assets/spritesheets/close_icon.tres" id="2_5qrj1"]
+[ext_resource type="Texture2D" uid="uid://c46jyp4agryk5" path="res://assets/sprites/volume-up.png" id="3_gmyl1"]
+[ext_resource type="Script" uid="uid://cikkibg3qr18i" path="res://scripts/volume.gd" id="4_lghl3"]
+[ext_resource type="Texture2D" uid="uid://tcg6f5b4aswb" path="res://assets/sprites/volume-down.png" id="5_lghl3"]
+[ext_resource type="Script" path="res://scripts/mobile_controls.gd" id="6_mobile"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cixlm"]
 bg_color = Color(0.498039, 0.498039, 0.498039, 0.682353)
@@ -19,6 +23,50 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.137255, 0.0980392, 0.286275, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause_button"]
+bg_color = Color(0.164706, 0.239216, 0.270588, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.278431, 0.776471, 0.721569, 0.9)
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause_button_hover"]
+bg_color = Color(0.223529, 0.356863, 0.360784, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.980392, 0.768627, 0.360784, 1)
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause_button_pressed"]
+bg_color = Color(0.117647, 0.188235, 0.203922, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.980392, 0.768627, 0.360784, 1)
+
 [sub_resource type="InputEventKey" id="InputEventKey_5qrj1"]
 device = -1
 pressed = true
@@ -34,12 +82,15 @@ load_path = "res://.godot/imported/ui_icons.png-2465fb4e2ba361975cb4c8d0751e0d19
 atlas = SubResource("CompressedTexture2D_lq5ci")
 region = Rect2(350, 350, 50, 50)
 
-[node name="MenuControle" type="CanvasLayer"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yxbbr"]
+load_path = "res://.godot/imported/volume-up.png-3bdd6feac2bb7d731f2282af532e8d83.ctex"
+
+[node name="MenuControle" type="CanvasLayer" unique_id=816335875]
 process_mode = 3
 script = ExtResource("1_5qrj1")
 metadata/_edit_vertical_guides_ = [512.0]
 
-[node name="PauseMenu" type="Panel" parent="."]
+[node name="PauseMenu" type="Panel" parent="." unique_id=89308619]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,7 +99,173 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cixlm")
 
-[node name="ShowInstructionsButton" type="Button" parent="PauseMenu"]
+[node name="DeviceMenu" type="Panel" parent="." unique_id=300000001]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cixlm")
+
+[node name="Title" type="Label" parent="DeviceMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -190.0
+offset_right = 300.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.980392, 0.768627, 0.360784, 1)
+theme_override_font_sizes/font_size = 48
+text = "CHOISIS TON CONTROLE"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="DeviceMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -95.0
+offset_right = 320.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.92549, 0.956863, 0.945098, 1)
+theme_override_font_sizes/font_size = 24
+text = "Portable : fleches, Espace pour sauter, E pour attaquer\nMobile : boutons tactiles a l'ecran"
+horizontal_alignment = 1
+
+[node name="PortableButton" type="Button" parent="DeviceMenu" unique_id=300000002]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pause_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pause_button_hover")
+text = "PORTABLE"
+
+[node name="MobileButton" type="Button" parent="DeviceMenu" unique_id=300000003]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 310.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pause_button_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pause_button_hover")
+text = "MOBILE"
+
+[node name="MobileControls" type="Control" parent="." unique_id=300000004]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("6_mobile")
+
+[node name="LeftButton" type="Button" parent="MobileControls"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = -148.0
+offset_right = 118.0
+offset_bottom = -58.0
+grow_vertical = 0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pause_button_pressed")
+text = "←"
+
+[node name="RightButton" type="Button" parent="MobileControls"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 132.0
+offset_top = -148.0
+offset_right = 222.0
+offset_bottom = -58.0
+grow_vertical = 0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pause_button_pressed")
+text = "→"
+
+[node name="JumpButton" type="Button" parent="MobileControls"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -148.0
+offset_right = -190.0
+offset_bottom = -58.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pause_button_pressed")
+text = "ESPACE\nSAUT"
+
+[node name="AttackButton" type="Button" parent="MobileControls"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -176.0
+offset_top = -148.0
+offset_right = -66.0
+offset_bottom = -58.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pause_button_pressed")
+text = "E\nATTAQUE"
+
+[node name="ShowInstructionsButton" type="Button" parent="PauseMenu" unique_id=1453097659]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -63,9 +280,33 @@ offset_bottom = 38.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.92549, 0.956863, 0.945098, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pause_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pause_button_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pause_button_hover")
 text = "Instructions"
 
-[node name="ContinueButton" type="Button" parent="PauseMenu"]
+[node name="PauseTitle" type="Label" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -170.0
+offset_right = 200.0
+offset_bottom = -105.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.980392, 0.768627, 0.360784, 1)
+theme_override_font_sizes/font_size = 48
+text = "PAUSE"
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="PauseMenu" unique_id=2090079862]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -79,9 +320,15 @@ offset_bottom = 138.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.92549, 0.956863, 0.945098, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_pause_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pause_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pause_button_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pause_button_hover")
 text = "Continuer"
 
-[node name="InstructionsScreen" type="Panel" parent="PauseMenu"]
+[node name="InstructionsScreen" type="Panel" parent="PauseMenu" unique_id=2028028024]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -95,7 +342,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_kftfl")
 
-[node name="CloseButton" type="Button" parent="PauseMenu/InstructionsScreen"]
+[node name="CloseButton" type="Button" parent="PauseMenu/InstructionsScreen" unique_id=66203879]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -107,7 +354,7 @@ offset_bottom = 75.0
 grow_horizontal = 0
 icon = ExtResource("2_5qrj1")
 
-[node name="InstructionsLabel" type="Label" parent="PauseMenu/InstructionsScreen"]
+[node name="InstructionsLabel" type="Label" parent="PauseMenu/InstructionsScreen" unique_id=375284091]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -123,7 +370,7 @@ text = "A ou D : Marche
 Espace : Saut
 Échapper : Pause"
 
-[node name="InstructionsTitle" type="Label" parent="PauseMenu/InstructionsScreen"]
+[node name="InstructionsTitle" type="Label" parent="PauseMenu/InstructionsScreen" unique_id=2100875591]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -137,7 +384,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 48
 text = "Instructions"
 
-[node name="PauseButton" type="Button" parent="."]
+[node name="PauseButton" type="Button" parent="." unique_id=1321286843]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -151,8 +398,31 @@ toggle_mode = true
 shortcut = SubResource("Shortcut_kftfl")
 icon = SubResource("AtlasTexture_cixlm")
 flat = true
+tooltip_text = "Mettre le jeu en pause"
+
+[node name="Volume" type="Button" parent="." unique_id=1807266703]
+custom_minimum_size = Vector2(58, 58)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -158.0
+offset_top = 26.0
+offset_right = -100.0
+offset_bottom = 84.0
+grow_horizontal = 0
+toggle_mode = true
+icon = ExtResource("3_gmyl1")
+flat = true
+icon_alignment = 1
+tooltip_text = "Activer ou couper le son"
+script = ExtResource("4_lghl3")
+texture_active = SubResource("CompressedTexture2D_yxbbr")
+texture_mute = ExtResource("5_lghl3")
 
 [connection signal="pressed" from="PauseMenu/ShowInstructionsButton" to="." method="_on_show_instructions_button_pressed"]
 [connection signal="pressed" from="PauseMenu/ContinueButton" to="." method="continuer"]
 [connection signal="pressed" from="PauseMenu/InstructionsScreen/CloseButton" to="." method="_on_close_instructions_button_pressed"]
 [connection signal="toggled" from="PauseButton" to="." method="_on_pause_button_toggled"]
+[connection signal="toggled" from="Volume" to="Volume" method="_on_toggled"]
+[connection signal="pressed" from="DeviceMenu/PortableButton" to="." method="_on_portable_button_pressed"]
+[connection signal="pressed" from="DeviceMenu/MobileButton" to="." method="_on_mobile_button_pressed"]

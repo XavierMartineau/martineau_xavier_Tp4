@@ -1,0 +1,5 @@
+res://scenes/menu_controle.tscn
+res://assets/spritesheets/paysage_tile_set.tres
+res://scripts/volume.gd
+res://scenes/main.tscn
+res://scenes/final_lock.tscn
