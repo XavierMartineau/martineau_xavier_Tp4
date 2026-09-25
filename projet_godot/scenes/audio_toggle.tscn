@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://scripts/volume.gd" id="1_audio"]
+[ext_resource type="Script" path="res://scripts/VOLUME.gd" id="1_audio"]
 [ext_resource type="Texture2D" path="res://assets/sprites/volume-up.png" id="2_audio"]
 [ext_resource type="Texture2D" path="res://assets/sprites/volume-down.png" id="3_audio"]
 

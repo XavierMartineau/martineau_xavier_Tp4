@@ -1,0 +1,46 @@
+[gd_scene load_steps=13 format=4 uid="uid://ci8ioa0gfxyhk"]
+
+[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/JOUEUR.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/HUD.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/PORTE.tscn" id="3_door"]
+[ext_resource type="Script" path="res://scripts/PACKED_PORTE.gd" id="4_door_script"]
+[ext_resource type="PackedScene" path="res://scenes/LEVEL_3.tscn" id="5_next"]
+[ext_resource type="PackedScene" path="res://scenes/LEVEL_PRESENTATION.tscn" id="6_presentation"]
+[ext_resource type="PackedScene" path="res://scenes/LEVEL_MECHANICS.tscn" id="7_mechanics"]
+[ext_resource type="Script" path="res://scripts/LEVEL_LAYOUT.gd" id="8_layout"]
+[ext_resource type="Script" path="res://scripts/CONTROLE_CAMERA.gd" id="9_camera"]
+[ext_resource type="AudioStream" uid="uid://ctgowq7y8nhih" path="res://assets/audio/Backround_2/drift-action-sport-background-music-loop-157986.mp3" id="10_music"]
+
+[node name="Level2" type="Node2D"]
+
+[node name="Presentation" parent="." instance=ExtResource("6_presentation")]
+level_id = "level_2"
+
+[node name="Layout" type="Node2D" parent="."]
+script = ExtResource("8_layout")
+layout_id = "level_2"
+
+[node name="Mechanics" parent="." instance=ExtResource("7_mechanics")]
+lever_positions = PackedVector2Array(700, 540, 2150, 390)
+collectible_positions = PackedVector2Array(520, 450, 1650, 310, 2750, 280)
+
+[node name="Joueur" parent="." instance=ExtResource("1_player")]
+position = Vector2(120, 500)
+
+[node name="Camera2D" type="Camera2D" parent="Joueur"]
+position = Vector2(5, -1)
+position_smoothing_enabled = true
+script = ExtResource("9_camera")
+
+[node name="HUD" parent="." instance=ExtResource("2_hud")]
+
+[node name="Porte" parent="." instance=ExtResource("3_door")]
+position = Vector2(3650, 543)
+script = ExtResource("4_door_script")
+nouvelle_scene = ExtResource("5_next")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_music")
+autoplay = true
+
+[connection signal="body_entered" from="Porte" to="Porte" method="_on_body_entered"]

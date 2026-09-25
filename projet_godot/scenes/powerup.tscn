@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bu32uoqhm7aph"]
+[gd_scene format=3 uid="uid://b78l2lvooin6c"]
 
-[ext_resource type="Script" uid="uid://c2qoy7ytiaun2" path="res://scripts/powerup.gd" id="1_406cw"]
+[ext_resource type="Script" uid="uid://c2qoy7ytiaun2" path="res://scripts/POWERUP.gd" id="1_406cw"]
 [ext_resource type="Texture2D" uid="uid://dcepbid2o8w4k" path="res://assets/spritesheets/spritesheet-tiles-default.png" id="2_406cw"]
 [ext_resource type="AudioStream" uid="uid://cdetpe22k48gg" path="res://assets/audio/powerup.wav" id="3_406cw"]
 

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/lever.png" id="1_lever"]
+[ext_resource type="Script" path="res://scripts/LEVER.gd" id="2_lever"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lever"]
+size = Vector2(96, 110)
+
+[node name="Lever" type="Area2D"]
+script = ExtResource("2_lever")
+monitoring = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lever")
+scale = Vector2(1.35, 1.35)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lever")
+
+[node name="Prompt" type="Label" parent="."]
+offset_left = -68.0
+offset_top = -82.0
+offset_right = 68.0
+offset_bottom = -52.0
+theme_override_colors/font_color = Color(0.98, 0.77, 0.36, 1)
+theme_override_font_sizes/font_size = 16
+text = "E  ACTIVER"
+horizontal_alignment = 1

@@ -1,13 +1,35 @@
-[gd_scene load_steps=7 format=4 uid="uid://dendgdbyw2wcw"]
+[gd_scene format=4 uid="uid://5ov3ymlau2yh"]
 
 [ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_33ski"]
-[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="4_gk77l"]
-[ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="5_ujobb"]
+[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/JOUEUR.tscn" id="4_gk77l"]
+[ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/CONTROLE_CAMERA.gd" id="5_ujobb"]
 [ext_resource type="AudioStream" uid="uid://bnb12wh0mvv0g" path="res://assets/audio/SFX/letx27s-go-352481.mp3" id="6_diygs"]
 [ext_resource type="AudioStream" uid="uid://d3fe6e213xto8" path="res://assets/audio/Backround_2/evil-aura-219114.mp3" id="6_pemao"]
-[ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/hud.tscn" id="7_6rq0c"]
+[ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/HUD.tscn" id="7_6rq0c"]
+[ext_resource type="Script" path="res://scripts/VICTOIRE.gd" id="8_victory"]
+[ext_resource type="PackedScene" uid="uid://7rolm2kdfdcf" path="res://scenes/YAY.tscn" id="9_confetti"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ending_panel"]
+bg_color = Color(0.055, 0.09, 0.16, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.98, 0.77, 0.36, 0.85)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ending_button"]
+bg_color = Color(0.98, 0.77, 0.36, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="victoire" type="Node"]
+script = ExtResource("8_victory")
 
 [node name="PlancherTileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(9, -2)
@@ -39,3 +61,58 @@ position = Vector2(-12808, 27140)
 stream = ExtResource("6_diygs")
 volume_db = 4.945
 autoplay = true
+
+[node name="Ending" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Backdrop" type="ColorRect" parent="Ending"]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.015, 0.025, 0.06, 0.94)
+mouse_filter = 2
+
+[node name="Yay" parent="Ending" instance=ExtResource("9_confetti")]
+position = Vector2(576, 155)
+scale = Vector2(0.48, 0.48)
+
+[node name="Panel" type="PanelContainer" parent="Ending"]
+offset_left = 316.0
+offset_top = 172.0
+offset_right = 836.0
+offset_bottom = 550.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ending_panel")
+
+[node name="Content" type="VBoxContainer" parent="Ending/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Ending/Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.77, 0.36, 1)
+theme_override_font_sizes/font_size = 42
+text = "VICTOIRE !"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="Ending/Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.95, 0.95, 1)
+theme_override_font_sizes/font_size = 22
+text = "Le gardien est vaincu."
+horizontal_alignment = 1
+
+[node name="Details" type="Label" parent="Ending/Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.82, 0.86, 1)
+theme_override_font_sizes/font_size = 16
+text = "Tu as traverse les trois niveaux et\ntu es sorti du complexe vivant."
+horizontal_alignment = 1
+
+[node name="ReturnButton" type="Button" parent="Ending/Panel/Content"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 58)
+theme_override_colors/font_color = Color(0.055, 0.09, 0.16, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_ending_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ending_button")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ending_button")
+text = "REJOUER"

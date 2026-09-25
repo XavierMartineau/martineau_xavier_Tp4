@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://de82iea1y2ek7"]
+[gd_scene format=3 uid="uid://ci208e61mor2l"]
 
-[ext_resource type="Script" uid="uid://dq8ea2it5b7wq" path="res://scripts/panneau_message.gd" id="1_kd50q"]
+[ext_resource type="Script" uid="uid://dq8ea2it5b7wq" path="res://scripts/PANNEAU_MESSAGE.gd" id="1_kd50q"]
 [ext_resource type="Texture2D" uid="uid://dcepbid2o8w4k" path="res://assets/spritesheets/spritesheet-tiles-default.png" id="1_shbub"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_efcy8"]

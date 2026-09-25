@@ -59,7 +59,7 @@ func _update_orientation_warning() -> void:
 
 
 func _is_configuration_scene() -> bool:
-	return get_tree().current_scene.scene_file_path == "res://scenes/configuration_jeu.tscn"
+	return get_tree().current_scene.scene_file_path == "res://scenes/CONFIGURATION_JEU.tscn"
 
 
 func _on_pause_button_toggled(toggled_on: bool) -> void:
@@ -97,7 +97,7 @@ func _on_quit_button_pressed() -> void:
 	Main.game_configured = false
 	Main.is_mobile = false
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/configuration_jeu.tscn")
+	get_tree().change_scene_to_file("res://scenes/CONFIGURATION_JEU.tscn")
 
 
 func _on_portable_button_pressed() -> void:
@@ -131,7 +131,7 @@ func _select_device(is_mobile: bool) -> void:
 	pause_button.show()
 	volume_button.show()
 	if _is_configuration_scene():
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		get_tree().change_scene_to_file("res://scenes/MAIN.tscn")
 		return
 	get_tree().paused = false
 

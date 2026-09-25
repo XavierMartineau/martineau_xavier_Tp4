@@ -1,10 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://bk0avaorue68x"]
+[gd_scene format=4 uid="uid://cki76041sngub"]
 
 [ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_2quyr"]
-[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="2_27ouh"]
-[ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="3_qh6bp"]
+[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/JOUEUR.tscn" id="2_27ouh"]
+[ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/CONTROLE_CAMERA.gd" id="3_qh6bp"]
 [ext_resource type="AudioStream" uid="uid://bt2ycg421pfi3" path="res://assets/audio/SFX/brass-fail-8-b-207131.mp3" id="4_qh6bp"]
-[ext_resource type="Script" path="res://scripts/fail.gd" id="5_fail"]
+[ext_resource type="Script" path="res://scripts/FAIL.gd" id="5_fail"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_death_panel"]
 bg_color = Color(0.086275, 0.101961, 0.129412, 0.96)

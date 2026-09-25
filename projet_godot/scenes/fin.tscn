@@ -1,13 +1,17 @@
-[gd_scene load_steps=9 format=4 uid="uid://dxfqrh1kg0d1f"]
+[gd_scene format=4 uid="uid://b1wo55qoh07lj"]
 
 [ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_2aqyk"]
-[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/joueur.tscn" id="2_imhjk"]
-[ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="3_whqpg"]
-[ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/hud.tscn" id="6_tr124"]
-[ext_resource type="PackedScene" uid="uid://d0u8cs5711vdj" path="res://scenes/helper_fin.tscn" id="7_sxbsd"]
+[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/JOUEUR.tscn" id="2_imhjk"]
+[ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/CONTROLE_CAMERA.gd" id="3_whqpg"]
+[ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/HUD.tscn" id="6_tr124"]
+[ext_resource type="PackedScene" uid="uid://d0u8cs5711vdj" path="res://scenes/HELPER_FIN.tscn" id="7_sxbsd"]
 [ext_resource type="AudioStream" uid="uid://bnb12wh0mvv0g" path="res://assets/audio/SFX/letx27s-go-352481.mp3" id="8_2aqyk"]
-[ext_resource type="Script" uid="uid://clhqyp8j0u0v4" path="res://scripts/helper.gd" id="8_xx68v"]
+[ext_resource type="Script" uid="uid://clhqyp8j0u0v4" path="res://scripts/HELPER.gd" id="8_xx68v"]
 [ext_resource type="AudioStream" uid="uid://y7gl8l5qrlmn" path="res://assets/audio/Backround_2/alarm.mp3" id="9_imhjk"]
+[ext_resource type="Script" path="res://scripts/POST_BOSS_ESCAPE.gd" id="10_escape"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_escape"]
+size = Vector2(180, 320)
 
 [node name="fin" type="Node"]
 
@@ -66,3 +70,10 @@ position = Vector2(-6085, 1141)
 stream = ExtResource("8_2aqyk")
 volume_db = 4.945
 autoplay = true
+
+[node name="EscapeExit" type="Area2D" parent="."]
+position = Vector2(-6085, 1050)
+script = ExtResource("10_escape")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EscapeExit"]
+shape = SubResource("RectangleShape2D_escape")

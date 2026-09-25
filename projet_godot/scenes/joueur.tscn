@@ -1,6 +1,6 @@
-[gd_scene load_steps=77 format=3 uid="uid://dirydc1jhbrdb"]
+[gd_scene format=3 uid="uid://dop0xssfp6ul5"]
 
-[ext_resource type="Script" uid="uid://c6f6th35eu1tn" path="res://scripts/joueur.gd" id="1_uj1k6"]
+[ext_resource type="Script" uid="uid://c6f6th35eu1tn" path="res://scripts/JOUEUR.gd" id="1_uj1k6"]
 [ext_resource type="AudioStream" uid="uid://dvyheh26hxljb" path="res://assets/audio/jump.wav" id="3_2y66e"]
 [ext_resource type="Texture2D" uid="uid://d2leui5tdjndh" path="res://assets/spritesheets/character/Wraith_03/PNG Sequences/Dying/Wraith_03_Dying_000.png" id="14_jyxhl"]
 [ext_resource type="Texture2D" uid="uid://dv3g4vwld3ljl" path="res://assets/spritesheets/character/Wraith_03/PNG Sequences/Dying/Wraith_03_Dying_001.png" id="15_maqgb"]

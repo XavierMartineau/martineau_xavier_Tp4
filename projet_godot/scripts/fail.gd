@@ -29,8 +29,8 @@ func _apply_language(language: String) -> void:
 		level_button.text = "RÉESSAYER LE NIVEAU"
 
 func _on_retry_boss_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/boss.tscn")
+	get_tree().change_scene_to_file("res://scenes/BOSS_FIGHT.tscn")
 
 func _on_retry_level_button_pressed() -> void:
 	Main.game_configured = false
-	get_tree().change_scene_to_file("res://scenes/configuration_jeu.tscn")
+	get_tree().change_scene_to_file("res://scenes/CONFIGURATION_JEU.tscn")

@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://j05okgtuaimk"]
+[gd_scene format=3 uid="uid://dm5egpoumsxro"]
 
-[ext_resource type="Script" uid="uid://be02vcw1pg0va" path="res://scripts/menu_controle.gd" id="1_5qrj1"]
+[ext_resource type="Script" uid="uid://be02vcw1pg0va" path="res://scripts/MENU_CONTROLE.gd" id="1_5qrj1"]
 [ext_resource type="Texture2D" uid="uid://crhkoo4vld02q" path="res://assets/spritesheets/close_icon.tres" id="2_5qrj1"]
-[ext_resource type="Script" path="res://scripts/mobile_controls.gd" id="6_mobile"]
-[ext_resource type="PackedScene" path="res://scenes/audio_toggle.tscn" id="7_audio"]
+[ext_resource type="Script" path="res://scripts/MOBILE_CONTROLS.gd" id="6_mobile"]
+[ext_resource type="PackedScene" path="res://scenes/AUDIO_TOGGLE.tscn" id="7_audio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cixlm"]
 bg_color = Color(0.498039, 0.498039, 0.498039, 0.682353)

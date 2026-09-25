@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dv4y14r0nply4"]
+[gd_scene format=3 uid="uid://b1ttsasvlbau2"]
 
-[ext_resource type="Script" uid="uid://bynldl35cuwf1" path="res://scripts/hud.gd" id="1_oo0fn"]
+[ext_resource type="Script" uid="uid://bynldl35cuwf1" path="res://scripts/HUD.gd" id="1_oo0fn"]
 [ext_resource type="Texture2D" uid="uid://b4rnhjjhju8nf" path="res://assets/sprites/star.png" id="2_oo0fn"]
 [ext_resource type="Texture2D" uid="uid://b57v0ip7q07p5" path="res://assets/sprites/hud_coin.png" id="4_6fi6k"]
 [ext_resource type="Texture2D" uid="uid://ckrcfxjihbeo4" path="res://assets/sprites/ZeeResizer (1).png" id="4_uo2fv"]
@@ -67,3 +67,21 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.980392, 0.356863, 0.364706, 1)
 theme_override_font_sizes/font_size = 24
 text = "300"
+
+[node name="ObjectiveLabel" type="Label" parent="."]
+offset_left = 28.0
+offset_top = 92.0
+offset_right = 620.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(0.92549, 0.956863, 0.945098, 1)
+theme_override_font_sizes/font_size = 16
+text = "OBJECTIF : explore la zone"
+
+[node name="MechanicsLabel" type="Label" parent="."]
+offset_left = 28.0
+offset_top = 120.0
+offset_right = 620.0
+offset_bottom = 148.0
+theme_override_colors/font_color = Color(0.980392, 0.768627, 0.360784, 1)
+theme_override_font_sizes/font_size = 15
+text = "LEVIERS 0/0   OBJETS 0/0"

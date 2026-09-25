@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://d0imblnd3un0b"]
+[gd_scene format=3 uid="uid://5gtcbvgml58a"]
 
 [ext_resource type="Texture2D" uid="uid://b4rnhjjhju8nf" path="res://assets/sprites/star.png" id="1_eurbg"]
 [ext_resource type="AudioStream" uid="uid://cru5i4c1hyrs7" path="res://assets/audio/SFX/game-bonus-02-294436.mp3" id="2_n6gx0"]

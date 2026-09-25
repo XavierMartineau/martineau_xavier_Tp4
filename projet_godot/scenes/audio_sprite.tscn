@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://dtyfonpxvcerq"]
+[gd_scene format=3 uid="uid://gf5o8ax5texg"]
 
 [ext_resource type="Texture2D" uid="uid://dcepbid2o8w4k" path="res://assets/spritesheets/spritesheet-tiles-default.png" id="1_tph5m"]
-[ext_resource type="Script" uid="uid://cd64dchs2iigf" path="res://scripts/audio_sprite.gd" id="1_x4c60"]
+[ext_resource type="Script" uid="uid://cd64dchs2iigf" path="res://scripts/AUDIO_SPRITE.gd" id="1_x4c60"]
 [ext_resource type="AudioStream" uid="uid://cn8ii3ex8xokn" path="res://assets/audio/Wood Burning in Fireplace 4 - QuickSounds.com.mp3" id="2_x4c60"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1kmuj"]

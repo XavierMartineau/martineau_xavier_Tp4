@@ -1,0 +1,46 @@
+[gd_scene load_steps=13 format=4 uid="uid://df4o6yn6uk8hi"]
+
+[ext_resource type="PackedScene" uid="uid://dirydc1jhbrdb" path="res://scenes/JOUEUR.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/HUD.tscn" id="2_hud"]
+[ext_resource type="Script" uid="uid://cnf4cux5h0q2u" path="res://scripts/CONTROLE_CAMERA.gd" id="3_camera"]
+[ext_resource type="PackedScene" uid="uid://itf3hknnah1g" path="res://scenes/PORTE.tscn" id="4_door"]
+[ext_resource type="Script" uid="uid://b1g238xfip51c" path="res://scripts/PACKED_PORTE.gd" id="5_door_script"]
+[ext_resource type="PackedScene" path="res://scenes/LEVEL_2.tscn" id="6_next"]
+[ext_resource type="PackedScene" path="res://scenes/LEVEL_PRESENTATION.tscn" id="7_presentation"]
+[ext_resource type="PackedScene" path="res://scenes/LEVEL_MECHANICS.tscn" id="8_mechanics"]
+[ext_resource type="Script" path="res://scripts/LEVEL_LAYOUT.gd" id="9_layout"]
+[ext_resource type="AudioStream" uid="uid://d3fe6e213xto8" path="res://assets/audio/Backround_2/evil-aura-219114.mp3" id="10_music"]
+
+[node name="Level1" type="Node2D"]
+
+[node name="Presentation" parent="." instance=ExtResource("7_presentation")]
+level_id = "level_1"
+
+[node name="Layout" type="Node2D" parent="."]
+script = ExtResource("9_layout")
+layout_id = "level_1"
+
+[node name="Mechanics" parent="." instance=ExtResource("8_mechanics")]
+lever_positions = PackedVector2Array(560, 540, 1700, 410)
+collectible_positions = PackedVector2Array(700, 450, 1400, 490, 2600, 420)
+
+[node name="Joueur" parent="." instance=ExtResource("1_player")]
+position = Vector2(120, 500)
+
+[node name="Camera2D" type="Camera2D" parent="Joueur"]
+position = Vector2(5, -1)
+position_smoothing_enabled = true
+script = ExtResource("3_camera")
+
+[node name="HUD" parent="." instance=ExtResource("2_hud")]
+
+[node name="Porte" parent="." instance=ExtResource("4_door")]
+position = Vector2(3350, 543)
+script = ExtResource("5_door_script")
+nouvelle_scene = ExtResource("6_next")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_music")
+autoplay = true
+
+[connection signal="body_entered" from="Porte" to="Porte" method="_on_body_entered"]

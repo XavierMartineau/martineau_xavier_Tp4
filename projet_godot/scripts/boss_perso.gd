@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Boss 
 
 # --- CONFIGURATION PRELOAD ---
-const PROJECTILE_ENEMIE = preload("res://scenes/projectile_enemie.tscn") 
+const PROJECTILE_ENEMIE = preload("res://scenes/PROJECTILE_ENEMIE.tscn") 
 
 # --- GESTION DE LA VIE ---
 const MAX_HEALTH = 300 

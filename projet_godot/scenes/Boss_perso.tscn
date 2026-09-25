@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://bh2uc784bi5de"]
+[gd_scene format=3 uid="uid://b06dn81024nim"]
 
 [ext_resource type="Texture2D" uid="uid://dprfwgo58bjdk" path="res://assets/spritesheets/character/Golems_Free_Version/Golem_1/Orange/White_Swoosh_VFX/Golem_1_idle.png" id="1_24bq8"]
-[ext_resource type="Script" uid="uid://dt3hr0v676ja" path="res://scripts/boss_perso.gd" id="1_jp2tc"]
+[ext_resource type="Script" uid="uid://dt3hr0v676ja" path="res://scripts/BOSS_PERSO.gd" id="1_jp2tc"]
 [ext_resource type="Texture2D" uid="uid://bvt5ntq7vdql6" path="res://assets/spritesheets/character/Golems_Free_Version/Golem_1/Orange/White_Swoosh_VFX/Golem_1_attack.png" id="2_qs1x1"]
 [ext_resource type="Texture2D" uid="uid://b5rg27ldh4npa" path="res://assets/spritesheets/character/Golems_Free_Version/Golem_1/Orange/White_Swoosh_VFX/Golem_1_die.png" id="3_68nbr"]
 [ext_resource type="Texture2D" uid="uid://d2ggpe1c4lpi7" path="res://assets/spritesheets/character/Golems_Free_Version/Golem_1/Orange/White_Swoosh_VFX/Golem_1_hurt.png" id="4_jp2tc"]

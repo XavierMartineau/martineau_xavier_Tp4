@@ -15,13 +15,13 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="projet_godot"
-run/main_scene="res://scenes/configuration_jeu.tscn"
+run/main_scene="res://scenes/CONFIGURATION_JEU.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/main_scene="res://scenes/configuration_jeu.tscn"
+config/main_scene="res://scenes/CONFIGURATION_JEU.tscn"
 
 [autoload]
 
-Main="*res://scripts/main.gd"
+Main="*res://scripts/MAIN.gd"
 
 [display]
 

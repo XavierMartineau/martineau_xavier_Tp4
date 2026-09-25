@@ -1,6 +1,6 @@
 extends Node
 
-@onready var return_button: Button = $Ending/Panel/ReturnButton
+@onready var return_button: Button = $Ending/Panel/Content/ReturnButton
 
 func _ready() -> void:
 	return_button.pressed.connect(_on_return_button_pressed)
@@ -9,4 +9,4 @@ func _ready() -> void:
 func _on_return_button_pressed() -> void:
 	Main.game_configured = false
 	Main.is_mobile = false
-	get_tree().change_scene_to_file("res://scenes/configuration_jeu.tscn")
+	get_tree().change_scene_to_file("res://scenes/CONFIGURATION_JEU.tscn")

@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://ct5cugxqpbv5d"]
+[gd_scene format=3 uid="uid://duvoqd16cp82d"]
 
 [ext_resource type="Texture2D" uid="uid://c01rp200vvtwb" path="res://assets/spritesheets/character/Wraith_03/PNG Sequences/Attacking/FB00_nyknck/FB001.png" id="1_du7tx"]
-[ext_resource type="Script" uid="uid://bq2mqy0rjyyfw" path="res://scripts/projectile.gd" id="1_qjnh8"]
+[ext_resource type="Script" uid="uid://bq2mqy0rjyyfw" path="res://scripts/PROJECTILE.gd" id="1_qjnh8"]
 [ext_resource type="Texture2D" uid="uid://cj436xncxe210" path="res://assets/spritesheets/character/Wraith_03/PNG Sequences/Attacking/FB00_nyknck/FB002.png" id="2_qjnh8"]
 [ext_resource type="Texture2D" uid="uid://bv7b312gwrtj6" path="res://assets/spritesheets/character/Wraith_03/PNG Sequences/Attacking/FB00_nyknck/FB003.png" id="3_xjfis"]
 [ext_resource type="Texture2D" uid="uid://dc74bgb5hdcs1" path="res://assets/spritesheets/character/Wraith_03/PNG Sequences/Attacking/FB00_nyknck/FB004.png" id="4_a7ljl"]
