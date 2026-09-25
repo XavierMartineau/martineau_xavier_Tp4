@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://vt3tub6vlhn0"]
 
 [ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_16us7"]
+<<<<<<< HEAD
 [ext_resource type="PackedScene" uid="uid://dop0xssfp6ul5" path="res://scenes/JOUEUR.tscn" id="2_idwny"]
 [ext_resource type="PackedScene" uid="uid://cki76041sngub" path="res://scenes/FAIL.tscn" id="3_tg56a"]
 [ext_resource type="Script" uid="uid://b3d8s4w5wu43x" path="res://scripts/CONTROLE_CAMERA.gd" id="3_vovur"]
@@ -11,6 +12,18 @@
 [ext_resource type="PackedScene" uid="uid://b1wo55qoh07lj" path="res://scenes/FIN.tscn" id="7_4dkpu"]
 [ext_resource type="PackedScene" uid="uid://bysno8vwnr5p7" path="res://scenes/COIN.tscn" id="8_30ra2"]
 [ext_resource type="Script" uid="uid://b8m721haoiyod" path="res://scripts/COIN.gd" id="9_t0prg"]
+=======
+[ext_resource type="PackedScene" uid="uid://dop0xssfp6ul5" path="res://scenes/joueur.tscn" id="2_idwny"]
+[ext_resource type="PackedScene" uid="uid://cki76041sngub" path="res://scenes/fail.tscn" id="3_tg56a"]
+[ext_resource type="Script" uid="uid://b3d8s4w5wu43x" path="res://scripts/controle_camera.gd" id="3_vovur"]
+[ext_resource type="PackedScene" uid="uid://b1ttsasvlbau2" path="res://scenes/hud.tscn" id="4_30ra2"]
+[ext_resource type="PackedScene" uid="uid://b06dn81024nim" path="res://scenes/boss_perso.tscn" id="5_idwny"]
+[ext_resource type="PackedScene" uid="uid://itf3hknnah1g" path="res://scenes/porte.tscn" id="5_t0prg"]
+[ext_resource type="Script" uid="uid://blynt220aulb1" path="res://scripts/packed_porte.gd" id="6_t0prg"]
+[ext_resource type="PackedScene" uid="uid://b1wo55qoh07lj" path="res://scenes/fin.tscn" id="7_4dkpu"]
+[ext_resource type="PackedScene" uid="uid://bysno8vwnr5p7" path="res://scenes/coin.tscn" id="8_30ra2"]
+[ext_resource type="Script" uid="uid://b8m721haoiyod" path="res://scripts/coin.gd" id="9_t0prg"]
+>>>>>>> 0d1c3c23244e219bd7ced2de61fdda70963be574
 [ext_resource type="AudioStream" uid="uid://gbx61cqjbvkt" path="res://assets/audio/Backround_2/boss-fight-one-400508.mp3" id="10_t0prg"]
 
 [node name="BOSS" type="Node" unique_id=1596399264]
