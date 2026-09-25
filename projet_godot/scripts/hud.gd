@@ -17,6 +17,7 @@ var total_levers := 0
 var active_levers := 0
 var total_collectibles := 0
 var collected_items := 0
+var objective_text := "OBJECTIF : explore la zone"
 
 
 func _ready() -> void:
@@ -24,6 +25,7 @@ func _ready() -> void:
 	label_stars.text = str(nb_stars)
 	label_coin.text = str(nb_coin)
 	health_title.text = Main.translate_text(health_title.text)
+	objective_label.text = objective_text
 	_update_mechanics_label()
 
 	
@@ -40,7 +42,9 @@ func ajouter_coin() -> void:
 	print("HUD : Coin =", nb_coin)
 
 func set_objective(text: String) -> void:
-	objective_label.text = text
+	objective_text = text
+	if is_instance_valid(objective_label):
+		objective_label.text = text
 
 func register_mechanics(levers: int, collectibles: int) -> void:
 	total_levers = levers
