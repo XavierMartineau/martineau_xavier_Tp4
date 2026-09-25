@@ -2,8 +2,8 @@
 
 [ext_resource type="AudioStream" uid="uid://ctgowq7y8nhih" path="res://assets/audio/Backround_2/drift-action-sport-background-music-loop-157986.mp3" id="6_heyxu"]
 [ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="7_0uhrw"]
-[ext_resource type="PackedScene" uid="uid://b78l2lvooin6c" path="res://scenes/powerup.tscn" id="8_e2nfi"]
-[ext_resource type="PackedScene" uid="uid://ci208e61mor2l" path="res://scenes/panneau_message.tscn" id="9_5ylpx"]
+[ext_resource type="PackedScene" uid="uid://b78l2lvooin6c" path="res://scenes/POWERUP.tscn" id="8_e2nfi"]
+[ext_resource type="PackedScene" uid="uid://ci208e61mor2l" path="res://scenes/PANNEAU_MESSAGE.tscn" id="9_5ylpx"]
 [ext_resource type="PackedScene" uid="uid://dop0xssfp6ul5" path="res://scenes/joueur.tscn" id="11_b84hf"]
 [ext_resource type="Script" uid="uid://b3d8s4w5wu43x" path="res://scripts/controle_camera.gd" id="12_ly5i2"]
 [ext_resource type="PackedScene" uid="uid://5gtcbvgml58a" path="res://scenes/etoiles.tscn" id="14_8wv4y"]

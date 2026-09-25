@@ -1,15 +1,15 @@
 [gd_scene format=4 uid="uid://cqdhxmgsb1fgy"]
 
 [ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_gnlxy"]
-[ext_resource type="PackedScene" uid="uid://dop0xssfp6ul5" path="res://scenes/joueur.tscn" id="2_3nuqx"]
-[ext_resource type="Script" uid="uid://b3d8s4w5wu43x" path="res://scripts/controle_camera.gd" id="3_api2p"]
-[ext_resource type="PackedScene" uid="uid://b1ttsasvlbau2" path="res://scenes/hud.tscn" id="4_0h2h2"]
-[ext_resource type="PackedScene" uid="uid://bd0emfvunh4k" path="res://scenes/helper.tscn" id="5_1pio5"]
-[ext_resource type="PackedScene" uid="uid://itf3hknnah1g" path="res://scenes/porte.tscn" id="5_ka1gb"]
-[ext_resource type="Script" uid="uid://dtoeo11yc3gj5" path="res://scripts/helper.gd" id="6_gnlxy"]
+[ext_resource type="PackedScene" uid="uid://dop0xssfp6ul5" path="res://scenes/JOUEUR.tscn" id="2_3nuqx"]
+[ext_resource type="Script" uid="uid://b3d8s4w5wu43x" path="res://scripts/CONTROLE_CAMERA.gd" id="3_api2p"]
+[ext_resource type="PackedScene" uid="uid://b1ttsasvlbau2" path="res://scenes/HUD.tscn" id="4_0h2h2"]
+[ext_resource type="PackedScene" uid="uid://bd0emfvunh4k" path="res://scenes/HELPER.tscn" id="5_1pio5"]
+[ext_resource type="PackedScene" uid="uid://itf3hknnah1g" path="res://scenes/PORTE.tscn" id="5_ka1gb"]
+[ext_resource type="Script" uid="uid://dtoeo11yc3gj5" path="res://scripts/HELPER.gd" id="6_gnlxy"]
 [ext_resource type="AudioStream" uid="uid://oriih64q1i36" path="res://assets/audio/SFX/cartoon-phone-voice-88637.mp3" id="7_0h2h2"]
-[ext_resource type="Script" uid="uid://blynt220aulb1" path="res://scripts/packed_porte.gd" id="9_0h2h2"]
-[ext_resource type="PackedScene" path="res://scenes/boss.tscn" id="10_ka1gb"]
+[ext_resource type="Script" uid="uid://blynt220aulb1" path="res://scripts/PACKED_PORTE.gd" id="9_0h2h2"]
+[ext_resource type="PackedScene" path="res://scenes/BOSS.tscn" id="10_ka1gb"]
 
 [node name="niveau_3" type="Node" unique_id=856358992]
 
