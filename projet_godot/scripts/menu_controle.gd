@@ -146,8 +146,8 @@ func _apply_language(language: String) -> void:
 	$DeviceMenu/Title.text = ("CHOOSE YOUR CONTROL" if is_english else "CHOISIS TON CONTRÔLE") if device_selection_started else ("READY TO PLAY?" if is_english else "PRÊT À JOUER ?")
 	$DeviceMenu/Description.text = ("Choose one control mode:" if is_english else "Choisis un mode de contrôle :") if device_selection_started else ("Choose your language, then press Play." if is_english else "Choisis ta langue, puis appuie sur Jouer.")
 	start_button.text = "PLAY" if is_english else "JOUER"
-	$DeviceMenu/PortableButton.text = "PORTABLE / PC" if is_english else "PORTABLE / PC"
-	$DeviceMenu/MobileButton.text = "MOBILE / PHONE" if is_english else "MOBILE / TÉLÉPHONE"
+	$DeviceMenu/PortableButton.text = "PC / KEYBOARD" if is_english else "PC / CLAVIER"
+	$DeviceMenu/MobileButton.text = "MOBILE / TOUCHSCREEN" if is_english else "MOBILE / TACTILE"
 	$DeviceMenu/PortableControls/Left.text = "← / A"
 	$DeviceMenu/PortableControls/Right.text = "→ / D"
 	$DeviceMenu/PortableControls/Jump.text = "SPACE" if is_english else "ESPACE"

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://j05okgtuaimk" path="res://scenes/menu_controle.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://ci8ioa0gfxyhk" path="res://scenes/niveau_2.tscn" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://bd31k8vyyq0nd" path="res://scenes/niveau_3.tscn" id="5_tbgi4"]
-[ext_resource type="PackedScene" uid="uid://olm42ocwnnkg" path="res://scenes/boss.tscn" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://0n1a5x15ulqf" path="res://scenes/boss.tscn" id="6_tefeu"]
 [ext_resource type="PackedScene" uid="uid://bk0avaorue68x" path="res://scenes/fail.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dxfqrh1kg0d1f" path="res://scenes/fin.tscn" id="7_tipki"]
 [ext_resource type="PackedScene" uid="uid://dendgdbyw2wcw" path="res://scenes/victoire.tscn" id="9_85g3d"]

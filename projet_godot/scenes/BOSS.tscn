@@ -5,11 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://bk0avaorue68x" path="res://scenes/fail.tscn" id="3_tg56a"]
 [ext_resource type="Script" uid="uid://cnf4o5qr4x1by" path="res://scripts/controle_camera.gd" id="3_vovur"]
 [ext_resource type="PackedScene" uid="uid://dv4y14r0nply4" path="res://scenes/hud.tscn" id="4_30ra2"]
-[ext_resource type="PackedScene" uid="uid://d1fcgld5i13ji" path="res://scenes/boss_perso.tscn" id="5_idwny"]
+[ext_resource type="PackedScene" uid="uid://bh2uc784bi5de" path="res://scenes/boss_perso.tscn" id="5_idwny"]
 [ext_resource type="PackedScene" uid="uid://3fro72ew8ojq" path="res://scenes/porte.tscn" id="5_t0prg"]
 [ext_resource type="Script" uid="uid://b1g238xfip51c" path="res://scripts/packed_porte.gd" id="6_t0prg"]
 [ext_resource type="PackedScene" uid="uid://dxfqrh1kg0d1f" path="res://scenes/fin.tscn" id="7_4dkpu"]
-[ext_resource type="PackedScene" uid="uid://b2rrdss4arcjk" path="res://scenes/coin.tscn" id="8_30ra2"]
+[ext_resource type="PackedScene" uid="uid://ubfmbb1w1ym8" path="res://scenes/coin.tscn" id="8_30ra2"]
 [ext_resource type="Script" uid="uid://c7rkhc3vuy48c" path="res://scripts/coin.gd" id="9_t0prg"]
 [ext_resource type="AudioStream" uid="uid://gbx61cqjbvkt" path="res://assets/audio/Backround_2/boss-fight-one-400508.mp3" id="10_t0prg"]
 

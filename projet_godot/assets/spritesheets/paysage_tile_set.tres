@@ -429,23 +429,6 @@ texture_region_size = Vector2i(64, 64)
 3:2/0 = 0
 4:2/0 = 0
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rq6na"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b6ywb"]
-texture = SubResource("CompressedTexture2D_rq6na")
-texture_region_size = Vector2i(1, 1)
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-0:1/0 = 0
-0:226/0 = 0
-39:198/0 = 0
-
 [resource]
 tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 1
@@ -454,5 +437,4 @@ terrain_set_0/terrain_0/name = "Carre"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_67hv0")
 sources/3 = SubResource("TileSetAtlasSource_1lyn2")
-sources/7 = SubResource("TileSetAtlasSource_b6ywb")
 pattern_0 = SubResource("TileMapPattern_cdgqm")
