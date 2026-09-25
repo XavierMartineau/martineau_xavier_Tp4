@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "godot-ai": {
+      "command": "npx",
+      "args": ["-y", "@satelliteoflove/godot-mcp"]
+    }
+  }
+}
