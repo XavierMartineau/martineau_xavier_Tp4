@@ -3,34 +3,34 @@
 export_presets.cfg::TextFile::-1::1765575421::0::1::::<><><>0<>0<><>::
 ::res://assets/::1765219225
 ::res://assets/audio/::1790308941
-brass-fanfare-with-timpani-and-winchimes-reverberated-146260.mp3::AudioStreamMP3/AudioStreamMP3::4736413719328490669::1765488534::1790308938::1::::<><><>0<>0<>6bb3547c3581aa0c8d8495b99ae47e9b<>res://.godot/imported/brass-fanfare-with-timpani-and-winchimes-reverberated-146260.mp3-9d57ce12aead7be76cbd8e2df615df26.mp3str::
-death-splat.mp3::AudioStreamMP3/AudioStreamMP3::3520437063235575539::1765397619::1790308938::1::::<><><>0<>0<>449dbcb700fc05b29c3b8fdefa916ffe<>res://.godot/imported/death-splat.mp3-f0ceb8baa20fe8b416d3e23483f51fce.mp3str::
-jump.wav::AudioStreamWAV/AudioStreamWAV::8683205406492342439::1758914719::1790308941::1::::<><><>0<>0<>5a1aa32d89df9c70eaa45592042b0449<>res://.godot/imported/jump.wav-7ea4d93114fa52c0b9979f6b2117f13f.sample::
-metal-gear-solid-snake-death-scream-sound-effect.mp3::AudioStreamMP3/AudioStreamMP3::6592301476748947696::1765397867::1790308938::1::::<><><>0<>0<>93340b09524860e78bdacf6bd939757a<>res://.godot/imported/metal-gear-solid-snake-death-scream-sound-effect.mp3-6dab4cec22741f48dcfd70dd33e5f615.mp3str::
-powerup.wav::AudioStreamWAV/AudioStreamWAV::4992846072132092414::1758914719::1790308941::1::::<><><>0<>0<>f6a82d70e5e8ffeebe51b82a795f9d6d<>res://.godot/imported/powerup.wav-7591bd6e852991381dd14f8488ca481b.sample::
-sharp-punch-soundbible.mp3::AudioStreamMP3/AudioStreamMP3::2331791153884622719::1765397985::1790308938::1::::<><><>0<>0<>f4814cc6c7aa97b9873698471c65c839<>res://.godot/imported/sharp-punch-soundbible.mp3-ee5209b1b30ef53f47e1f4700f518bf5.mp3str::
-Walking_sound.mp3::AudioStreamMP3/AudioStreamMP3::590237806284170110::1759339937::1790308938::1::::<><><>0<>0<>43251d2dcf8027bd16dbb43b93dec532<>res://.godot/imported/Walking_sound.mp3-68b4d6f3daa999fb16a76b202fa77c59.mp3str::
-Wood Burning in Fireplace 4 - QuickSounds.com.mp3::AudioStreamMP3/AudioStreamMP3::5753922300781022657::1758914719::1790308938::1::::<><><>0<>0<>9c9571023dc088d28e517d6bb0e70f91<>res://.godot/imported/Wood Burning in Fireplace 4 - QuickSounds.com.mp3-ffe65708e9220902c6546117b9b5ff7a.mp3str::
+brass-fanfare-with-timpani-and-winchimes-reverberated-146260.mp3::AudioStreamMP3::4736413719328490669::1765488534::1790308938::1::::<><><>0<>0<>6bb3547c3581aa0c8d8495b99ae47e9b<>res://.godot/imported/brass-fanfare-with-timpani-and-winchimes-reverberated-146260.mp3-9d57ce12aead7be76cbd8e2df615df26.mp3str::
+death-splat.mp3::AudioStreamMP3::3520437063235575539::1765397619::1790308938::1::::<><><>0<>0<>449dbcb700fc05b29c3b8fdefa916ffe<>res://.godot/imported/death-splat.mp3-f0ceb8baa20fe8b416d3e23483f51fce.mp3str::
+jump.wav::AudioStreamWAV::8683205406492342439::1758914719::1790308941::1::::<><><>0<>0<>5a1aa32d89df9c70eaa45592042b0449<>res://.godot/imported/jump.wav-7ea4d93114fa52c0b9979f6b2117f13f.sample::
+metal-gear-solid-snake-death-scream-sound-effect.mp3::AudioStreamMP3::6592301476748947696::1765397867::1790308938::1::::<><><>0<>0<>93340b09524860e78bdacf6bd939757a<>res://.godot/imported/metal-gear-solid-snake-death-scream-sound-effect.mp3-6dab4cec22741f48dcfd70dd33e5f615.mp3str::
+powerup.wav::AudioStreamWAV::4992846072132092414::1758914719::1790308941::1::::<><><>0<>0<>f6a82d70e5e8ffeebe51b82a795f9d6d<>res://.godot/imported/powerup.wav-7591bd6e852991381dd14f8488ca481b.sample::
+sharp-punch-soundbible.mp3::AudioStreamMP3::2331791153884622719::1765397985::1790308938::1::::<><><>0<>0<>f4814cc6c7aa97b9873698471c65c839<>res://.godot/imported/sharp-punch-soundbible.mp3-ee5209b1b30ef53f47e1f4700f518bf5.mp3str::
+Walking_sound.mp3::AudioStreamMP3::590237806284170110::1759339937::1790308938::1::::<><><>0<>0<>43251d2dcf8027bd16dbb43b93dec532<>res://.godot/imported/Walking_sound.mp3-68b4d6f3daa999fb16a76b202fa77c59.mp3str::
+Wood Burning in Fireplace 4 - QuickSounds.com.mp3::AudioStreamMP3::5753922300781022657::1758914719::1790308938::1::::<><><>0<>0<>9c9571023dc088d28e517d6bb0e70f91<>res://.godot/imported/Wood Burning in Fireplace 4 - QuickSounds.com.mp3-ffe65708e9220902c6546117b9b5ff7a.mp3str::
 ::res://assets/audio/Backround_2/::1790308938
-alarm.mp3::AudioStreamMP3/AudioStreamMP3::1750978032780771417::1765483019::1790308938::1::::<><><>0<>0<>54548b2bd1eec26ff2dc4aff406abd8d<>res://.godot/imported/alarm.mp3-78dcee013e8c2460e5b04ccdad014ede.mp3str::
-boss-fight-one-400508.mp3::AudioStreamMP3/AudioStreamMP3::424650659462704851::1765482788::1790308938::1::::<><><>0<>0<>b790f2f4ac13c19c7ba808259718f96a<>res://.godot/imported/boss-fight-one-400508.mp3-7228167a4b2044d35fbf0b793f94b9d3.mp3str::
-drift-action-sport-background-music-loop-157986.mp3::AudioStreamMP3/AudioStreamMP3::6119705879340226475::1765482869::1790308938::1::::<><><>0<>0<>77895d127d8ec1de49c1fcfb4935ed19<>res://.godot/imported/drift-action-sport-background-music-loop-157986.mp3-71252f69702ca56494709f6935a91021.mp3str::
-evil-aura-219114.mp3::AudioStreamMP3/AudioStreamMP3::9135170042319411137::1765483242::1790308938::1::::<><><>0<>0<>e8460cf6438856aad041dfa1cf5d0551<>res://.godot/imported/evil-aura-219114.mp3-14f768314477599ee0037967b15288ca.mp3str::
-siren-a-248662.mp3::AudioStreamMP3/AudioStreamMP3::1983211295841093266::1765483108::1790308938::1::::<><><>0<>0<>6a122c7717ea674c2a4a94266f0b59b9<>res://.godot/imported/siren-a-248662.mp3-5ce3b015c76ca2bda8c10e0e1a82dc13.mp3str::
+alarm.mp3::AudioStreamMP3::1750978032780771417::1765483019::1790308938::1::::<><><>0<>0<>54548b2bd1eec26ff2dc4aff406abd8d<>res://.godot/imported/alarm.mp3-78dcee013e8c2460e5b04ccdad014ede.mp3str::
+boss-fight-one-400508.mp3::AudioStreamMP3::424650659462704851::1765482788::1790308938::1::::<><><>0<>0<>b790f2f4ac13c19c7ba808259718f96a<>res://.godot/imported/boss-fight-one-400508.mp3-7228167a4b2044d35fbf0b793f94b9d3.mp3str::
+drift-action-sport-background-music-loop-157986.mp3::AudioStreamMP3::6119705879340226475::1765482869::1790308938::1::::<><><>0<>0<>77895d127d8ec1de49c1fcfb4935ed19<>res://.godot/imported/drift-action-sport-background-music-loop-157986.mp3-71252f69702ca56494709f6935a91021.mp3str::
+evil-aura-219114.mp3::AudioStreamMP3::9135170042319411137::1765483242::1790308938::1::::<><><>0<>0<>e8460cf6438856aad041dfa1cf5d0551<>res://.godot/imported/evil-aura-219114.mp3-14f768314477599ee0037967b15288ca.mp3str::
+siren-a-248662.mp3::AudioStreamMP3::1983211295841093266::1765483108::1790308938::1::::<><><>0<>0<>6a122c7717ea674c2a4a94266f0b59b9<>res://.godot/imported/siren-a-248662.mp3-5ce3b015c76ca2bda8c10e0e1a82dc13.mp3str::
 ::res://assets/audio/SFX/::1790308938
-brass-fail-8-b-207131.mp3::AudioStreamMP3/AudioStreamMP3::3777208052791060984::1765483843::1790308938::1::::<><><>0<>0<>6d13ed4b94e0aa283fb2f246af345cf3<>res://.godot/imported/brass-fail-8-b-207131.mp3-907baffe01272c12006b777036bab54b.mp3str::
-cartoon-phone-voice-88637.mp3::AudioStreamMP3/AudioStreamMP3::1018238671937269159::1765483691::1790308938::1::::<><><>0<>0<>61015d569f0ae1c094b6d2702e6e3259<>res://.godot/imported/cartoon-phone-voice-88637.mp3-2b62c252befcbef424c0245b8cdaf7b4.mp3str::
-cartoonish-impacts-02-278820.mp3::AudioStreamMP3/AudioStreamMP3::2062969041033041441::1765484224::1790308938::1::::<><><>0<>0<>cd66f2b4ef79bc2237d3148fdb4bf2dc<>res://.godot/imported/cartoonish-impacts-02-278820.mp3-0e4ad2e934fda416348c78e0634c3a61.mp3str::
-game-bonus-02-294436.mp3::AudioStreamMP3/AudioStreamMP3::6009176587906583224::1765483921::1790308938::1::::<><><>0<>0<>9716f24751ed15e05401a94ac906fcf5<>res://.godot/imported/game-bonus-02-294436.mp3-1c509bc208d9a893dabd89d0c51c1c12.mp3str::
-glass-bottle-smash-277554.mp3::AudioStreamMP3/AudioStreamMP3::6145656283757150514::1765484242::1790308938::1::::<><><>0<>0<>e9f7173b1da6edcf1c8be6909935129e<>res://.godot/imported/glass-bottle-smash-277554.mp3-fed38d50a30a00ade72f87778867d8a2.mp3str::
-letx27s-go-352481.mp3::AudioStreamMP3/AudioStreamMP3::3302568054469048308::1765484109::1790308938::1::::<><><>0<>0<>0ee19863fa8ea1bc7e21b90c711fc8fa<>res://.godot/imported/letx27s-go-352481.mp3-4e3cdd543cd0f5bfe1b58b0fb74ad16e.mp3str::
-Level_up.mp3::AudioStreamMP3/AudioStreamMP3::199521677786517872::1765484048::1790308938::1::::<><><>0<>0<>a012da300a40bd2515fca7890c7a8724<>res://.godot/imported/Level_up.mp3-fe24c83f62c84472bb80612971fc0045.mp3str::
+brass-fail-8-b-207131.mp3::AudioStreamMP3::3777208052791060984::1765483843::1790308938::1::::<><><>0<>0<>6d13ed4b94e0aa283fb2f246af345cf3<>res://.godot/imported/brass-fail-8-b-207131.mp3-907baffe01272c12006b777036bab54b.mp3str::
+cartoon-phone-voice-88637.mp3::AudioStreamMP3::1018238671937269159::1765483691::1790308938::1::::<><><>0<>0<>61015d569f0ae1c094b6d2702e6e3259<>res://.godot/imported/cartoon-phone-voice-88637.mp3-2b62c252befcbef424c0245b8cdaf7b4.mp3str::
+cartoonish-impacts-02-278820.mp3::AudioStreamMP3::2062969041033041441::1765484224::1790308938::1::::<><><>0<>0<>cd66f2b4ef79bc2237d3148fdb4bf2dc<>res://.godot/imported/cartoonish-impacts-02-278820.mp3-0e4ad2e934fda416348c78e0634c3a61.mp3str::
+game-bonus-02-294436.mp3::AudioStreamMP3::6009176587906583224::1765483921::1790308938::1::::<><><>0<>0<>9716f24751ed15e05401a94ac906fcf5<>res://.godot/imported/game-bonus-02-294436.mp3-1c509bc208d9a893dabd89d0c51c1c12.mp3str::
+glass-bottle-smash-277554.mp3::AudioStreamMP3::6145656283757150514::1765484242::1790308938::1::::<><><>0<>0<>e9f7173b1da6edcf1c8be6909935129e<>res://.godot/imported/glass-bottle-smash-277554.mp3-fed38d50a30a00ade72f87778867d8a2.mp3str::
+letx27s-go-352481.mp3::AudioStreamMP3::3302568054469048308::1765484109::1790308938::1::::<><><>0<>0<>0ee19863fa8ea1bc7e21b90c711fc8fa<>res://.godot/imported/letx27s-go-352481.mp3-4e3cdd543cd0f5bfe1b58b0fb74ad16e.mp3str::
+Level_up.mp3::AudioStreamMP3::199521677786517872::1765484048::1790308938::1::::<><><>0<>0<>a012da300a40bd2515fca7890c7a8724<>res://.godot/imported/Level_up.mp3-fe24c83f62c84472bb80612971fc0045.mp3str::
 ::res://assets/audio/SFX/Fire/::1790308938
-fireball-impact-351961.mp3::AudioStreamMP3/AudioStreamMP3::6850300486735444554::1765486667::1790308938::1::::<><><>0<>0<>d0035a7d806f5b1106881ab95400f04e<>res://.godot/imported/fireball-impact-351961.mp3-6bbfd537745e4e53f3df439de0432c48.mp3str::
-ghast-fireball-minecraft-sound-sound-effect-for-editing.mp3::AudioStreamMP3/AudioStreamMP3::588621090549418263::1765486709::1790308938::1::::<><><>0<>0<>a4322ef944be9cedca7f35c692a14c31<>res://.godot/imported/ghast-fireball-minecraft-sound-sound-effect-for-editing.mp3-97380e4b774f6d00425b2215f9a898b4.mp3str::
+fireball-impact-351961.mp3::AudioStreamMP3::6850300486735444554::1765486667::1790308938::1::::<><><>0<>0<>d0035a7d806f5b1106881ab95400f04e<>res://.godot/imported/fireball-impact-351961.mp3-6bbfd537745e4e53f3df439de0432c48.mp3str::
+ghast-fireball-minecraft-sound-sound-effect-for-editing.mp3::AudioStreamMP3::588621090549418263::1765486709::1790308938::1::::<><><>0<>0<>a4322ef944be9cedca7f35c692a14c31<>res://.godot/imported/ghast-fireball-minecraft-sound-sound-effect-for-editing.mp3-97380e4b774f6d00425b2215f9a898b4.mp3str::
 ::res://assets/audio/SFX/ice/::1790308938
-ice-ball-1.mp3::AudioStreamMP3/AudioStreamMP3::1452771969231804014::1765486733::1790308938::1::::<><><>0<>0<>0b760f381754ba195aca28c538b11415<>res://.godot/imported/ice-ball-1.mp3-b791055c9e926b57508bcf3a41eba625.mp3str::
-wooden-club-smashing-ice-414426.mp3::AudioStreamMP3/AudioStreamMP3::7457900019497155880::1765486769::1790308938::1::::<><><>0<>0<>5396f4e2036466f30d37253d9dede92a<>res://.godot/imported/wooden-club-smashing-ice-414426.mp3-d5761c259119e18b64631a423eec7fa8.mp3str::
+ice-ball-1.mp3::AudioStreamMP3::1452771969231804014::1765486733::1790308938::1::::<><><>0<>0<>0b760f381754ba195aca28c538b11415<>res://.godot/imported/ice-ball-1.mp3-b791055c9e926b57508bcf3a41eba625.mp3str::
+wooden-club-smashing-ice-414426.mp3::AudioStreamMP3::7457900019497155880::1765486769::1790308938::1::::<><><>0<>0<>5396f4e2036466f30d37253d9dede92a<>res://.godot/imported/wooden-club-smashing-ice-414426.mp3-d5761c259119e18b64631a423eec7fa8.mp3str::
 ::res://assets/sprites/::1790309056
 block_blue.png::CompressedTexture2D::4978017978841266097::1746560012::1790309055::1::::<><><>0<>0<>c2a7a1415f3ce27e05041a64a8995f8c<>res://.godot/imported/block_blue.png-5b96919cb5be1d3ba0bef5a647e06c0a.ctex::
 block_coin.png::CompressedTexture2D::4978244196250861247::1746560012::1790309055::1::::<><><>0<>0<>6f223f25497bb215e5856301028821b3<>res://.godot/imported/block_coin.png-717e7c636c82bd4c156e14d3dfc6a975.ctex::
@@ -373,14 +373,14 @@ puhzil.png::CompressedTexture2D::6364430580695917622::1765480253::1790309056::1:
 ::res://assets/spritesheets/backround/bulkhead-walls-files/::1765480399
 ::res://assets/spritesheets/backround/bulkhead-walls-files/__MACOSX/::1765480399
 ::res://assets/spritesheets/backround/bulkhead-walls-files/__MACOSX/bulkhead-walls-files/::1765645495
-._bulkhead-wallsx1.png::CompressedTexture2D::940506293047133911::1765480308::1765645495::0::::<><><>0<>0<>4b2145f64e130fa7c73f80de3ed63eeb<>::
-._bulkhead-wallsx3.png::CompressedTexture2D::7058292160458905671::1765480308::1765645495::0::::<><><>0<>0<>f4f426eeeb62d1f5c46834346595636b<>::
+._bulkhead-wallsx1.png::::-1::1765480308::1765645495::0::::<><><>0<>0<>4b2145f64e130fa7c73f80de3ed63eeb<>::
+._bulkhead-wallsx3.png::::-1::1765480308::1765645495::0::::<><><>0<>0<>f4f426eeeb62d1f5c46834346595636b<>::
 ._license.txt::TextFile::-1::1765480308::0::1::::<><><>0<>0<><>::
 ::res://assets/spritesheets/backround/bulkhead-walls-files/__MACOSX/bulkhead-walls-files/layers/::1765645495
-._bulkhead-walls-back.png::CompressedTexture2D::5932093528864585662::1765480308::1765645495::0::::<><><>0<>0<>0140b36987d2d1579e9c5812a3fb0e51<>::
-._bulkhead-walls-pipes.png::CompressedTexture2D::6496948172013030658::1765480308::1765645495::0::::<><><>0<>0<>bcfcea72cbec0a2537346c38aa09d40d<>::
-._bulkhead-walls-platform.png::CompressedTexture2D::1245594819117445233::1765480308::1765645495::0::::<><><>0<>0<>6410cc8bf50246190122cac4399efefb<>::
-._cols.png::CompressedTexture2D::4014582698378461905::1765480308::1765645495::0::::<><><>0<>0<>d2bab6c97cdedb80f0499527f2a2d1be<>::
+._bulkhead-walls-back.png::::-1::1765480308::1765645495::0::::<><><>0<>0<>0140b36987d2d1579e9c5812a3fb0e51<>::
+._bulkhead-walls-pipes.png::::-1::1765480308::1765645495::0::::<><><>0<>0<>bcfcea72cbec0a2537346c38aa09d40d<>::
+._bulkhead-walls-platform.png::::-1::1765480308::1765645495::0::::<><><>0<>0<>6410cc8bf50246190122cac4399efefb<>::
+._cols.png::::-1::1765480308::1765645495::0::::<><><>0<>0<>d2bab6c97cdedb80f0499527f2a2d1be<>::
 ::res://assets/spritesheets/backround/bulkhead-walls-files/bulkhead-walls-files/::1790309056
 bulkhead-wallsx1.png::CompressedTexture2D::7864566942654826492::1765480308::1790309056::1::::<><><>0<>0<>ece7cfa1061183b0a8946e38119a8e64<>res://.godot/imported/bulkhead-wallsx1.png-b783afbc144056909002ef976181c694.ctex::
 bulkhead-wallsx3.png::CompressedTexture2D::1919726034027494048::1765480308::1790309056::1::::<><><>0<>0<>bd6c57abb4ab03c38fcd09fc7241e819<>res://.godot/imported/bulkhead-wallsx3.png-dbc786ec8eea550da1c0724e0d24c134.ctex::
@@ -413,9 +413,9 @@ dongeonWallFloorTransparent16.png::CompressedTexture2D::8368935937915561175::162
 ::res://assets/spritesheets/backround/living-tissue-background/::1765480399
 ::res://assets/spritesheets/backround/living-tissue-background/__MACOSX/::1765480399
 ::res://assets/spritesheets/backround/living-tissue-background/__MACOSX/living-tissue-background/::1765645495
-._living-tissue-background-preview.png::CompressedTexture2D::8667409400513312729::1765480290::1765645495::0::::<><><>0<>0<>7e0f8f8b56f17e870acef58d55187f90<>::
+._living-tissue-background-preview.png::::-1::1765480290::1765645495::0::::<><><>0<>0<>7e0f8f8b56f17e870acef58d55187f90<>::
 ._public-license.txt::TextFile::-1::1765480290::0::1::::<><><>0<>0<><>::
-._tile-background.png::CompressedTexture2D::3016138155988789977::1765480290::1765645495::0::::<><><>0<>0<>a7a3de18c8df7fc70a995c3ab0e41b04<>::
+._tile-background.png::::-1::1765480290::1765645495::0::::<><><>0<>0<>a7a3de18c8df7fc70a995c3ab0e41b04<>::
 ::res://assets/spritesheets/backround/living-tissue-background/living-tissue-background/::1790309055
 living-tissue-background-preview.png::CompressedTexture2D::1717465762669230392::1765480290::1790309055::1::::<><><>0<>0<>324f07527cfdb89d71f551ffbc012516<>res://.godot/imported/living-tissue-background-preview.png-477a346107b43e4ca31e7ee82e30f3f2.ctex::
 public-license.txt::TextFile::-1::1765480290::0::1::::<><><>0<>0<><>::
@@ -425,11 +425,11 @@ tile-background.png::CompressedTexture2D::6781103563759226266::1765480290::17903
 ::res://assets/spritesheets/backround/parallax_mountain_pack/__MACOSX/parallax_mountain_pack/::1765480411
 ._license.txt::TextFile::-1::1765480411::0::1::::<><><>0<>0<><>::
 ::res://assets/spritesheets/backround/parallax_mountain_pack/__MACOSX/parallax_mountain_pack/layers/::1765645495
-._parallax-mountain-bg.png::CompressedTexture2D::3456903295104241552::1765480411::1765645495::0::::<><><>0<>0<>052e6a2182bb261fc07f0ef39417cfee<>::
-._parallax-mountain-foreground-trees.png::CompressedTexture2D::7470799522835902977::1765480411::1765645495::0::::<><><>0<>0<>fbb06e6d0fca915ea49b87c98e0bc3e4<>::
-._parallax-mountain-montain-far.png::CompressedTexture2D::6086850944608061547::1765480411::1765645495::0::::<><><>0<>0<>fdfe18a570a2012d40f5d82fadd2c1aa<>::
-._parallax-mountain-mountains.png::CompressedTexture2D::1473773512248977931::1765480411::1765645495::0::::<><><>0<>0<>91ccdb63deb50530bc01ff6ec76c865d<>::
-._parallax-mountain-trees.png::CompressedTexture2D::1119226644289458334::1765480411::1765645495::0::::<><><>0<>0<>b6aa2efb38200de0f872b4376dc0d260<>::
+._parallax-mountain-bg.png::::-1::1765480411::1765645495::0::::<><><>0<>0<>052e6a2182bb261fc07f0ef39417cfee<>::
+._parallax-mountain-foreground-trees.png::::-1::1765480411::1765645495::0::::<><><>0<>0<>fbb06e6d0fca915ea49b87c98e0bc3e4<>::
+._parallax-mountain-montain-far.png::::-1::1765480411::1765645495::0::::<><><>0<>0<>fdfe18a570a2012d40f5d82fadd2c1aa<>::
+._parallax-mountain-mountains.png::::-1::1765480411::1765645495::0::::<><><>0<>0<>91ccdb63deb50530bc01ff6ec76c865d<>::
+._parallax-mountain-trees.png::::-1::1765480411::1765645495::0::::<><><>0<>0<>b6aa2efb38200de0f872b4376dc0d260<>::
 ::res://assets/spritesheets/backround/parallax_mountain_pack/parallax_mountain_pack/::1765480411
 license.txt::TextFile::-1::1765480411::0::1::::<><><>0<>0<><>::
 ::res://assets/spritesheets/backround/parallax_mountain_pack/parallax_mountain_pack/layers/::1790309055
@@ -740,88 +740,88 @@ license.txt::TextFile::-1::1765389862::0::1::::<><><>0<>0<><>::
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Arrow/AI/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Arrow/EPS/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Arrow/PNG/::1765645495
-._Fire Arrow_Frame_01.png::CompressedTexture2D::955581577802946218::1765389861::1765645495::0::::<><><>0<>0<>8ec07d895ad24b8b85f0999da25c316f<>::
-._Fire Arrow_Frame_02.png::CompressedTexture2D::8724231714313953293::1765389861::1765645495::0::::<><><>0<>0<>932e8ec89769f4b3208305d3edbda9d5<>::
-._Fire Arrow_Frame_03.png::CompressedTexture2D::5946023409629893842::1765389861::1765645495::0::::<><><>0<>0<>d7abf77c91fdbc01258ea2a6ff95a909<>::
-._Fire Arrow_Frame_04.png::CompressedTexture2D::2573833933600438153::1765389861::1765645495::0::::<><><>0<>0<>1c891f507283a3208405acfcfc8b65d4<>::
-._Fire Arrow_Frame_05.png::CompressedTexture2D::1587167358741153863::1765389861::1765645495::0::::<><><>0<>0<>1ffe9e773ff8a492142897670e015978<>::
-._Fire Arrow_Frame_06.png::CompressedTexture2D::2981019767262100534::1765389861::1765645495::0::::<><><>0<>0<>ca99cc753881a205284858eca382c8dd<>::
-._Fire Arrow_Frame_07.png::CompressedTexture2D::7674110261338351093::1765389861::1765645495::0::::<><><>0<>0<>e5c9f0c909436432b3a655f6e31e8ce3<>::
-._Fire Arrow_Frame_08.png::CompressedTexture2D::6368219191514570341::1765389861::1765645495::0::::<><><>0<>0<>3fdc732c6e1691466c04922df22d0aef<>::
+._Fire Arrow_Frame_01.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>8ec07d895ad24b8b85f0999da25c316f<>::
+._Fire Arrow_Frame_02.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>932e8ec89769f4b3208305d3edbda9d5<>::
+._Fire Arrow_Frame_03.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>d7abf77c91fdbc01258ea2a6ff95a909<>::
+._Fire Arrow_Frame_04.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>1c891f507283a3208405acfcfc8b65d4<>::
+._Fire Arrow_Frame_05.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>1ffe9e773ff8a492142897670e015978<>::
+._Fire Arrow_Frame_06.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>ca99cc753881a205284858eca382c8dd<>::
+._Fire Arrow_Frame_07.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>e5c9f0c909436432b3a655f6e31e8ce3<>::
+._Fire Arrow_Frame_08.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>3fdc732c6e1691466c04922df22d0aef<>::
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Ball/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Ball/AI/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Ball/EPS/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Ball/PNG/::1765645495
-._Fire Ball_Frame_01.png::CompressedTexture2D::6681227611055737933::1765389861::1765645495::0::::<><><>0<>0<>60d16a8f0df86f4c17d4f724b6b05bac<>::
-._Fire Ball_Frame_02.png::CompressedTexture2D::6589232388408370728::1765389861::1765645495::0::::<><><>0<>0<>f68d7986be5fd36165262eed0fad0157<>::
-._Fire Ball_Frame_03.png::CompressedTexture2D::3151412460274325359::1765389861::1765645495::0::::<><><>0<>0<>f59db061eab7770e47a9688b462f0db0<>::
-._Fire Ball_Frame_04.png::CompressedTexture2D::4164864975271003984::1765389861::1765645495::0::::<><><>0<>0<>1375087581154d177f5dbb9506e40894<>::
-._Fire Ball_Frame_05.png::CompressedTexture2D::811842018213736283::1765389861::1765645495::0::::<><><>0<>0<>ccc03f5ceadaf359faad367fc92a9070<>::
-._Fire Ball_Frame_06.png::CompressedTexture2D::1844363011573721577::1765389861::1765645495::0::::<><><>0<>0<>00f4d366022c000e364bbdd45c1382e9<>::
-._Fire Ball_Frame_07.png::CompressedTexture2D::8531285623815103995::1765389861::1765645495::0::::<><><>0<>0<>42f973a530fd6e2e3dfc002c4c979835<>::
-._Fire Ball_Frame_08.png::CompressedTexture2D::5155347284893208111::1765389861::1765645495::0::::<><><>0<>0<>1a23b8dca93f239c0d750f5e070a32b9<>::
+._Fire Ball_Frame_01.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>60d16a8f0df86f4c17d4f724b6b05bac<>::
+._Fire Ball_Frame_02.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>f68d7986be5fd36165262eed0fad0157<>::
+._Fire Ball_Frame_03.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>f59db061eab7770e47a9688b462f0db0<>::
+._Fire Ball_Frame_04.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>1375087581154d177f5dbb9506e40894<>::
+._Fire Ball_Frame_05.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>ccc03f5ceadaf359faad367fc92a9070<>::
+._Fire Ball_Frame_06.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>00f4d366022c000e364bbdd45c1382e9<>::
+._Fire Ball_Frame_07.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>42f973a530fd6e2e3dfc002c4c979835<>::
+._Fire Ball_Frame_08.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>1a23b8dca93f239c0d750f5e070a32b9<>::
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Spell/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Spell/AI/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Spell/EPS/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Fire Spell/PNG/::1765645495
-._Fire Spell_Frame_01.png::CompressedTexture2D::4688270706409814682::1765389861::1765645495::0::::<><><>0<>0<>4070c3ce7888d47f7fe35e56b89e99fd<>::
-._Fire Spell_Frame_02.png::CompressedTexture2D::4832885888584637850::1765389861::1765645495::0::::<><><>0<>0<>cf8e896e058554e9962de4c47229a147<>::
-._Fire Spell_Frame_03.png::CompressedTexture2D::1170304885013054664::1765389861::1765645495::0::::<><><>0<>0<>629307ec507d7adbf8fb8660a23de46d<>::
-._Fire Spell_Frame_04.png::CompressedTexture2D::230106814870366824::1765389861::1765645495::0::::<><><>0<>0<>2e6dcb86b2df1e0f09a4bbca099bc409<>::
-._Fire Spell_Frame_05.png::CompressedTexture2D::459707299409385968::1765389861::1765645495::0::::<><><>0<>0<>a44535cc939cd6133bc6e5e579a6a5cf<>::
-._Fire Spell_Frame_06.png::CompressedTexture2D::2909770464343067300::1765389861::1765645495::0::::<><><>0<>0<>b0d25dd3296639b3e2ca12a4ec2620ba<>::
-._Fire Spell_Frame_07.png::CompressedTexture2D::3042399783126201778::1765389861::1765645495::0::::<><><>0<>0<>5f670dc1226e184c7743a8307244572a<>::
-._Fire Spell_Frame_08.png::CompressedTexture2D::839917156313687531::1765389861::1765645495::0::::<><><>0<>0<>0b63416443ec9288338bb53546b59d9b<>::
+._Fire Spell_Frame_01.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>4070c3ce7888d47f7fe35e56b89e99fd<>::
+._Fire Spell_Frame_02.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>cf8e896e058554e9962de4c47229a147<>::
+._Fire Spell_Frame_03.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>629307ec507d7adbf8fb8660a23de46d<>::
+._Fire Spell_Frame_04.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>2e6dcb86b2df1e0f09a4bbca099bc409<>::
+._Fire Spell_Frame_05.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>a44535cc939cd6133bc6e5e579a6a5cf<>::
+._Fire Spell_Frame_06.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>b0d25dd3296639b3e2ca12a4ec2620ba<>::
+._Fire Spell_Frame_07.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>5f670dc1226e184c7743a8307244572a<>::
+._Fire Spell_Frame_08.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>0b63416443ec9288338bb53546b59d9b<>::
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Icons/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Icons/AI/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Icons/EPS/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Icons/PNG/::1765645495
-._Icons_Fire Arrow.png::CompressedTexture2D::1430868383401652500::1765389861::1765645495::0::::<><><>0<>0<>357cd311ff39591da30dec2982b85845<>::
-._Icons_Fire Ball.png::CompressedTexture2D::9032363000549681475::1765389861::1765645495::0::::<><><>0<>0<>548b14d73a8cbf5500fb3a34c9ad40b9<>::
-._Icons_Fire Spell.png::CompressedTexture2D::4219905911077788121::1765389861::1765645495::0::::<><><>0<>0<>08d4412874e2efd61078cf45e79607b4<>::
-._Icons_Water Arrow.png::CompressedTexture2D::8741802853843779395::1765389861::1765645495::0::::<><><>0<>0<>1b07dfbceefc11865d57d39c0b88254f<>::
-._Icons_Water Ball.png::CompressedTexture2D::2871726411408010895::1765389861::1765645495::0::::<><><>0<>0<>6f0fb23f44fd43b0db0b95f7ecd15ceb<>::
-._Icons_Water Spell.png::CompressedTexture2D::3415759675649961838::1765389861::1765645495::0::::<><><>0<>0<>addb3bf32e31cf0797a6a9be0e4c0212<>::
+._Icons_Fire Arrow.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>357cd311ff39591da30dec2982b85845<>::
+._Icons_Fire Ball.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>548b14d73a8cbf5500fb3a34c9ad40b9<>::
+._Icons_Fire Spell.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>08d4412874e2efd61078cf45e79607b4<>::
+._Icons_Water Arrow.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>1b07dfbceefc11865d57d39c0b88254f<>::
+._Icons_Water Ball.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>6f0fb23f44fd43b0db0b95f7ecd15ceb<>::
+._Icons_Water Spell.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>addb3bf32e31cf0797a6a9be0e4c0212<>::
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Arrow/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Arrow/AI/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Arrow/EPS/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Arrow/PNG/::1765645495
-._Water Arrow_Frame_01.png::CompressedTexture2D::6267808108143194640::1765389861::1765645495::0::::<><><>0<>0<>681daaafac9b8637c1c8677a04551f75<>::
-._Water Arrow_Frame_02.png::CompressedTexture2D::8202034834142118054::1765389861::1765645495::0::::<><><>0<>0<>561fdcb0a4cf963f141b5ce9e7fae8e9<>::
-._Water Arrow_Frame_03.png::CompressedTexture2D::2684569832457161325::1765389861::1765645495::0::::<><><>0<>0<>fe4a819cc0a60c6ef3995e8fadad27df<>::
-._Water Arrow_Frame_04.png::CompressedTexture2D::7891861267319888805::1765389861::1765645495::0::::<><><>0<>0<>1f968dd11e637eb938585a6209ffd3ea<>::
-._Water Arrow_Frame_05.png::CompressedTexture2D::6882639004145133885::1765389861::1765645495::0::::<><><>0<>0<>8febe70deb98498b8110bcfd64e9626c<>::
-._Water Arrow_Frame_06.png::CompressedTexture2D::119692005451889362::1765389861::1765645495::0::::<><><>0<>0<>81f9e354d88afc7aeddabe4d149c2e4a<>::
-._Water Arrow_Frame_07.png::CompressedTexture2D::4324674345458213158::1765389861::1765645495::0::::<><><>0<>0<>fdb5b310f8f5aa5ad417fed85fb82d6a<>::
-._Water Arrow_Frame_08.png::CompressedTexture2D::2345246097213848638::1765389861::1765645495::0::::<><><>0<>0<>7cc8741c04bc37afe5a1ff18cf046705<>::
+._Water Arrow_Frame_01.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>681daaafac9b8637c1c8677a04551f75<>::
+._Water Arrow_Frame_02.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>561fdcb0a4cf963f141b5ce9e7fae8e9<>::
+._Water Arrow_Frame_03.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>fe4a819cc0a60c6ef3995e8fadad27df<>::
+._Water Arrow_Frame_04.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>1f968dd11e637eb938585a6209ffd3ea<>::
+._Water Arrow_Frame_05.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>8febe70deb98498b8110bcfd64e9626c<>::
+._Water Arrow_Frame_06.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>81f9e354d88afc7aeddabe4d149c2e4a<>::
+._Water Arrow_Frame_07.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>fdb5b310f8f5aa5ad417fed85fb82d6a<>::
+._Water Arrow_Frame_08.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>7cc8741c04bc37afe5a1ff18cf046705<>::
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Ball/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Ball/AI/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Ball/EPS/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Ball/PNG/::1765645495
-._Water Ball_Frame_01.png::CompressedTexture2D::7626804608733084138::1765389861::1765645495::0::::<><><>0<>0<>5323a838ecd327c095a270829ff91e64<>::
-._Water Ball_Frame_02.png::CompressedTexture2D::1241813095569809294::1765389861::1765645495::0::::<><><>0<>0<>b1ba7844fc27fedbc6ca8474e381041d<>::
-._Water Ball_Frame_03.png::CompressedTexture2D::8471443095619384766::1765389861::1765645495::0::::<><><>0<>0<>35f6cc6f6d81eb9f17bad7b2fe54f003<>::
-._Water Ball_Frame_04.png::CompressedTexture2D::5446306405960426530::1765389861::1765645495::0::::<><><>0<>0<>f3f33e572fa7f9e49ad4588813d273ef<>::
-._Water Ball_Frame_05.png::CompressedTexture2D::1530482644297666774::1765389861::1765645495::0::::<><><>0<>0<>c2c393265fe0a7a153d3df37df6e8a9d<>::
-._Water Ball_Frame_06.png::CompressedTexture2D::7217191942581803369::1765389861::1765645495::0::::<><><>0<>0<>0f1357c9d7ce3f938afa040c53dc0dcc<>::
-._Water Ball_Frame_07.png::CompressedTexture2D::8834270522957252088::1765389861::1765645495::0::::<><><>0<>0<>63e88e550d08f27734bdf020b9dbcac7<>::
-._Water Ball_Frame_08.png::CompressedTexture2D::5460049470657232740::1765389861::1765645495::0::::<><><>0<>0<>9fc8613c56c1ea17a54bfa835f471790<>::
-._Water Ball_Frame_09.png::CompressedTexture2D::1719398262037989903::1765389861::1765645495::0::::<><><>0<>0<>6a51a83abec206a9132a57a44cf566d5<>::
-._Water Ball_Frame_10.png::CompressedTexture2D::4980573515843328923::1765389861::1765645495::0::::<><><>0<>0<>5ce66aa258c6eb6eb3562d4cd158482e<>::
-._Water Ball_Frame_11.png::CompressedTexture2D::1957900755769201760::1765389861::1765645495::0::::<><><>0<>0<>e7ebdc52413ce5054fa1fdef12a42f07<>::
-._Water Ball_Frame_12.png::CompressedTexture2D::7699623194375730619::1765389861::1765645495::0::::<><><>0<>0<>73f4a14676e689ed37c4f8db679613ed<>::
+._Water Ball_Frame_01.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>5323a838ecd327c095a270829ff91e64<>::
+._Water Ball_Frame_02.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>b1ba7844fc27fedbc6ca8474e381041d<>::
+._Water Ball_Frame_03.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>35f6cc6f6d81eb9f17bad7b2fe54f003<>::
+._Water Ball_Frame_04.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>f3f33e572fa7f9e49ad4588813d273ef<>::
+._Water Ball_Frame_05.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>c2c393265fe0a7a153d3df37df6e8a9d<>::
+._Water Ball_Frame_06.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>0f1357c9d7ce3f938afa040c53dc0dcc<>::
+._Water Ball_Frame_07.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>63e88e550d08f27734bdf020b9dbcac7<>::
+._Water Ball_Frame_08.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>9fc8613c56c1ea17a54bfa835f471790<>::
+._Water Ball_Frame_09.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>6a51a83abec206a9132a57a44cf566d5<>::
+._Water Ball_Frame_10.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>5ce66aa258c6eb6eb3562d4cd158482e<>::
+._Water Ball_Frame_11.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>e7ebdc52413ce5054fa1fdef12a42f07<>::
+._Water Ball_Frame_12.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>73f4a14676e689ed37c4f8db679613ed<>::
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Spell/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Spell/AI/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Spell/EPS/::1765390327
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/__MACOSX/Water Spell/PNG/::1765645495
-._Water Spell_Frame_01.png::CompressedTexture2D::1096402481320539298::1765389861::1765645495::0::::<><><>0<>0<>4442d1ff44c3fc0b620271b6688fecad<>::
-._Water Spell_Frame_02.png::CompressedTexture2D::654402059036351060::1765389861::1765645495::0::::<><><>0<>0<>275161711060937eb18b3847a8498f55<>::
-._Water Spell_Frame_03.png::CompressedTexture2D::8173346565845054976::1765389861::1765645495::0::::<><><>0<>0<>91911f94166e4d82af0b1a41fd2932e3<>::
-._Water Spell_Frame_04.png::CompressedTexture2D::6275502781287762036::1765389861::1765645495::0::::<><><>0<>0<>1756b9ed062234f267f98c3a20fe6710<>::
-._Water Spell_Frame_05.png::CompressedTexture2D::3207131089137585311::1765389861::1765645495::0::::<><><>0<>0<>0292817d8f0c77db2a13389620137ba9<>::
-._Water Spell_Frame_06.png::CompressedTexture2D::5160163683346708794::1765389861::1765645495::0::::<><><>0<>0<>5694541ef16336ffcce603b0c613d442<>::
-._Water Spell_Frame_07.png::CompressedTexture2D::1051345373080379135::1765389861::1765645495::0::::<><><>0<>0<>078fafea15c28f81b89dab6788826174<>::
-._Water Spell_Frame_08.png::CompressedTexture2D::3539222572018783200::1765389861::1765645495::0::::<><><>0<>0<>05972c51842d0a24fc9007b9053b9da6<>::
+._Water Spell_Frame_01.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>4442d1ff44c3fc0b620271b6688fecad<>::
+._Water Spell_Frame_02.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>275161711060937eb18b3847a8498f55<>::
+._Water Spell_Frame_03.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>91911f94166e4d82af0b1a41fd2932e3<>::
+._Water Spell_Frame_04.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>1756b9ed062234f267f98c3a20fe6710<>::
+._Water Spell_Frame_05.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>0292817d8f0c77db2a13389620137ba9<>::
+._Water Spell_Frame_06.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>5694541ef16336ffcce603b0c613d442<>::
+._Water Spell_Frame_07.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>078fafea15c28f81b89dab6788826174<>::
+._Water Spell_Frame_08.png::::-1::1765389861::1765645495::0::::<><><>0<>0<>05972c51842d0a24fc9007b9053b9da6<>::
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Fire Arrow/::1765390326
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Fire Arrow/AI/::1765390326
 ::res://assets/spritesheets/projectile/craftpix-net-381552-free-water-and-fire-magic-sprite-vector-pack/Fire Arrow/EPS/::1765390326
@@ -1133,12 +1133,12 @@ tile36.png::CompressedTexture2D::6797083824723860219::1758915231::1790309054::1:
 ::res://assets/spritesheets/tile_map/PSD/::1765219229
 ::res://scenes/::1790309797
 AUDIO_SPRITE.tscn::PackedScene::433303195852567420::1790309052::0::1::::<><><>0<>0<><>::uid://dcepbid2o8w4k::::res://assets/spritesheets/spritesheet-tiles-default.png<>uid://cd64dchs2iigf::::res://scripts/AUDIO_SPRITE.gd<>uid://cn8ii3ex8xokn::::res://assets/audio/Wood Burning in Fireplace 4 - QuickSounds.com.mp3
-AUDIO_TOGGLE.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::
+AUDIO_TOGGLE.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::res://scripts/VOLUME.gd<>res://assets/sprites/volume-up.png<>res://assets/sprites/volume-down.png
 BOSS_FIGHT.tscn::PackedScene::1783138256018731089::1790309052::0::1::::<><><>0<>0<><>::uid://cwqycux5h0q2u::::res://assets/spritesheets/paysage_tile_set.tres<>uid://dirydc1jhbrdb::::res://scenes/JOUEUR.tscn<>uid://bk0avaorue68x::::res://scenes/FAIL.tscn<>uid://cnf4o5qr4x1by::::res://scripts/CONTROLE_CAMERA.gd<>uid://dv4y14r0nply4::::res://scenes/HUD.tscn<>uid://bh2uc784bi5de::::res://scenes/BOSS_PERSO.tscn<>uid://3fro72ew8ojq::::res://scenes/PORTE.tscn<>uid://b1g238xfip51c::::res://scripts/PACKED_PORTE.gd<>uid://dxfqrh1kg0d1f::::res://scenes/FIN.tscn<>uid://ubfmbb1w1ym8::::res://scenes/COIN.tscn<>uid://c7rkhc3vuy48c::::res://scripts/COIN.gd<>uid://gbx61cqjbvkt::::res://assets/audio/Backround_2/boss-fight-one-400508.mp3<>res://scenes/LEVEL_PRESENTATION.tscn
 BOSS_PERSO.tscn::PackedScene::4205344625927418120::1790309052::0::1::::<><><>0<>0<><>::uid://dprfwgo58bjdk::::res://assets/spritesheets/character/Golems_Free_Version/Golem_1/Orange/White_Swoosh_VFX/Golem_1_idle.png<>uid://dt3hr0v676ja::::res://scripts/BOSS_PERSO.gd<>uid://bvt5ntq7vdql6::::res://assets/spritesheets/character/Golems_Free_Version/Golem_1/Orange/White_Swoosh_VFX/Golem_1_attack.png<>uid://b5rg27ldh4npa::::res://assets/spritesheets/character/Golems_Free_Version/Golem_1/Orange/White_Swoosh_VFX/Golem_1_die.png<>uid://d2ggpe1c4lpi7::::res://assets/spritesheets/character/Golems_Free_Version/Golem_1/Orange/White_Swoosh_VFX/Golem_1_hurt.png<>uid://c4ulpidcr8c2u::::res://assets/audio/SFX/Fire/fireball-impact-351961.mp3
 COIN.tscn::PackedScene::4108927819328689390::1790309052::0::1::::<><><>0<>0<><>::uid://b57v0ip7q07p5::::res://assets/sprites/hud_coin.png
-COLLECTIBLE.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::
-CONFIGURATION_JEU.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::
+COLLECTIBLE.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::res://assets/sprites/star.png<>res://scripts/COLLECTIBLE.gd
+CONFIGURATION_JEU.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::res://scenes/MENU_CONTROLE.tscn
 ETOILES.tscn::PackedScene::2119208855369062386::1790309052::0::1::::<><><>0<>0<><>::uid://b4rnhjjhju8nf::::res://assets/sprites/star.png<>uid://cru5i4c1hyrs7::::res://assets/audio/SFX/game-bonus-02-294436.mp3
 FAIL.tscn::PackedScene::5493244488267558089::1790309052::0::1::::<><><>0<>0<><>::uid://cwqycux5h0q2u::::res://assets/spritesheets/paysage_tile_set.tres<>uid://dirydc1jhbrdb::::res://scenes/JOUEUR.tscn<>uid://cnf4o5qr4x1by::::res://scripts/CONTROLE_CAMERA.gd<>uid://bt2ycg421pfi3::::res://assets/audio/SFX/brass-fail-8-b-207131.mp3<>res://scripts/FAIL.gd
 FIN.tscn::PackedScene::4257652141650980727::1790309052::0::1::::<><><>0<>0<><>::uid://cwqycux5h0q2u::::res://assets/spritesheets/paysage_tile_set.tres<>uid://dirydc1jhbrdb::::res://scenes/JOUEUR.tscn<>uid://cnf4o5qr4x1by::::res://scripts/CONTROLE_CAMERA.gd<>uid://dv4y14r0nply4::::res://scenes/HUD.tscn<>uid://d0u8cs5711vdj::::res://scenes/HELPER_FIN.tscn<>uid://bnb12wh0mvv0g::::res://assets/audio/SFX/letx27s-go-352481.mp3<>uid://clhqyp8j0u0v4::::res://scripts/HELPER.gd<>uid://y7gl8l5qrlmn::::res://assets/audio/Backround_2/alarm.mp3<>res://scripts/POST_BOSS_ESCAPE.gd
@@ -1150,9 +1150,9 @@ JOUEUR.tscn::PackedScene::8174431499876873580::1790309052::0::1::::<><><>0<>0<><
 LEVEL_1.tscn::PackedScene::7570979903725498026::1790309218::0::1::::<><><>0<>0<><>::uid://dirydc1jhbrdb::::res://scenes/JOUEUR.tscn<>uid://dv4y14r0nply4::::res://scenes/HUD.tscn<>uid://cnf4cux5h0q2u::::res://scripts/CONTROLE_CAMERA.gd<>uid://itf3hknnah1g::::res://scenes/PORTE.tscn<>uid://b1g238xfip51c::::res://scripts/PACKED_PORTE.gd<>res://scenes/LEVEL_2.tscn<>res://scenes/LEVEL_PRESENTATION.tscn<>res://scenes/LEVEL_MECHANICS.tscn<>res://scripts/LEVEL_LAYOUT.gd<>uid://d3fe6e213xto8::::res://assets/audio/Backround_2/evil-aura-219114.mp3
 LEVEL_2.tscn::PackedScene::5402987358331570656::1790309218::0::1::::<><><>0<>0<><>::uid://dirydc1jhbrdb::::res://scenes/JOUEUR.tscn<>uid://dv4y14r0nply4::::res://scenes/HUD.tscn<>res://scenes/PORTE.tscn<>res://scripts/PACKED_PORTE.gd<>res://scenes/LEVEL_3.tscn<>res://scenes/LEVEL_PRESENTATION.tscn<>res://scenes/LEVEL_MECHANICS.tscn<>res://scripts/LEVEL_LAYOUT.gd<>res://scripts/CONTROLE_CAMERA.gd<>uid://ctgowq7y8nhih::::res://assets/audio/Backround_2/drift-action-sport-background-music-loop-157986.mp3
 LEVEL_3.tscn::PackedScene::2656388058306476897::1790309218::0::1::::<><><>0<>0<><>::uid://dirydc1jhbrdb::::res://scenes/JOUEUR.tscn<>uid://dv4y14r0nply4::::res://scenes/HUD.tscn<>res://scenes/PORTE.tscn<>res://scripts/PACKED_PORTE.gd<>res://scenes/BOSS_FIGHT.tscn<>res://scenes/LEVEL_PRESENTATION.tscn<>res://scenes/LEVEL_MECHANICS.tscn<>res://scripts/LEVEL_LAYOUT.gd<>res://scripts/CONTROLE_CAMERA.gd<>uid://oriih64q1i36::::res://assets/audio/SFX/cartoon-phone-voice-88637.mp3
-LEVEL_MECHANICS.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::
-LEVEL_PRESENTATION.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::
-LEVER.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::
+LEVEL_MECHANICS.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::res://scripts/LEVEL_MECHANICS.gd
+LEVEL_PRESENTATION.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::res://scripts/LEVEL_PRESENTATION.gd
+LEVER.tscn::PackedScene::-1::1790308751::0::1::::<><><>0<>0<><>::res://assets/sprites/lever.png<>res://scripts/LEVER.gd
 MAIN.tscn::PackedScene::6186291023638942992::1790310569::0::1::::<><><>0<>0<><>::uid://df4o6yn6uk8hi::::res://scenes/LEVEL_1.tscn<>uid://bv5bojyq47wl8::::res://scripts/MAIN.gd<>uid://j05okgtuaimk::::res://scenes/MENU_CONTROLE.tscn
 MENU_CONTROLE.tscn::PackedScene::8063713900494973436::1790309052::0::1::::<><><>0<>0<><>::uid://be02vcw1pg0va::::res://scripts/MENU_CONTROLE.gd<>uid://crhkoo4vld02q::::res://assets/spritesheets/close_icon.tres<>res://scripts/MOBILE_CONTROLS.gd<>res://scenes/AUDIO_TOGGLE.tscn
 PANNEAU_MESSAGE.tscn::PackedScene::5391667431048363669::1790309052::0::1::::<><><>0<>0<><>::uid://dq8ea2it5b7wq::::res://scripts/PANNEAU_MESSAGE.gd<>uid://dcepbid2o8w4k::::res://assets/spritesheets/spritesheet-tiles-default.png
@@ -1163,7 +1163,7 @@ PROJECTILE_ENEMIE.tscn::PackedScene::763683420454504759::1790309052::0::1::::<><
 STAR_LOCK.tscn::PackedScene::108988885940207532::1790309052::0::1::::<><><>0<>0<><>::uid://daqe1k4o566bd::::res://assets/sprites/block_yellow.png
 VICTOIRE.tscn::PackedScene::2135892936373905443::1790309052::0::1::::<><><>0<>0<><>::uid://cwqycux5h0q2u::::res://assets/spritesheets/paysage_tile_set.tres<>uid://dirydc1jhbrdb::::res://scenes/JOUEUR.tscn<>uid://cnf4o5qr4x1by::::res://scripts/CONTROLE_CAMERA.gd<>uid://bnb12wh0mvv0g::::res://assets/audio/SFX/letx27s-go-352481.mp3<>uid://d3fe6e213xto8::::res://assets/audio/Backround_2/evil-aura-219114.mp3<>uid://dv4y14r0nply4::::res://scenes/HUD.tscn<>res://scripts/VICTOIRE.gd<>uid://7rolm2kdfdcf::::res://scenes/YAY.tscn
 YAY.tscn::PackedScene::1988829873906344565::1790309052::0::1::::<><><>0<>0<><>::uid://d1j4p8lcurxal::::res://assets/spritesheets/Confetti.png
-::res://scripts/::1790309797
+::res://scripts/::1790310570
 AUDIO_SPRITE.gd::GDScript::6632368936419154685::1790308751::0::1::::<>Node2D<><>0<>0<><>::
 BOSS_PERSO.gd::GDScript::4240816242547708199::1790308751::0::1::::Boss<>CharacterBody2D<><>0<>0<><>::
 COIN.gd::GDScript::4729417593440632095::1790308751::0::1::::Coin<>Area2D<><>0<>0<><>::
