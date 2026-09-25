@@ -131,7 +131,7 @@ func _select_device(is_mobile: bool) -> void:
 	pause_button.show()
 	volume_button.show()
 	if _is_configuration_scene():
-		get_tree().change_scene_to_file("res://scenes/MAIN.tscn")
+		get_tree().change_scene_to_file("res://scenes/LEVEL_1.tscn")
 		return
 	get_tree().paused = false
 
