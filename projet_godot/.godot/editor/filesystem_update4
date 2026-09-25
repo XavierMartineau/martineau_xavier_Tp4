@@ -1,0 +1,9 @@
+res://assets/spritesheets/paysage_tile_set.tres
+res://scenes/BOSS_FIGHT.tscn
+res://scenes/LEVEL_1.tscn
+res://scenes/LEVEL_2.tscn
+res://scenes/LEVEL_3.tscn
+res://scenes/PROJECTILE.tscn
+res://scenes/PROJECTILE_ENEMIE.tscn
+res://scripts/HUD.gd
+res://scripts/MENU_CONTROLE.gd

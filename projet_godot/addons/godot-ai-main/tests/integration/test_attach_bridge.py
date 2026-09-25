@@ -1,0 +1,782 @@
+"""End-to-end contracts for the client-owned stdio attach bridge."""
+
+from __future__ import annotations
+
+import asyncio
+import contextlib
+import json
+import os
+import re
+import signal
+import socket
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+import httpx2 as httpx
+import pytest
+import websockets
+from fastmcp import Client
+from fastmcp.client.transports import StdioTransport
+
+from godot_ai import __version__
+from godot_ai.attach.ensure import BackendStatus, probe_backend
+from godot_ai.attach.lease import LeaseClient
+from godot_ai.attach.proxy import _http_client_factory, create_attach_proxy
+from godot_ai.orphan_reaper import (
+    BOOT_GRACE_ENV,
+    IDLE_GRACE_ENV,
+    NO_IDLE_EXIT_ENV,
+    POLL_SECONDS_ENV,
+)
+from godot_ai.protocol.attach import (
+    ATTACH_PROTOCOL_VERSION,
+    ATTACH_SPAWNED_ENV,
+    DEV_TRANSPORT_ENV,
+    PLUGIN_SPAWNED_ENV,
+)
+from godot_ai.transport.capability import (
+    CAPABILITY_DIR_ENV,
+    HTTP_CAPABILITY_ENV,
+    WS_CAPABILITY_ENV,
+    generate_capabilities,
+    read_capabilities,
+)
+from tests.conftest import (
+    MockGodotPlugin,
+    allocate_free_ports,
+    isolate_capability_directory,
+    perform_v4_handshake,
+)
+
+
+def _runtime_capability_dir(runtime_dir: Path) -> Path:
+    if os.name == "nt":
+        return runtime_dir / "godot-ai" / "capabilities"
+    return runtime_dir / "capabilities"
+
+
+def _port_open(port: int) -> bool:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+        probe.settimeout(0.2)
+        return probe.connect_ex(("127.0.0.1", port)) == 0
+
+
+async def _wait_port_closed(port: int, timeout: float = 20.0) -> bool:
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        if not _port_open(port):
+            return True
+        await asyncio.sleep(0.1)
+    return not _port_open(port)
+
+
+async def _wait_backend_pid(log_path: Path, timeout: float = 10.0) -> int:
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        if log_path.exists():
+            match = re.search(
+                r"Started server process \[(\d+)\]",
+                log_path.read_text(encoding="utf-8", errors="replace"),
+            )
+            if match:
+                return int(match.group(1))
+        await asyncio.sleep(0.05)
+    raise AssertionError(f"backend PID did not appear in {log_path}")
+
+
+async def _wait_port_open(port: int, timeout: float = 15.0) -> None:
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        if _port_open(port):
+            return
+        await asyncio.sleep(0.05)
+    raise AssertionError(f"port {port} did not open within {timeout}s")
+
+
+def _external_status(instance_id: str = "integration-backend") -> BackendStatus:
+    return BackendStatus(
+        instance_id=instance_id,
+        server_version=__version__,
+        attach_protocol_version=ATTACH_PROTOCOL_VERSION,
+        ws_port=9500,
+        exclude_domains=(),
+        owner_type="external",
+        tool_catalog_hash="0" * 64,
+        package_path="test",
+    )
+
+
+def _bridge_transport(
+    http_port: int,
+    ws_port: int,
+    runtime_dir: Path,
+    stderr_log: Path,
+) -> StdioTransport:
+    repo_root = Path(__file__).resolve().parents[2]
+    env = dict(os.environ)
+    for inherited_reaper_key in (
+        NO_IDLE_EXIT_ENV,
+        POLL_SECONDS_ENV,
+        BOOT_GRACE_ENV,
+        IDLE_GRACE_ENV,
+        ATTACH_SPAWNED_ENV,
+        PLUGIN_SPAWNED_ENV,
+        DEV_TRANSPORT_ENV,
+        "GODOT_AI_OWNER_PID",
+    ):
+        env.pop(inherited_reaper_key, None)
+    existing_pythonpath = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = os.pathsep.join(
+        part for part in (str(repo_root / "src"), existing_pythonpath) if part
+    )
+    env["GODOT_AI_RUNTIME_DIR"] = str(runtime_dir)
+    if os.name == "nt":
+        env.pop(CAPABILITY_DIR_ENV, None)
+        env["LOCALAPPDATA"] = str(runtime_dir)
+    else:
+        env[CAPABILITY_DIR_ENV] = str(_runtime_capability_dir(runtime_dir))
+    env["GODOT_AI_DISABLE_TELEMETRY"] = "true"
+    env[POLL_SECONDS_ENV] = "0.05"
+    env[BOOT_GRACE_ENV] = "2"
+    env[IDLE_GRACE_ENV] = "0.2"
+    return StdioTransport(
+        sys.executable,
+        [
+            "-m",
+            "godot_ai",
+            "attach",
+            "--port",
+            str(http_port),
+            "--ws-port",
+            str(ws_port),
+        ],
+        env=env,
+        cwd=str(repo_root),
+        keep_alive=False,
+        log_file=stderr_log,
+    )
+
+
+def _http_headers(http_port: int, directory: Path) -> dict[str, str]:
+    record = read_capabilities(http_port, directory)
+    assert record is not None
+    return {"Authorization": f"Bearer {record.http}"}
+
+
+def _terminate_test_process(process: subprocess.Popen[bytes]) -> None:
+    if process.poll() is not None:
+        return
+    process.terminate()
+    try:
+        process.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        process.kill()
+        process.wait(timeout=5)
+
+
+def _terminate_pid(pid: int) -> None:
+    try:
+        os.kill(pid, signal.SIGTERM)
+    except OSError:
+        return
+
+
+def test_bridge_transport_sanitizes_inherited_reaper_environment(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv(NO_IDLE_EXIT_ENV, "1")
+    monkeypatch.setenv(ATTACH_SPAWNED_ENV, "inherited")
+    monkeypatch.setenv(PLUGIN_SPAWNED_ENV, "inherited")
+    monkeypatch.setenv(DEV_TRANSPORT_ENV, "inherited")
+    transport = _bridge_transport(8123, 9567, tmp_path / "runtime", tmp_path / "stderr")
+
+    assert transport.env is not None
+    assert NO_IDLE_EXIT_ENV not in transport.env
+    assert ATTACH_SPAWNED_ENV not in transport.env
+    assert PLUGIN_SPAWNED_ENV not in transport.env
+    assert DEV_TRANSPORT_ENV not in transport.env
+    assert transport.env[POLL_SECONDS_ENV] == "0.05"
+    assert transport.env[BOOT_GRACE_ENV] == "2"
+    assert transport.env[IDLE_GRACE_ENV] == "0.2"
+
+
+async def test_cold_start_discovers_tools_and_explains_how_to_open_editor(
+    tmp_path: Path,
+) -> None:
+    """Client-first startup succeeds without an editor and leaves stdout MCP-clean."""
+
+    http_port, ws_port = allocate_free_ports(2)
+    stderr_log = tmp_path / "attach-stderr.log"
+    transport = _bridge_transport(
+        http_port,
+        ws_port,
+        tmp_path / "runtime",
+        stderr_log,
+    )
+    backend_log = tmp_path / "runtime" / f"backend-{http_port}.log"
+
+    backend_pid: int | None = None
+    failure: BaseException | None = None
+    try:
+        async with Client(transport, timeout=20, init_timeout=30) as client:
+            tools = await client.list_tools()
+            names = {tool.name for tool in tools}
+            assert {"editor_state", "test_run", "session_manage"} <= names
+
+            async with httpx.AsyncClient(timeout=5, trust_env=False) as http:
+                status = (
+                    await http.get(
+                        f"http://127.0.0.1:{http_port}/godot-ai/status",
+                        headers=_http_headers(
+                            http_port, _runtime_capability_dir(tmp_path / "runtime")
+                        ),
+                    )
+                ).json()
+            assert status["name"] == "godot-ai"
+            assert status["owner_type"] == "attach"
+            assert status["instance_id"]
+            backend_pid = await _wait_backend_pid(backend_log)
+
+            result = await client.call_tool("editor_state", {}, raise_on_error=False)
+            assert result.is_error
+            error = result.structured_content["error"]
+            assert error["code"] == "PLUGIN_DISCONNECTED"
+            assert error["data"]["reason"] == "no_active_session"
+            assert "open this project in the godot editor" in error["data"]["hint"].lower()
+            assert "restarting the mcp client is not required" in error["data"]["hint"].lower()
+
+            # A safe operation after backend loss must start a replacement,
+            # re-register the instance-bound lease, and remain invisible to
+            # the upstream stdio client.
+            first_instance = status["instance_id"]
+            os.kill(backend_pid, signal.SIGTERM)
+            assert await _wait_port_closed(http_port)
+            assert await _wait_port_closed(ws_port)
+            backend_pid = None
+
+            recovered_tools = await client.list_tools()
+            assert {tool.name for tool in recovered_tools} == names
+            async with httpx.AsyncClient(timeout=5, trust_env=False) as http:
+                recovered_status = (
+                    await http.get(
+                        f"http://127.0.0.1:{http_port}/godot-ai/status",
+                        headers=_http_headers(
+                            http_port, _runtime_capability_dir(tmp_path / "runtime")
+                        ),
+                    )
+                ).json()
+            assert recovered_status["instance_id"] != first_instance
+            backend_pid = await _wait_backend_pid(backend_log)
+
+            # Give the backend reaper a poll in which to observe the active
+            # bridge lease before graceful release exercises the idle grace.
+            await asyncio.sleep(0.15)
+    except BaseException as exc:
+        failure = exc
+
+    stderr_text = (
+        stderr_log.read_text(encoding="utf-8", errors="replace")
+        if stderr_log.exists()
+        else "<missing>"
+    )
+    if failure is not None:
+        if backend_log.exists():
+            with contextlib.suppress(AssertionError):
+                backend_pid = await _wait_backend_pid(backend_log, timeout=2)
+        if backend_pid is not None:
+            _terminate_pid(backend_pid)
+        backend_closed = await _wait_port_closed(http_port, timeout=5)
+        if not backend_closed:
+            failure.add_note(
+                "Cleanup could not confirm that the detached attach backend exited; "
+                f"bridge stderr: {stderr_text}"
+            )
+    else:
+        backend_closed = await _wait_port_closed(http_port)
+    if not backend_closed and failure is None:
+        failure = AssertionError(
+            "attach-owned backend did not reap after the bridge released its lease; "
+            f"bridge stderr: {stderr_text}"
+        )
+        if backend_pid is not None:
+            _terminate_pid(backend_pid)
+            await _wait_port_closed(http_port)
+    if failure is not None:
+        raise failure.with_traceback(failure.__traceback__)
+
+
+@pytest.mark.parametrize("status", [307, 308])
+async def test_downstream_redirect_never_replays_or_forwards_capability(status: int) -> None:
+    requests: list[bytes] = []
+    handlers: set[asyncio.Task] = set()
+
+    async def redirect(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
+        task = asyncio.current_task()
+        handlers.add(task)
+        try:
+            request = await reader.readuntil(b"\r\n\r\n")
+            requests.append(request)
+            length = next(
+                int(line.split(b":", 1)[1])
+                for line in request.split(b"\r\n")
+                if line.lower().startswith(b"content-length:")
+            )
+            await reader.readexactly(length)
+            writer.write(
+                (
+                    f"HTTP/1.1 {status} Redirect\r\n"
+                    "Location: /second-dispatch\r\nContent-Length: 0\r\n"
+                    "Connection: close\r\n\r\n"
+                ).encode()
+            )
+            await writer.drain()
+        finally:
+            writer.close()
+            await writer.wait_closed()
+            handlers.discard(task)
+
+    server = await asyncio.start_server(redirect, "127.0.0.1", 0)
+    port = server.sockets[0].getsockname()[1]
+    try:
+        async with server, _http_client_factory(lambda: "c" * 32, follow_redirects=True) as client:
+            response = await client.post(
+                f"http://127.0.0.1:{port}/mcp",
+                json={
+                    "jsonrpc": "2.0",
+                    "id": 1,
+                    "method": "tools/call",
+                    "params": {"name": "mutation", "arguments": {}},
+                },
+            )
+            assert response.status_code == status
+            assert response.headers["location"] == "/second-dispatch"
+            assert not response.history
+    finally:
+        if handlers:
+            await asyncio.gather(*handlers)
+    assert len(requests) == 1
+    assert requests[0].startswith(b"POST /mcp ")
+    assert b"Authorization: Bearer " + b"c" * 32 in requests[0]
+    assert all(b"/second-dispatch" not in request for request in requests)
+
+
+async def test_slow_downstream_tool_has_no_bridge_read_deadline(tmp_path: Path) -> None:
+    """A dispatched response may outlive HTTPX's 5s and MCP SDK's 30s defaults."""
+
+    http_port = allocate_free_ports(1)[0]
+    call_log = tmp_path / "slow-calls.log"
+    backend_script = """
+import asyncio
+import sys
+from pathlib import Path
+from fastmcp import FastMCP
+
+mcp = FastMCP("slow-backend")
+
+@mcp.tool
+async def slow_operation(delay: float = 35.0) -> dict:
+    with Path(sys.argv[2]).open("a", encoding="utf-8") as calls:
+        calls.write("called\\n")
+    await asyncio.sleep(delay)
+    return {"completed": True, "delay": delay}
+
+mcp.run(transport="streamable-http", host="127.0.0.1", port=int(sys.argv[1]), show_banner=False)
+"""
+    backend_log = (tmp_path / "slow-backend.log").open("wb")
+    process = subprocess.Popen(
+        [sys.executable, "-c", backend_script, str(http_port), str(call_log)],
+        stdin=subprocess.DEVNULL,
+        stdout=backend_log,
+        stderr=backend_log,
+    )
+
+    async def ensure_ready() -> BackendStatus:
+        instance_id = (
+            "slow-test-backend"
+            if process.poll() is None and _port_open(http_port)
+            else "replacement-test-backend"
+        )
+        return BackendStatus(
+            instance_id=instance_id,
+            server_version=__version__,
+            attach_protocol_version=ATTACH_PROTOCOL_VERSION,
+            ws_port=9500,
+            exclude_domains=(),
+            owner_type="external",
+            tool_catalog_hash="0" * 64,
+            package_path="test",
+        )
+
+    try:
+        deadline = time.monotonic() + 15
+        while time.monotonic() < deadline and not _port_open(http_port):
+            if process.poll() is not None:
+                break
+            await asyncio.sleep(0.05)
+        assert _port_open(http_port), backend_log.name
+
+        proxy = create_attach_proxy(
+            f"http://127.0.0.1:{http_port}/mcp",
+            ensure_ready,
+            ensure_ready,
+            lambda: "t" * 32,
+        )
+        async with Client(proxy, timeout=60) as client:
+            started = time.monotonic()
+            result = await client.call_tool("slow_operation", {"delay": 35.0})
+            elapsed = time.monotonic() - started
+
+            interrupted = asyncio.create_task(
+                client.call_tool(
+                    "slow_operation",
+                    {"delay": 10.0},
+                    raise_on_error=False,
+                )
+            )
+            try:
+                dispatch_deadline = time.monotonic() + 5
+                while time.monotonic() < dispatch_deadline:
+                    calls = call_log.read_text(encoding="utf-8").splitlines()
+                    if len(calls) >= 2:
+                        break
+                    await asyncio.sleep(0.05)
+                else:
+                    raise AssertionError("second slow operation was not dispatched")
+            except BaseException:
+                interrupted.cancel()
+                with contextlib.suppress(asyncio.CancelledError):
+                    await interrupted
+                raise
+            await asyncio.to_thread(_terminate_test_process, process)
+            unknown = await interrupted
+
+        assert result.data == {"completed": True, "delay": 35.0}
+        assert elapsed >= 34.0
+        assert unknown.is_error
+        error = unknown.structured_content["error"]
+        assert error["code"] == "TRANSPORT_OUTCOME_UNKNOWN"
+        assert error["data"]["retryable"] is False
+        assert call_log.read_text(encoding="utf-8").splitlines() == ["called", "called"]
+    finally:
+        _terminate_test_process(process)
+        backend_log.close()
+
+
+@pytest.mark.parametrize("failure_name", ["connect_error", "connect_timeout"])
+@pytest.mark.parametrize("failure_phase", ["initialize", "tools/call"])
+async def test_real_stack_connect_failure_replays_once_before_dispatch(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    failure_name: str,
+    failure_phase: str,
+) -> None:
+    """The raw recorder survives FastMCP wrapping and never duplicates mutation."""
+
+    http_port = allocate_free_ports(1)[0]
+    call_log = tmp_path / f"{failure_name}-calls.log"
+    backend_script = """
+import sys
+from pathlib import Path
+from fastmcp import FastMCP
+
+mcp = FastMCP("counting-backend")
+
+@mcp.tool
+def counted_mutation() -> dict:
+    path = Path(sys.argv[2])
+    count = len(path.read_text(encoding="utf-8").splitlines()) if path.exists() else 0
+    count += 1
+    with path.open("a", encoding="utf-8") as calls:
+        calls.write(f"{count}\\n")
+    return {"count": count}
+
+mcp.run(transport="streamable-http", host="127.0.0.1", port=int(sys.argv[1]), show_banner=False)
+"""
+    backend_log = (tmp_path / f"{failure_name}-backend.log").open("wb")
+    process = subprocess.Popen(
+        [sys.executable, "-c", backend_script, str(http_port), str(call_log)],
+        stdin=subprocess.DEVNULL,
+        stdout=backend_log,
+        stderr=backend_log,
+    )
+    original = httpx.AsyncHTTPTransport.handle_async_request
+    armed = False
+    refused = 0
+
+    async def fail_first_tool_connect(self, request: httpx.Request) -> httpx.Response:
+        nonlocal refused
+        if armed and refused == 0 and failure_phase.encode() in request.content:
+            refused += 1
+            error_type = (
+                httpx.ConnectError if failure_name == "connect_error" else httpx.ConnectTimeout
+            )
+            raise error_type("synthetic pre-dispatch failure", request=request)
+        return await original(self, request)
+
+    monkeypatch.setattr(
+        httpx.AsyncHTTPTransport,
+        "handle_async_request",
+        fail_first_tool_connect,
+    )
+
+    async def ensure_ready() -> BackendStatus:
+        return _external_status()
+
+    try:
+        await _wait_port_open(http_port)
+        proxy = create_attach_proxy(
+            f"http://127.0.0.1:{http_port}/mcp",
+            ensure_ready,
+            ensure_ready,
+            lambda: "t" * 32,
+        )
+        async with Client(proxy, timeout=20) as client:
+            assert "counted_mutation" in {tool.name for tool in await client.list_tools()}
+            armed = True
+            result = await client.call_tool("counted_mutation", {})
+
+        assert result.data == {"count": 1}
+        assert refused == 1
+        assert call_log.read_text(encoding="utf-8").splitlines() == ["1"]
+    finally:
+        _terminate_test_process(process)
+        backend_log.close()
+
+
+async def test_loopback_status_lease_and_mcp_ignore_proxy_environment(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    http_port, ws_port, bogus_proxy_port = allocate_free_ports(3)
+    backend_log = (tmp_path / "loopback-backend.log").open("wb")
+    capability_dir = isolate_capability_directory(monkeypatch, tmp_path / "capability-home")
+    capabilities = generate_capabilities()
+    env = dict(os.environ)
+    env["GODOT_AI_DISABLE_TELEMETRY"] = "true"
+    env[HTTP_CAPABILITY_ENV] = capabilities.http
+    env[WS_CAPABILITY_ENV] = capabilities.websocket
+    process = subprocess.Popen(
+        [
+            sys.executable,
+            "-m",
+            "godot_ai",
+            "--transport",
+            "streamable-http",
+            "--port",
+            str(http_port),
+            "--ws-port",
+            str(ws_port),
+        ],
+        cwd=str(Path(__file__).resolve().parents[2]),
+        env=env,
+        stdin=subprocess.DEVNULL,
+        stdout=backend_log,
+        stderr=backend_log,
+    )
+
+    for name in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY"):
+        monkeypatch.setenv(name, f"http://127.0.0.1:{bogus_proxy_port}")
+    for name in ("NO_PROXY", "no_proxy"):
+        monkeypatch.setenv(name, "")
+
+    async def ensure_ready() -> BackendStatus:
+        status = await probe_backend(http_port, timeout=5)
+        assert status is not None
+        return status
+
+    def http_capability() -> str:
+        record = read_capabilities(http_port, capability_dir)
+        assert record is not None
+        return record.http
+
+    try:
+        await _wait_port_open(http_port)
+        status = await ensure_ready()
+
+        lease = LeaseClient(
+            f"http://127.0.0.1:{http_port}",
+            ensure_ready,
+            http_capability,
+        )
+        await lease.start(status)
+        try:
+            proxy = create_attach_proxy(
+                f"http://127.0.0.1:{http_port}/mcp",
+                ensure_ready,
+                ensure_ready,
+                http_capability,
+            )
+            async with Client(proxy, timeout=20) as client:
+                names = {tool.name for tool in await client.list_tools()}
+            assert {"editor_state", "test_run"} <= names
+        finally:
+            await lease.close()
+    finally:
+        _terminate_test_process(process)
+        backend_log.close()
+
+
+async def test_clean_sse_eof_reports_unknown_outcome_without_replay() -> None:
+    methods: list[str] = []
+    server_errors: list[Exception] = []
+
+    async def respond(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
+        try:
+            async with asyncio.timeout(10):
+                headers = await reader.readuntil(b"\r\n\r\n")
+                length = next(
+                    int(line.split(b":", 1)[1])
+                    for line in headers.split(b"\r\n")
+                    if line.lower().startswith(b"content-length:")
+                )
+                payload = json.loads(await reader.readexactly(length))
+                method = payload["method"]
+                methods.append(method)
+                status, mime = "200 OK", "application/json"
+                result = None
+                if method == "initialize":
+                    result = {
+                        "protocolVersion": payload["params"]["protocolVersion"],
+                        "capabilities": {"tools": {}},
+                        "serverInfo": {"name": "eof-fixture", "version": "1"},
+                    }
+                elif method == "tools/list":
+                    result = {"tools": [{
+                        "name": "mutation",
+                        "inputSchema": {"type": "object", "properties": {}},
+                    }]}
+                elif method == "tools/call":
+                    mime, body = "text/event-stream", b": ping\n\n"
+                else:
+                    status, body = "202 Accepted", b""
+                if result is not None:
+                    body = json.dumps({
+                        "jsonrpc": "2.0", "id": payload["id"], "result": result
+                    }).encode()
+                writer.write((
+                    f"HTTP/1.1 {status}\r\nContent-Type: {mime}\r\n"
+                    f"Content-Length: {len(body)}\r\nConnection: close\r\n\r\n"
+                ).encode() + body)
+                await writer.drain()
+        except Exception as exc:
+            server_errors.append(exc)
+        finally:
+            writer.close()
+            await writer.wait_closed()
+
+    async def ready() -> BackendStatus:
+        return BackendStatus(
+            instance_id="stable-eof-fixture", server_version=__version__,
+            attach_protocol_version=ATTACH_PROTOCOL_VERSION, ws_port=9500,
+            exclude_domains=(), owner_type="external", tool_catalog_hash="0" * 64,
+            package_path="fixture",
+        )
+
+    server = await asyncio.start_server(respond, "127.0.0.1", 0)
+    async with server:
+        port = server.sockets[0].getsockname()[1]
+        proxy = create_attach_proxy(
+            f"http://127.0.0.1:{port}/mcp", ready, ready, lambda: "t" * 32
+        )
+        async with Client(proxy, timeout=10) as client:
+            result = await client.call_tool("mutation", {}, raise_on_error=False)
+    assert not server_errors
+    assert methods.count("tools/call") == 1
+    assert result.is_error is True
+    assert isinstance(result.structured_content, dict)
+    error = result.structured_content["error"]
+    assert error["code"] == "TRANSPORT_OUTCOME_UNKNOWN"
+    assert error["data"]["retryable"] is False
+
+
+@pytest.mark.parametrize("failure", ["disconnect", "malformed"])
+async def test_editor_failure_preserves_unknown_write_outcome_through_stdio(
+    tmp_path: Path, failure: str
+) -> None:
+    http_port, ws_port = allocate_free_ports(2)
+    runtime_dir = tmp_path / "runtime"
+    transport = _bridge_transport(http_port, ws_port, runtime_dir, tmp_path / "attach.log")
+    sentinel = tmp_path / "sentinel.txt"
+    sentinel.write_text("before", encoding="utf-8")
+    writes = []
+    peer = None
+    backend_pid = None
+    try:
+        async with Client(transport, timeout=20, init_timeout=30) as client:
+            backend_pid = await _wait_backend_pid(runtime_dir / f"backend-{http_port}.log")
+            capability = read_capabilities(http_port, _runtime_capability_dir(runtime_dir))
+            assert capability is not None
+
+            async def connect():
+                ws = await websockets.connect(f"ws://127.0.0.1:{ws_port}")
+                await perform_v4_handshake(
+                    ws, capability=capability.websocket, session_id="sentinel"
+                )
+                return MockGodotPlugin(ws, "sentinel")
+
+            peer = await connect()
+
+            async def apply_without_valid_ack():
+                command = await peer.recv_command(timeout=10)
+                assert command["command"] == "write_file"
+                writes.append(command["request_id"])
+                sentinel.write_text(command["params"]["content"], encoding="utf-8")
+                if failure == "disconnect":
+                    await peer.ws.close(code=1011, reason="private diagnostic must not escape")
+                else:
+                    await peer.ws.send(
+                        json.dumps({"request_id": command["request_id"], "status": 42})
+                    )
+
+            handler = asyncio.create_task(apply_without_valid_ack())
+            result = await client.call_tool(
+                "filesystem_manage",
+                {
+                    "op": "write_text",
+                    "params": {"path": "res://sentinel.txt", "content": "applied"},
+                    "session_id": "sentinel",
+                },
+                raise_on_error=False,
+            )
+            await handler
+            assert result.is_error
+            assert result.structured_content is not None
+            error = result.structured_content["error"]
+            assert error["code"] == "TRANSPORT_OUTCOME_UNKNOWN"
+            assert error["data"]["retryable"] is False
+            assert error["data"]["sub_code"] == (
+                "EDITOR_DISCONNECTED" if failure == "disconnect" else "MALFORMED_EDITOR_RESPONSE"
+            )
+            assert "private diagnostic" not in json.dumps(result.structured_content)
+            assert sentinel.read_text(encoding="utf-8") == "applied"
+            assert len(writes) == 1
+            if failure == "disconnect":
+                peer = await connect()
+
+            async def read_after_failure():
+                command = await peer.recv_command(timeout=10)
+                assert command["command"] == "read_file", "an ambiguous write must never replay"
+                await peer.send_response(
+                    command["request_id"], {"content": sentinel.read_text(encoding="utf-8")}
+                )
+
+            reader = asyncio.create_task(read_after_failure())
+            result = await client.call_tool(
+                "filesystem_manage",
+                {
+                    "op": "read_text",
+                    "params": {"path": "res://sentinel.txt"},
+                    "session_id": "sentinel",
+                },
+            )
+            await reader
+            assert result.data["content"] == "applied"
+            with pytest.raises(TimeoutError):
+                await peer.recv_command(timeout=0.2)
+    finally:
+        if peer is not None:
+            await peer.close()
+        if backend_pid is not None:
+            _terminate_pid(backend_pid)

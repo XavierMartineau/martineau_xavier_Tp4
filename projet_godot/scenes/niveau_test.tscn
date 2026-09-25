@@ -1,0 +1,72 @@
+[gd_scene format=4 uid="uid://ckb5umnc1bfdh"]
+
+[ext_resource type="Script" uid="uid://eaknc6drcxnm" path="res://scripts/niveau_test.gd" id="1_eph2o"]
+[ext_resource type="TileSet" uid="uid://cwqycux5h0q2u" path="res://assets/spritesheets/paysage_tile_set.tres" id="1_lbg1e"]
+[ext_resource type="PackedScene" uid="uid://dop0xssfp6ul5" path="res://scenes/joueur.tscn" id="2_ktk5d"]
+[ext_resource type="Script" uid="uid://b3d8s4w5wu43x" path="res://scripts/controle_camera.gd" id="4_5hoti"]
+[ext_resource type="Script" uid="uid://blynt220aulb1" path="res://scripts/packed_porte.gd" id="10_efbda"]
+[ext_resource type="PackedScene" path="res://scenes/niveau_2.tscn" id="11_7e15m"]
+[ext_resource type="AudioStream" uid="uid://d3fe6e213xto8" path="res://assets/audio/Backround_2/evil-aura-219114.mp3" id="13_eph2o"]
+[ext_resource type="PackedScene" uid="uid://b78l2lvooin6c" path="res://scenes/powerup.tscn" id="13_rewv3"]
+[ext_resource type="PackedScene" uid="uid://gf5o8ax5texg" path="res://scenes/audio_sprite.tscn" id="14_duk5p"]
+[ext_resource type="PackedScene" uid="uid://b1ttsasvlbau2" path="res://scenes/hud.tscn" id="16_vlrp8"]
+[ext_resource type="PackedScene" uid="uid://itf3hknnah1g" path="res://scenes/porte.tscn" id="20_5kbji"]
+
+[node name="NiveauTest" type="Node" unique_id=1726107482]
+script = ExtResource("1_eph2o")
+
+[node name="PlancherTileMapLayer" type="TileMapLayer" parent="." unique_id=1909387567]
+position = Vector2(18395, 16257)
+tile_map_data = PackedByteArray("AAAAAAEAAAABAAIAAAD//wIAAAABAAIAADD//wEAAAABAAIAADD//wAAAAABAAIAAAD/////AAABAAIAAAABAAIAAAABAAIAAAACAAIAAAABAAIAAAADAAIAAAABAAIAAAAEAAQAAAABAAIAAAAFAAMAAAABAAIAADADAAUAAAABAAIAAAACAAYAAAABAAIAAAAAAAgAAAABAAIAAAABAAgAAAABAAIAAAACAAgAAAABAAIAAAADAAgAAAABAAIAAAAEAAgAAAABAAIAAAAFAAgAAAABAAIAAAAGAAgAAAABAAIAAAAFAAYAAAABAAIAADAAAAIAAAABAAIAAAAAAAYAAAABAAIAAFAAAAUAAAABAAIAAFAAAAQAAAABAAIAAFAAAAMAAAABAAIAAFD//wMAAAABAAIAADD//wQAAAABAAIAADD//wUAAAABAAIAAAAEAAUAAAABAAIAAAAEAAYAAAABAAIAADADAAYAAAABAAIAADAGAAAAAAABAAIAAAAGAAEAAAABAAIAAAAGAAIAAAABAAIAAAAGAP//AAABAAIAAAAFAP//AAABAAIAADAEAP//AAABAAIAADADAP//AAABAAIAADACAP//AAABAAIAADABAP//AAABAAIAADAAAP//AAABAAIAADABAAMAAAABAAIAAAACAAMAAAABAAIAAAABAAQAAAABAAIAAAD+/wUAAAABAAIAAAD+/wQAAAABAAIAAAD+/wMAAAABAAIAAAD+/wIAAAABAAIAAAD+/wEAAAABAAIAAAD+/wAAAAABAAIAAAAHAAEAAAABAAIAAAAKAAIAAAABAAIAAAALAAkAAAABAAIAAAALAP//AAAAAAoAAAAKAP//AAAAAAoAAAAJAP//AAAAAAoAAAAIAP//AAAAAAoAAAAHAP//AAAAAAoAAAAHAAAAAAABAAIAADAIAAAAAAABAAIAADAJAAAAAAABAAIAADAKAAAAAAABAAIAADALAAAAAAAAAAoAAAAKAAkAAAABAAIAAAAJAAkAAAABAAIAAAAIAAkAAAABAAIAAAALAAMAAAABAAIAAGALAAIAAAABAAIAAGALAAEAAAABAAIAAGAAAAcAAAABAAIAAFAHAAkAAAABAAIAAAAMAAkAAAABAAIAAAANAAkAAAABAAIAAAAOAAkAAAABAAIAAAAPAAkAAAABAAIAAAAQAAkAAAABAAIAAAARAAkAAAABAAIAAAASAAkAAAABAAIAAAATAAkAAAABAAIAAAAUAAgAAAABAAIAAAAVAAgAAAABAAIAAAAWAAcAAAABAAIAAAAXAAcAAAABAAIAAAAYAAYAAAABAAIAAAAMAAQAAAABAAIAADALAAQAAAABAAIAADAOAAUAAAABAAIAADANAAUAAAABAAIAADAQAAUAAAABAAIAADAPAAUAAAABAAIAADASAAUAAAABAAIAADARAAUAAAABAAIAADAUAAUAAAABAAIAADATAAUAAAABAAIAADAWAAQAAAABAAIAADAVAAQAAAABAAIAADAYAAMAAAABAAIAADAXAAMAAAABAAIAADA=")
+tile_set = ExtResource("1_lbg1e")
+
+[node name="group_powerup" type="Node2D" parent="." unique_id=1504431377]
+position = Vector2(18593.6, 16378)
+
+[node name="powerup2" parent="group_powerup" unique_id=2063241103 instance=ExtResource("13_rewv3")]
+position = Vector2(314.41, 168)
+collision_layer = 3
+collision_mask = 3
+
+[node name="powerup" parent="group_powerup" unique_id=1636953114 instance=ExtResource("13_rewv3")]
+position = Vector2(-96.59, 237)
+
+[node name="group-audio-positionnel" type="Node2D" parent="." unique_id=1785209753]
+position = Vector2(19194, 16864)
+
+[node name="Audio-sprite" parent="group-audio-positionnel" unique_id=1672363356 instance=ExtResource("14_duk5p")]
+position = Vector2(-410, -126)
+
+[node name="Audio-sprite2" parent="group-audio-positionnel" unique_id=834280930 instance=ExtResource("14_duk5p")]
+position = Vector2(-582, -318)
+
+[node name="Joueur" parent="." unique_id=957046711 instance=ExtResource("2_ktk5d")]
+position = Vector2(18410, 16331)
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="Joueur" unique_id=1012757359]
+texture_filter = 1
+position = Vector2(5, -1)
+limit_left = -10000009
+position_smoothing_enabled = true
+editor_draw_limits = true
+script = ExtResource("4_5hoti")
+zoom_closed = null
+zoom_open = null
+zoom_duration = null
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Joueur" unique_id=1740672894]
+position = Vector2(-24, -72)
+stream = ExtResource("13_eph2o")
+volume_db = 13.929
+autoplay = true
+
+[node name="HUD" parent="." unique_id=165867737 instance=ExtResource("16_vlrp8")]
+visible = false
+
+[node name="porte" parent="." unique_id=787404164 instance=ExtResource("20_5kbji")]
+position = Vector2(19933, 16514)
+script = ExtResource("10_efbda")
+nouvelle_scene = ExtResource("11_7e15m")
+
+[connection signal="body_entered" from="porte" to="porte" method="_on_body_entered"]

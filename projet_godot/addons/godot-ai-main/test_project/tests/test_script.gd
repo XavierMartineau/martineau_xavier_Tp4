@@ -1,0 +1,1189 @@
+@tool
+extends McpTestSuite
+
+const ErrorCodes := preload("res://addons/godot_ai/utils/error_codes.gd")
+
+const NodeHandler := preload("res://addons/godot_ai/handlers/node_handler.gd")
+const ScriptHandler := preload("res://addons/godot_ai/handlers/script_handler.gd")
+const FilesystemHandler := preload("res://addons/godot_ai/handlers/filesystem_handler.gd")
+const EditorLogger := preload("res://addons/godot_ai/runtime/editor_logger.gd")
+
+## Tests for ScriptHandler — script creation, reading, attach/detach, and symbol inspection.
+
+const INVALID_IF_PARSE_ERROR := "Parse Error: Expected conditional expression after \"if\"."
+
+var _handler: ScriptHandler
+var _undo_redo: EditorUndoRedoManager
+var _attached_shared_logger = null
+
+
+class _FallbackDiagnosticsScriptHandler extends ScriptHandler:
+	func _capture_gdscript_load_diagnostics(_path: String) -> Dictionary:
+		return {
+			"diagnostics": [],
+			"diagnostics_detail": "none",
+			"diagnostics_status": "checked",
+		}
+
+const TEST_SCRIPT_PATH := "res://tests/_mcp_test_script.gd"
+const CS_TEST_PATH := "res://tests/_mcp_test_script.cs"
+const CS_TEST_CONTENT := """using Godot;
+using System.Threading.Tasks;
+
+namespace McpTests;
+
+// The Godot C# conventions find_symbols has to understand: attribute on its
+// own line, attribute sharing the member's line, stacked attributes, an
+// expression-bodied method, a generic async method, and control-flow lines
+// that look like calls.
+public partial class McpTestCsharp : CharacterBody2D
+{
+	[Signal]
+	public delegate void HealthChangedEventHandler(int newValue);
+
+	[Signal] public delegate void DiedEventHandler();
+
+	[Export]
+	public float Speed { get; set; } = 10.0f;
+
+	[Export(PropertyHint.Range, "0,100")] private int _maxHealth = 100;
+
+	[Export] [Obsolete("stacked")] public string Label = "x";
+
+	private int _internal;
+
+	public override void _Ready()
+	{
+		if (Speed > 0)
+		{
+			GD.Print("ready");
+		}
+		else if (Speed < 0)
+		{
+			return;
+		}
+	}
+
+	public static McpTestCsharp MakeDefault() => null;
+
+	private async Task<bool> Move(Vector2 direction)
+	{
+		return await Task.FromResult(true);
+	}
+}
+"""
+const TEST_SCRIPT_CONTENT := """class_name _McpTestScript
+extends Node3D
+
+signal health_changed(new_value: int)
+signal died
+
+@export var speed: float = 10.0
+@export var max_health: int = 100
+
+var _internal := 0
+
+func _ready() -> void:
+	pass
+
+func move(direction: Vector3) -> void:
+	pass
+
+static func make_default() -> _McpTestScript:
+	return null
+"""
+
+
+func suite_name() -> String:
+	return "script"
+
+
+func suite_setup(ctx: Dictionary) -> void:
+	_undo_redo = ctx.get("undo_redo")
+	_handler = ScriptHandler.new(_undo_redo)
+	# Create a test script file for read/symbol tests
+	var file := FileAccess.open(TEST_SCRIPT_PATH, FileAccess.WRITE)
+	if file:
+		file.store_string(TEST_SCRIPT_CONTENT)
+		file.close()
+	var cs_file := FileAccess.open(CS_TEST_PATH, FileAccess.WRITE)
+	if cs_file:
+		cs_file.store_string(CS_TEST_CONTENT)
+		cs_file.close()
+
+
+func suite_teardown() -> void:
+	_detach_shared_editor_logger()
+	# Clean up test script file
+	if FileAccess.file_exists(TEST_SCRIPT_PATH):
+		DirAccess.remove_absolute(TEST_SCRIPT_PATH)
+	if FileAccess.file_exists(CS_TEST_PATH):
+		_remove_reload_helper(CS_TEST_PATH)
+
+
+# ----- create_script -----
+
+func test_create_script_basic() -> void:
+	var path := "res://tests/_mcp_test_created.gd"
+	var content := "extends Node\n\nfunc _ready() -> void:\n\tpass\n"
+	var result := _handler.create_script({"path": path, "content": content})
+	assert_has_key(result, "data")
+	assert_eq(result.data.path, path)
+	assert_eq(result.data.size, content.length())
+	assert_eq(result.data.committed, true)
+	assert_eq(result.data.import_settled, false)
+	assert_eq(result.data.import_settle, "not_waited")
+	assert_eq(result.data.diagnostics_scope, "this_file")
+	assert_eq(result.data.diagnostics_status, "checked")
+	assert_eq(result.data.diagnostics_detail, "none")
+	assert_eq(result.data.diagnostics, [])
+	assert_false(result.data.undoable, "File write should not be undoable")
+	# Verify file was actually written
+	assert_true(FileAccess.file_exists(path), "Script file should exist")
+	var file := FileAccess.open(path, FileAccess.READ)
+	assert_eq(file.get_as_text(), content)
+	file.close()
+	# Cleanup hint lists .gd and .gd.uid for freshly-created scripts (issue #82).
+	assert_has_key(result.data, "cleanup")
+	assert_eq(result.data.cleanup.rm, [path, path + ".uid"])
+	# Clean up
+	DirAccess.remove_absolute(path)
+
+
+func test_create_script_reports_log_capture_diagnostics_with_real_line() -> void:
+	var path := "res://tests/_mcp_test_invalid_create.gd"
+	var content := "extends Node\n\nfunc _ready() -> void:\n\tif\n\tpass\n"
+	_expect_invalid_if_parse_errors()
+	var result := _handler.create_script({"path": path, "content": content})
+	assert_has_key(result, "data")
+	assert_eq(result.data.path, path)
+	assert_eq(result.data.committed, true)
+	assert_eq(result.data.diagnostics_scope, "this_file")
+	assert_eq(result.data.diagnostics_status, "checked")
+	assert_eq(result.data.diagnostics_detail, "log_capture")
+	assert_eq(result.data.diagnostics.size(), 1, "Invalid GDScript should report one diagnostic")
+	assert_eq(result.data.diagnostics[0].path, path)
+	assert_eq(result.data.diagnostics[0].line, 4)
+	assert_eq(result.data.diagnostics[0].level, "error")
+	assert_contains(result.data.diagnostics[0].text, "Parse Error")
+	assert_false(result.data.diagnostics[0].details.has("fallback_line"), "Real capture must not use fallback line guesses")
+	assert_eq(result.data.diagnostics[0].details.source.path, path)
+	assert_eq(result.data.diagnostics[0].details.source.line, 4)
+	assert_true(FileAccess.file_exists(path), "Invalid content is still written so the agent can fix it")
+	DirAccess.remove_absolute(path)
+
+
+func test_create_script_validation_does_not_pollute_shared_editor_log() -> void:
+	var shared_buf := McpEditorLogBuffer.new()
+	_attach_shared_editor_logger(shared_buf)
+	var path := "res://tests/_mcp_test_invalid_create_shared_log.gd"
+	var content := "extends Node\n\nfunc _ready() -> void:\n\tif\n\tpass\n"
+	var cursor := shared_buf.appended_total()
+	_expect_invalid_if_parse_errors()
+	var result := _handler.create_script({"path": path, "content": content})
+	_detach_shared_editor_logger()
+
+	assert_has_key(result, "data")
+	assert_eq(result.data.diagnostics_detail, "log_capture")
+	assert_eq(result.data.diagnostics.size(), 1, "Invalid GDScript should report one diagnostic")
+	var captured := shared_buf.get_since(cursor)
+	assert_eq(captured.entries.size(), 0, "Validation load diagnostics must not leak into the shared editor log")
+	DirAccess.remove_absolute(path)
+
+
+func test_headless_mcp_write_parse_failure_does_not_ring_watermark() -> void:
+	## #766 contract pin: in headless MCP-only sessions, a broken .gd written
+	## via script_create surfaces its parse failure ONLY through the write
+	## response's `diagnostics` field — the diagnostic doorbell
+	## (`new_errors_since_last_call`) stays silent. Per-write validation runs
+	## against a private throwaway buffer, the shared EditorLogger drops
+	## addon-origin entries, and registration is efs.update_file() (no reload),
+	## so no editor-origin parse event reaches the watermark.
+	##
+	## The test runner is synchronous, so a real efs.scan() cannot settle
+	## in-test; the scan step below coalesces via the single-flight latch
+	## (same as test_filesystem.gd) and the settled scan's silence for an
+	## unchanged already-registered broken file was verified live in #766.
+	## If an engine or plugin change starts ringing the doorbell for these
+	## writes, this failing is the cue to update the "Headless sessions"
+	## paragraph in docs/TOOLS.md — a deliberate contract decision, not
+	## silent drift.
+	var shared_buf := McpEditorLogBuffer.new()
+	_attach_shared_editor_logger(shared_buf)
+	var empty_errors_tree := Tree.new()
+	track(empty_errors_tree)
+	empty_errors_tree.create_item()
+	var tracker := McpSurfacedErrorTracker.new(shared_buf, null, empty_errors_tree)
+	var before: Dictionary = tracker.watermark(true)
+
+	var path := "res://tests/_mcp_test_invalid_watermark.gd"
+	var content := "extends Node\n\nfunc _ready() -> void:\n\tif\n\tpass\n"
+	_expect_invalid_if_parse_errors()
+	var result := _handler.create_script({"path": path, "content": content})
+
+	# (a) The write response itself carries the error diagnostics — the
+	# contract-guaranteed channel for MCP-written code.
+	assert_has_key(result, "data")
+	assert_eq(result.data.committed, true)
+	assert_eq(result.data.diagnostics_scope, "this_file")
+	assert_gt(result.data.diagnostics.size(), 0, "Write response must carry the parse diagnostics")
+	assert_eq(result.data.diagnostics[0].level, "error")
+	assert_eq(result.data.diagnostics[0].path, path)
+	assert_contains(result.data.diagnostics[0].text, "Parse Error")
+
+	# The write registered the file with the resource pipeline (update_file),
+	# which is why a later scan treats it as known-and-unchanged and does not
+	# reload it.
+	var efs := EditorInterface.get_resource_filesystem()
+	assert_true(efs != null and efs.get_file_type(path) != "",
+		"Broken file must still be registered with the editor filesystem")
+
+	# (b) filesystem_manage(op="scan") — sync fallback with the single-flight
+	# latch pre-set so the call coalesces instead of kicking a real editor
+	# scan mid-suite (see test_filesystem.gd).
+	FilesystemHandler._scan_in_flight = true
+	var scan_result := FilesystemHandler.new().scan_filesystem({})
+	FilesystemHandler._scan_in_flight = false
+	assert_has_key(scan_result, "data")
+	assert_true(scan_result.data.was_already_scanning, "Latch set → coalesced, no new scan() kicked")
+
+	var after: Dictionary = tracker.watermark(true)
+	_detach_shared_editor_logger()
+	assert_eq(after.editor_ring, before.editor_ring,
+		"MCP-written parse failure must not append to the shared error ring")
+	assert_eq(after.editor_ring_warn, before.editor_ring_warn,
+		"MCP-written parse failure must not append to the shared warning ring")
+	assert_eq(after.debugger_promoted, before.debugger_promoted,
+		"No Debugger Errors-tab row may be promoted for an MCP-written parse failure")
+	DirAccess.remove_absolute(path)
+	## Tell the editor filesystem the broken file is gone — this test asserted
+	## the path was registered, and leaving the record behind makes later scans
+	## re-emit its parse error into other suites' capture windows (same cleanup
+	## as test_filesystem.gd's parse-diagnostics test).
+	if efs != null:
+		efs.update_file(path)
+
+
+func _attach_shared_editor_logger(buffer: McpEditorLogBuffer) -> void:
+	_detach_shared_editor_logger()
+	_attached_shared_logger = EditorLogger.new(buffer)
+	OS.add_logger(_attached_shared_logger)
+
+
+func _detach_shared_editor_logger() -> void:
+	if _attached_shared_logger != null:
+		OS.remove_logger(_attached_shared_logger)
+	_attached_shared_logger = null
+
+
+func _expect_invalid_if_parse_errors() -> void:
+	# Godot 4.7 adds one more logger-visible copy of this parse diagnostic.
+	# Expect the maximum seen across supported engines; older versions tolerate
+	# extra expectations for errors that are never emitted.
+	expect_script_error_containing(INVALID_IF_PARSE_ERROR)
+	expect_script_error_containing(INVALID_IF_PARSE_ERROR)
+	expect_script_error_containing(INVALID_IF_PARSE_ERROR)
+
+
+func test_finish_text_write_deferred_is_static_and_handles_null_connection() -> void:
+	## Under stress (many concurrent script_create + editor_reload_plugin
+	## mid-burst) the handler RefCounted was being freed mid-await of the
+	## deferred completion, producing "Resumed function ... after await, but
+	## class instance is gone" errors and dropping the response. The fix is
+	## the deferred completion being a `static` function so the coroutine
+	## doesn't capture self — it lives on McpResourceIO since #714, shared
+	## by create_script and write_file's fresh-`.gd` path.
+	##
+	## Calling the function directly via the class exercises both guarantees
+	## in one go: if the function isn't `static`, the parser rejects this
+	## call site ("Cannot call non-static function ... directly, make an
+	## instance instead") and the whole test file fails to load. If it IS
+	## static, the null-connection branch must bail without awaiting or
+	## sending a deferred response — the safety net for teardown-time callers.
+	##
+	## The Python source-pin in tests/unit/test_script_create_import_settle.py
+	## also asserts the `static func` declaration at the source-text level.
+	McpResourceIO.finish_text_write_deferred(null, "req-x", "res://nope.gd", {})
+	assert_true(true, "Static call with null connection must not raise")
+
+
+func test_create_script_overwrite_omits_cleanup_hint() -> void:
+	## On overwrite the caller already had the file on disk; cleanup.rm would
+	## point them at user content, not just scratch — so the field is omitted.
+	var path := "res://tests/_mcp_test_overwrite.gd"
+	var first := FileAccess.open(path, FileAccess.WRITE)
+	assert_true(first != null)
+	first.store_string("extends Node\n")
+	first.close()
+	var result := _handler.create_script({"path": path, "content": "extends Node\n# v2\n"})
+	assert_has_key(result, "data")
+	assert_eq(result.data.committed, true)
+	assert_eq(result.data.import_settled, true)
+	assert_eq(result.data.import_settle, "already_known")
+	assert_false(result.data.has("cleanup"), "Overwrite must not emit a cleanup hint")
+	DirAccess.remove_absolute(path)
+
+
+func test_extract_class_name_handles_all_forms() -> void:
+	## Deterministic coverage of the parser behind the scan_required hint,
+	## including the icon form `class_name Foo, "res://icon.svg"` which must yield
+	## just "Foo" (and a script with no class_name yields "").
+	assert_eq(ScriptHandler._extract_class_name("class_name Foo\nextends Node\n"), "Foo")
+	assert_eq(ScriptHandler._extract_class_name("class_name Foo extends Node\n"), "Foo")
+	assert_eq(
+		ScriptHandler._extract_class_name("@tool\nclass_name Foo, \"res://icon.svg\"\nextends Resource\n"),
+		"Foo"
+	)
+	assert_eq(ScriptHandler._extract_class_name("extends Node\nvar x := 1\n"), "")
+
+
+func test_create_script_emits_scan_required_for_unregistered_class_name() -> void:
+	## A newly-written class_name isn't in the global class table until a scan
+	## (update_file doesn't register it), so create_script flags it for headless
+	## callers. Guard against re-run contamination: once created in a persistent
+	## editor the class stays globally registered, which both suppresses the hint
+	## and makes re-creating it a parse error ("hides a global script class") —
+	## skip rather than fail there; a fresh CI editor always runs it.
+	var probe := "_McpScanReqProbe"
+	if ScriptHandler._class_name_registered(probe):
+		skip("%s already globally registered (re-run in a persistent editor)" % probe)
+		return
+	var path := "res://tests/_mcp_scan_hint_probe.gd"
+	if FileAccess.file_exists(path):
+		DirAccess.remove_absolute(path)
+	var content := "@tool\nclass_name %s\nextends Resource\n" % probe
+	var result := _handler.create_script({"path": path, "content": content})
+	assert_has_key(result, "data")
+	assert_eq(result.data.get("class_name", ""), probe)
+	assert_eq(result.data.get("class_registration", ""), "scan_required")
+	# Assert the hint names the actual recovery op, not just that some hint
+	# exists — a stale/mistyped op name should fail this test.
+	assert_contains(
+		result.data.get("class_registration_hint", ""),
+		"filesystem_manage(op=\"scan\")"
+	)
+	DirAccess.remove_absolute(path)
+	if FileAccess.file_exists(path + ".uid"):
+		DirAccess.remove_absolute(path + ".uid")
+
+
+func test_create_script_omits_scan_required_for_invalid_class_name_script() -> void:
+	## A script that fails to parse can't register its class via a scan, so the
+	## hint must be suppressed in favour of the parse-error diagnostics — pointing
+	## at op="scan" would steer the caller away from the real fix.
+	var path := "res://tests/_mcp_scan_hint_invalid.gd"
+	if FileAccess.file_exists(path):
+		DirAccess.remove_absolute(path)
+	var content := "@tool\nclass_name _McpScanHintInvalid\nextends Resource\n\nfunc _bad() -> void:\n\tif\n\tpass\n"
+	# The invalid `if` deliberately fails to parse; whitelist that SCRIPT ERROR
+	# so the framework doesn't abort the test (same pattern as the diagnostics
+	# tests above).
+	_expect_invalid_if_parse_errors()
+	var result := _handler.create_script({"path": path, "content": content})
+	assert_has_key(result, "data")
+	assert_false(
+		result.data.has("class_registration"),
+		"no scan_required hint when the script failed to parse"
+	)
+	DirAccess.remove_absolute(path)
+	if FileAccess.file_exists(path + ".uid"):
+		DirAccess.remove_absolute(path + ".uid")
+
+
+func test_create_script_missing_path() -> void:
+	var result := _handler.create_script({"content": "extends Node\n"})
+	assert_is_error(result, ErrorCodes.MISSING_REQUIRED_PARAM)
+
+
+func test_create_script_invalid_prefix() -> void:
+	var result := _handler.create_script({"path": "/tmp/bad.gd"})
+	assert_is_error(result)
+
+
+func test_create_script_wrong_extension() -> void:
+	var result := _handler.create_script({"path": "res://test.txt"})
+	assert_is_error(result, ErrorCodes.VALUE_OUT_OF_RANGE)
+	## #908: the rejection has to teach the caller what IS accepted and where
+	## other text files go, so an agent doesn't burn a turn guessing.
+	assert_contains(result.error.message, ".gd or .cs")
+	assert_contains(result.error.message, "write_text")
+
+
+func test_create_script_rejects_traversal_path() -> void:
+	## Issue #347: `res://../etc/passwd.gd` previously passed the prefix check.
+	## Use a synthetic target so a host with a pre-existing
+	## `<project_parent>/etc/passwd.gd` couldn't false-positive the disk
+	## assertion. The synthetic name never exists in a clean tree.
+	var traversal_path := "res://../__mcp_traversal_test_target__.gd"
+	var result := _handler.create_script({
+		"path": traversal_path,
+		"content": "extends Node\n",
+	})
+	assert_is_error(result)
+	assert_contains(result.error.message, "..")
+	## Defence: confirm the file was NOT written outside the project.
+	assert_false(FileAccess.file_exists(traversal_path), "traversal must not write to disk")
+
+
+# ----- patch_script -----
+
+func test_patch_script_basic() -> void:
+	var path := "res://tests/_mcp_test_patch.gd"
+	var original := "extends Node\n\nvar speed = 5\n"
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(original)
+	file.close()
+
+	var result := _handler.patch_script({
+		"path": path,
+		"old_text": "speed = 5",
+		"new_text": "speed = 10",
+	})
+	assert_has_key(result, "data")
+	assert_eq(result.data.replacements, 1)
+	assert_eq(result.data.diagnostics_scope, "this_file")
+	assert_eq(result.data.diagnostics_status, "checked")
+	assert_eq(result.data.diagnostics_detail, "none")
+	assert_eq(result.data.diagnostics, [])
+	assert_false(result.data.undoable)
+
+	var read := FileAccess.open(path, FileAccess.READ)
+	var new_content := read.get_as_text()
+	read.close()
+	assert_contains(new_content, "speed = 10")
+	DirAccess.remove_absolute(path)
+
+
+func test_patch_script_reports_log_capture_diagnostics_with_real_line() -> void:
+	var path := "res://tests/_mcp_test_invalid_patch.gd"
+	var original := "extends Node\n\nfunc _ready() -> void:\n\tpass\n\tprint(\"after\")\n"
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(original)
+	file.close()
+
+	_expect_invalid_if_parse_errors()
+	var result := _handler.patch_script({
+		"path": path,
+		"old_text": "pass",
+		"new_text": "if",
+	})
+	assert_has_key(result, "data")
+	assert_eq(result.data.path, path)
+	assert_eq(result.data.replacements, 1)
+	assert_eq(result.data.diagnostics_scope, "this_file")
+	assert_eq(result.data.diagnostics_status, "checked")
+	assert_eq(result.data.diagnostics_detail, "log_capture")
+	assert_eq(result.data.diagnostics.size(), 1, "Invalid patched GDScript should report one diagnostic")
+	assert_eq(result.data.diagnostics[0].path, path)
+	assert_eq(result.data.diagnostics[0].line, 4)
+	assert_eq(result.data.diagnostics[0].level, "error")
+	assert_contains(result.data.diagnostics[0].text, "Parse Error")
+	assert_false(result.data.diagnostics[0].details.has("fallback_line"), "Real capture must not use fallback line guesses")
+	assert_eq(result.data.diagnostics[0].details.source.path, path)
+	assert_eq(result.data.diagnostics[0].details.source.line, 4)
+
+	var read := FileAccess.open(path, FileAccess.READ)
+	var new_content := read.get_as_text()
+	read.close()
+	assert_contains(new_content, "if")
+	DirAccess.remove_absolute(path)
+
+
+func test_patch_script_validation_does_not_pollute_shared_editor_log() -> void:
+	var shared_buf := McpEditorLogBuffer.new()
+	_attach_shared_editor_logger(shared_buf)
+	var path := "res://tests/_mcp_test_invalid_patch_shared_log.gd"
+	var original := "extends Node\n\nfunc _ready() -> void:\n\tpass\n\tprint(\"after\")\n"
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(original)
+	file.close()
+
+	var cursor := shared_buf.appended_total()
+	_expect_invalid_if_parse_errors()
+	var result := _handler.patch_script({
+		"path": path,
+		"old_text": "pass",
+		"new_text": "if",
+	})
+	_detach_shared_editor_logger()
+
+	assert_has_key(result, "data")
+	assert_eq(result.data.diagnostics_detail, "log_capture")
+	assert_eq(result.data.diagnostics.size(), 1, "Invalid patched GDScript should report one diagnostic")
+	var captured := shared_buf.get_since(cursor)
+	assert_eq(captured.entries.size(), 0, "Validation load diagnostics must not leak into the shared editor log")
+	DirAccess.remove_absolute(path)
+
+
+func test_patch_script_reports_fallback_diagnostics_without_logger() -> void:
+	var path := "res://tests/_mcp_test_invalid_patch_no_logger.gd"
+	var original := "extends Node\n\nfunc _ready() -> void:\n\tpass\n\tprint(\"after\")\n"
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(original)
+	file.close()
+
+	_expect_invalid_if_parse_errors()
+	var fallback_handler := _FallbackDiagnosticsScriptHandler.new(_undo_redo)
+	var result := fallback_handler.patch_script({
+		"path": path,
+		"old_text": "pass",
+		"new_text": "if",
+	})
+	assert_has_key(result, "data")
+	assert_eq(result.data.path, path)
+	assert_eq(result.data.diagnostics_scope, "this_file")
+	assert_eq(result.data.diagnostics_status, "checked")
+	assert_eq(result.data.diagnostics_detail, "fallback")
+	assert_gt(result.data.diagnostics.size(), 0)
+	assert_eq(result.data.diagnostics[0].path, path)
+	assert_eq(result.data.diagnostics[0].line, 5)
+	assert_eq(result.data.diagnostics[0].details.fallback_line, true)
+	DirAccess.remove_absolute(path)
+
+
+func test_patch_script_no_match() -> void:
+	var result := _handler.patch_script({
+		"path": TEST_SCRIPT_PATH,
+		"old_text": "this_does_not_exist_anywhere",
+		"new_text": "whatever",
+	})
+	assert_is_error(result)
+
+
+func test_patch_script_ambiguous_match_without_replace_all() -> void:
+	var path := "res://tests/_mcp_test_patch_ambig.gd"
+	var original := "var x = 1\nvar y = 1\n"
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(original)
+	file.close()
+
+	var result := _handler.patch_script({
+		"path": path,
+		"old_text": "= 1",
+		"new_text": "= 2",
+	})
+	assert_is_error(result)
+	DirAccess.remove_absolute(path)
+
+
+func test_patch_script_replace_all() -> void:
+	var path := "res://tests/_mcp_test_patch_all.gd"
+	var original := "extends Node\n\n# foo\n# foo\n# foo\n"
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(original)
+	file.close()
+
+	var result := _handler.patch_script({
+		"path": path,
+		"old_text": "foo",
+		"new_text": "bar",
+		"replace_all": true,
+	})
+	assert_has_key(result, "data")
+	assert_eq(result.data.replacements, 3)
+
+	var read := FileAccess.open(path, FileAccess.READ)
+	var new_content := read.get_as_text()
+	read.close()
+	assert_eq(new_content, "extends Node\n\n# bar\n# bar\n# bar\n")
+	DirAccess.remove_absolute(path)
+
+
+func test_patch_script_missing_old_text() -> void:
+	var result := _handler.patch_script({
+		"path": TEST_SCRIPT_PATH,
+		"new_text": "x",
+	})
+	assert_is_error(result, ErrorCodes.MISSING_REQUIRED_PARAM)
+
+
+func test_patch_script_non_gd_extension_rejected() -> void:
+	var result := _handler.patch_script({
+		"path": "res://main.tscn",
+		"old_text": "x",
+		"new_text": "y",
+	})
+	assert_is_error(result)
+
+
+func test_patch_script_missing_new_text() -> void:
+	var result := _handler.patch_script({
+		"path": TEST_SCRIPT_PATH,
+		"old_text": "speed",
+	})
+	assert_is_error(result)
+
+
+func test_patch_script_file_not_found() -> void:
+	var result := _handler.patch_script({
+		"path": "res://does/not/exist.gd",
+		"old_text": "x",
+		"new_text": "y",
+	})
+	assert_is_error(result, ErrorCodes.RESOURCE_NOT_FOUND)
+
+
+func test_patch_script_invalid_prefix() -> void:
+	var result := _handler.patch_script({
+		"path": "/tmp/bad.gd",
+		"old_text": "x",
+		"new_text": "y",
+	})
+	assert_is_error(result)
+
+
+func test_patch_script_rejects_traversal_path() -> void:
+	## Issue #347 regression: traversal must be caught before the file is
+	## opened for read or write.
+	var result := _handler.patch_script({
+		"path": "res://../etc/passwd.gd",
+		"old_text": "x",
+		"new_text": "y",
+	})
+	assert_is_error(result)
+	assert_contains(result.error.message, "..")
+
+
+# ----- read_script -----
+
+func test_read_script_basic() -> void:
+	var result := _handler.read_script({"path": TEST_SCRIPT_PATH})
+	assert_has_key(result, "data")
+	assert_eq(result.data.path, TEST_SCRIPT_PATH)
+	assert_contains(result.data.content, "class_name _McpTestScript")
+	assert_gt(result.data.size, 0, "Size should be positive")
+	assert_gt(result.data.line_count, 0, "Line count should be positive")
+
+
+func test_read_script_missing_path() -> void:
+	var result := _handler.read_script({})
+	assert_is_error(result, ErrorCodes.MISSING_REQUIRED_PARAM)
+
+
+func test_read_script_invalid_prefix() -> void:
+	var result := _handler.read_script({"path": "/tmp/bad.gd"})
+	assert_is_error(result)
+
+
+func test_read_script_not_found() -> void:
+	var result := _handler.read_script({"path": "res://nonexistent_script.gd"})
+	assert_is_error(result)
+
+
+func test_read_script_rejects_traversal_path() -> void:
+	## Issue #347: read_script must not become a file-disclosure primitive.
+	var result := _handler.read_script({"path": "res://../etc/passwd.gd"})
+	assert_is_error(result)
+	assert_contains(result.error.message, "..")
+
+
+# ----- attach_script -----
+
+func test_attach_script_basic() -> void:
+	# Clean up any leftover node from a prior run
+	var scene_root := EditorInterface.get_edited_scene_root()
+	var stale := McpScenePath.resolve("/Main/_McpTestAttach", scene_root)
+	if stale:
+		stale.get_parent().remove_child(stale)
+		stale.queue_free()
+
+	# Create a temporary node to attach to
+	var node_handler := NodeHandler.new(_undo_redo)
+	node_handler.create_node({"type": "Node3D", "name": "_McpTestAttach", "parent_path": "/Main"})
+
+	var result := _handler.attach_script({
+		"path": "/Main/_McpTestAttach",
+		"script_path": TEST_SCRIPT_PATH,
+	})
+	assert_has_key(result, "data")
+	assert_eq(result.data.script_path, TEST_SCRIPT_PATH)
+	assert_false(result.data.had_previous_script)
+	assert_true(result.data.undoable)
+
+	# Clean up: undo attach then undo create
+	assert_true(editor_undo(_undo_redo), "undo should succeed")
+	assert_true(editor_undo(_undo_redo), "undo should succeed")
+
+
+func test_attach_script_missing_path() -> void:
+	var result := _handler.attach_script({"script_path": TEST_SCRIPT_PATH})
+	assert_is_error(result, ErrorCodes.MISSING_REQUIRED_PARAM)
+
+
+func test_attach_script_missing_script_path() -> void:
+	var result := _handler.attach_script({"path": "/Main/Camera3D"})
+	assert_is_error(result, ErrorCodes.MISSING_REQUIRED_PARAM)
+
+
+func test_attach_script_node_not_found() -> void:
+	var result := _handler.attach_script({
+		"path": "/Main/DoesNotExist",
+		"script_path": TEST_SCRIPT_PATH,
+	})
+	assert_is_error(result, ErrorCodes.NODE_NOT_FOUND)
+
+
+func test_attach_script_not_found() -> void:
+	var result := _handler.attach_script({
+		"path": "/Main/Camera3D",
+		"script_path": "res://nonexistent_script.gd",
+	})
+	assert_is_error(result)
+
+
+# ----- detach_script -----
+
+func test_detach_script_no_script() -> void:
+	# Camera3D typically has no custom script attached
+	# Create a fresh node with no script
+	var node_handler := NodeHandler.new(_undo_redo)
+	node_handler.create_node({"type": "Node3D", "name": "_McpTestDetach", "parent_path": "/Main"})
+
+	var result := _handler.detach_script({"path": "/Main/_McpTestDetach"})
+	assert_has_key(result, "data")
+	assert_false(result.data.had_script)
+
+	# Clean up
+	assert_true(editor_undo(_undo_redo), "undo should succeed")
+
+
+func test_detach_script_missing_path() -> void:
+	var result := _handler.detach_script({})
+	assert_is_error(result, ErrorCodes.MISSING_REQUIRED_PARAM)
+
+
+func test_detach_script_node_not_found() -> void:
+	var result := _handler.detach_script({"path": "/Main/DoesNotExist"})
+	assert_is_error(result, ErrorCodes.NODE_NOT_FOUND)
+
+
+# ----- find_symbols -----
+
+func test_find_symbols_basic() -> void:
+	var result := _handler.find_symbols({"path": TEST_SCRIPT_PATH})
+	assert_has_key(result, "data")
+	assert_eq(result.data.path, TEST_SCRIPT_PATH)
+	assert_eq(result.data.class_name, "_McpTestScript")
+	assert_eq(result.data.extends, "Node3D")
+
+
+func test_find_symbols_functions() -> void:
+	var result := _handler.find_symbols({"path": TEST_SCRIPT_PATH})
+	assert_gt(result.data.function_count, 0, "Should find functions")
+	var func_names: Array[String] = []
+	for fn: Dictionary in result.data.functions:
+		func_names.append(fn.name)
+	assert_contains(func_names, "_ready")
+	assert_contains(func_names, "move")
+	## Regression: `static func` declarations must be detected too (not just
+	## plain `func`). See script_handler.find_symbols.
+	assert_contains(func_names, "make_default")
+
+
+func test_find_symbols_signals() -> void:
+	var result := _handler.find_symbols({"path": TEST_SCRIPT_PATH})
+	assert_eq(result.data.signal_count, 2)
+	assert_contains(result.data.signals, "health_changed")
+	assert_contains(result.data.signals, "died")
+
+
+func test_find_symbols_exports() -> void:
+	var result := _handler.find_symbols({"path": TEST_SCRIPT_PATH})
+	assert_eq(result.data.export_count, 2)
+	var export_names: Array[String] = []
+	for exp: Dictionary in result.data.exports:
+		export_names.append(exp.name)
+	assert_contains(export_names, "speed")
+	assert_contains(export_names, "max_health")
+
+
+func test_find_symbols_missing_path() -> void:
+	var result := _handler.find_symbols({})
+	assert_is_error(result, ErrorCodes.MISSING_REQUIRED_PARAM)
+
+
+func test_find_symbols_invalid_prefix() -> void:
+	var result := _handler.find_symbols({"path": "/tmp/bad.gd"})
+	assert_is_error(result)
+
+
+func test_find_symbols_not_found() -> void:
+	var result := _handler.find_symbols({"path": "res://nonexistent_script.gd"})
+	assert_is_error(result)
+
+
+func test_find_symbols_rejects_traversal_path() -> void:
+	## Issue #347: find_symbols also reads file content; same disclosure surface.
+	var result := _handler.find_symbols({"path": "res://../etc/passwd.gd"})
+	assert_is_error(result)
+	assert_contains(result.error.message, "..")
+
+
+func test_find_symbols_class_name_with_extends_tail() -> void:
+	## find_symbols' class_name parse drifted from _extract_class_name:
+	## `class_name Foo extends Bar` leaked the tail into the symbol name.
+	const CN_FORM_PATH := "res://tests/_mcp_cn_form_probe.gd"
+	var f := FileAccess.open(CN_FORM_PATH, FileAccess.WRITE)
+	if f == null:
+		assert_true(false, "could not write probe script")
+		return
+	f.store_string("class_name _McpCnFormProbe extends Node\n\nfunc noop() -> void:\n\tpass\n")
+	f.close()
+	var result := _handler.find_symbols({"path": CN_FORM_PATH})
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(CN_FORM_PATH))
+	assert_has_key(result, "data")
+	assert_eq(result.data.class_name, "_McpCnFormProbe",
+		"the `extends` tail must not leak into the class_name symbol")
+
+
+# ----- #937: refresh an already-loaded GDScript after a write -----
+
+## A GDScript stays in GDScriptCache (keyed by path) while any reference is
+## alive, and ResourceLoader cache modes do not refresh it — so a reused
+## fixture path hands the next test, or the next test_run in the same editor
+## session (CI reruns the suite after reload churn), the previous body or a
+## broken parse: the very staleness under test. Every invocation therefore
+## gets a path that has never been loaded.
+const RELOAD_RETURN_PARSE_ERROR := "Expected end of statement after return statement"
+
+
+func _unique_reload_path(tag: String) -> String:
+	return "res://tests/_mcp_test_reload_%s_%d.gd" % [tag, Time.get_ticks_usec()]
+
+
+func _reload_helper_source(value: String) -> String:
+	return "extends RefCounted\nstatic func value() -> String:\n\treturn \"%s\"\n" % value
+
+
+func _write_reload_helper(value: String, path: String) -> void:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	assert_true(file != null, "helper fixture must be writable")
+	file.store_string(_reload_helper_source(value))
+	file.close()
+
+
+## Load a never-before-loaded fixture path so the object IS the cache entry.
+func _load_reload_helper(path: String) -> GDScript:
+	var loaded: GDScript = ResourceLoader.load(path)
+	assert_true(loaded != null, "fixture must load")
+	return loaded
+
+
+## Every invocation writes a fresh path, so also drop the `.uid` sidecar the
+## editor generates on register — otherwise each run leaves one behind.
+func _remove_reload_helper(path: String) -> void:
+	DirAccess.remove_absolute(path)
+	if FileAccess.file_exists(path + ".uid"):
+		DirAccess.remove_absolute(path + ".uid")
+
+
+## Stand-in for a GUI editor. There, EditorFileSystem.update_file() runs the
+## script-documentation pass synchronously (a headless editor skips it): it
+## ResourceLoader.load()s a never-loaded script into the cache and reloads a
+## cached one from disk. Replaying that inside the handler's register seam
+## lets a headless run lock the decide-before-register ordering.
+class _GuiEditorScriptHandler extends ScriptHandler:
+	func _register_written_file(path: String) -> void:
+		super(path)
+		if ResourceLoader.has_cached(path):
+			# EditorFileSystem::_should_reload_script -> Script::reload_from_file.
+			# CACHE_MODE_IGNORE is the mode that refreshes the cached object:
+			# ResourceFormatLoaderGDScript maps it to GDScriptCache::get_full_script
+			# (update_from_disk=true), i.e. load_source_code() + reload(true) on the
+			# entry every holder shares — the same thing the handler's diagnostics
+			# capture relies on. CACHE_MODE_REPLACE returns the cached script untouched.
+			ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE)
+		else:
+			ResourceLoader.load(path)
+
+
+func test_patch_script_refreshes_loaded_gdscript() -> void:
+	## Regression for #937: a loaded GDScript kept the old body after a patch.
+	var path := _unique_reload_path("patch")
+	_write_reload_helper("old", path)
+	var loaded: GDScript = _load_reload_helper(path)
+	assert_eq(loaded.new().value(), "old")
+	var result := _handler.patch_script({
+		"path": path, "old_text": "\"old\"", "new_text": "\"new\"",
+	})
+	assert_has_key(result, "data")
+	assert_eq(result.data.replacements, 1)
+	assert_eq(result.data.reloaded, true)
+	assert_false(result.data.has("reload_reason"), "a reloaded script carries no skip reason")
+	# The SAME object an agent (or a node) already holds now runs the new code.
+	assert_eq(loaded.new().value(), "new")
+	assert_eq(ResourceLoader.load(path).new().value(), "new")
+	_remove_reload_helper(path)
+
+
+func test_create_script_overwrite_refreshes_loaded_gdscript() -> void:
+	var path := _unique_reload_path("overwrite")
+	_write_reload_helper("old", path)
+	var loaded: GDScript = _load_reload_helper(path)
+	assert_eq(loaded.new().value(), "old")
+	var result := _handler.create_script({
+		"path": path, "content": _reload_helper_source("newer"),
+	})
+	assert_has_key(result, "data")
+	assert_eq(result.data.import_settle, "already_known")
+	assert_eq(result.data.reloaded, true)
+	assert_eq(loaded.new().value(), "newer")
+	_remove_reload_helper(path)
+
+
+func test_patch_script_reports_not_loaded_when_nothing_cached() -> void:
+	## A script nobody has loaded has nothing to refresh; say so explicitly.
+	var path := _unique_reload_path("cold")
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(_reload_helper_source("old"))
+	file.close()
+	assert_false(ResourceLoader.has_cached(path), "fixture must start uncached")
+	var result := _handler.patch_script({"path": path, "old_text": "\"old\"", "new_text": "\"new\""})
+	assert_has_key(result, "data")
+	assert_eq(result.data.reloaded, false)
+	assert_eq(result.data.reload_reason, "not_loaded")
+	_remove_reload_helper(path)
+
+
+func test_patch_script_skips_reload_on_parse_error() -> void:
+	## A broken patch reports reload_reason=parse_error instead of claiming the
+	## loaded code changed. (The handler's diagnostics capture reloads the shared
+	## cache entry with the broken source, so the live object is already in an
+	## error state here — the point is the honest signal, not preservation.)
+	var path := _unique_reload_path("parse")
+	_write_reload_helper("old", path)
+	var loaded: GDScript = _load_reload_helper(path)
+	assert_eq(loaded.new().value(), "old")
+	# Godot 4.7 surfaces the parse diagnostic through several logger copies.
+	for _i in 4:
+		expect_script_error_containing(RELOAD_RETURN_PARSE_ERROR)
+	var result := _handler.patch_script({
+		"path": path, "old_text": "return \"old\"", "new_text": "return if",
+	})
+	assert_has_key(result, "data")
+	assert_eq(result.data.reloaded, false)
+	assert_eq(result.data.reload_reason, "parse_error")
+	assert_eq(result.data.diagnostics_status, "checked")
+	assert_true(result.data.diagnostics.size() >= 1, "the parse error is reported as a diagnostic")
+	_remove_reload_helper(path)
+
+
+func test_patch_script_reports_not_loaded_when_the_editor_caches_on_register() -> void:
+	## GUI-editor regression: the editor's own load inside update_file() must
+	## not turn "nobody held this script" into a false already_current.
+	var path := _unique_reload_path("gui_cold")
+	_write_reload_helper("old", path)
+	assert_false(ResourceLoader.has_cached(path), "fixture must start uncached")
+	var gui := _GuiEditorScriptHandler.new(_undo_redo)
+	var result := gui.patch_script({"path": path, "old_text": "\"old\"", "new_text": "\"new\""})
+	assert_has_key(result, "data")
+	assert_eq(result.data.reloaded, false)
+	assert_eq(result.data.reload_reason, "not_loaded")
+	assert_true(ResourceLoader.has_cached(path), "the stand-in editor cached the script on register")
+	assert_eq(
+		EditorInterface.get_resource_filesystem().get_file_type(path), "GDScript",
+		"the write is still registered with the editor")
+	_remove_reload_helper(path)
+
+
+func test_patch_script_refreshes_before_the_editor_reloads_on_register() -> void:
+	## GUI-editor regression: the handler refreshes the held object itself, so
+	## `reloaded` carries no skip reason even though the editor's register pass
+	## reloads the same bytes right after it.
+	var path := _unique_reload_path("gui_patch")
+	_write_reload_helper("old", path)
+	var loaded: GDScript = _load_reload_helper(path)
+	assert_eq(loaded.new().value(), "old")
+	var gui := _GuiEditorScriptHandler.new(_undo_redo)
+	var result := gui.patch_script({"path": path, "old_text": "\"old\"", "new_text": "\"new\""})
+	assert_has_key(result, "data")
+	assert_eq(result.data.reloaded, true)
+	assert_false(result.data.has("reload_reason"), "a reloaded script carries no skip reason")
+	assert_eq(loaded.new().value(), "new")
+	_remove_reload_helper(path)
+
+
+# ----- #908: C# authoring is text-only -----
+
+## Every `.cs` write must say it was NOT validated. The GDScript shape
+## (`diagnostics: []` + `diagnostics_status: "checked"`) would read as
+## "compiled clean", which is exactly the false success #908 warns about.
+func _assert_csharp_not_checked(data: Dictionary) -> void:
+	assert_eq(data.language, "csharp")
+	assert_eq(data.diagnostics, [])
+	assert_eq(data.diagnostics_scope, "this_file")
+	assert_eq(data.diagnostics_status, "not_checked")
+	assert_eq(data.diagnostics_detail, "none")
+	assert_has_key(data, "validation_hint")
+	assert_contains(data.validation_hint, "dotnet build")
+	assert_has_key(data, "dotnet_editor")
+	assert_eq(data.dotnet_editor, ScriptHandler.editor_has_dotnet())
+
+
+func test_create_script_csharp_is_text_only() -> void:
+	var path := "res://tests/_mcp_test_created.cs"
+	var content := "using Godot;\n\npublic partial class Created : Node\n{\n}\n"
+	var result := _handler.create_script({"path": path, "content": content})
+	assert_has_key(result, "data")
+	assert_eq(result.data.path, path)
+	assert_eq(result.data.size, content.length())
+	assert_eq(result.data.committed, true)
+	assert_eq(result.data.import_settled, false)
+	assert_eq(result.data.import_settle, "not_waited")
+	assert_false(result.data.undoable, "File write should not be undoable")
+	_assert_csharp_not_checked(result.data)
+	## The class_name scan hint is a GDScript concept; a C# class must not
+	## trigger it (nothing here declares `class_name`).
+	assert_false(result.data.has("class_registration"), "no GDScript scan hint for C#")
+	assert_true(FileAccess.file_exists(path), "C# file should be written")
+	var file := FileAccess.open(path, FileAccess.READ)
+	assert_eq(file.get_as_text(), content)
+	file.close()
+	## A `.cs.uid` sidecar only appears on a .NET editor build.
+	assert_has_key(result.data, "cleanup")
+	if ScriptHandler.editor_has_dotnet():
+		assert_eq(result.data.cleanup.rm, [path, path + ".uid"])
+	else:
+		assert_eq(result.data.cleanup.rm, [path])
+	_remove_reload_helper(path)
+
+
+func test_create_script_csharp_overwrite_reports_requires_build() -> void:
+	var path := "res://tests/_mcp_test_overwrite.cs"
+	var first := _handler.create_script({"path": path, "content": "// v1\n"})
+	assert_has_key(first, "data")
+	var second := _handler.create_script({"path": path, "content": "// v2\n"})
+	_remove_reload_helper(path)
+	assert_has_key(second, "data")
+	assert_eq(second.data.import_settled, ScriptHandler.editor_has_dotnet())
+	assert_eq(second.data.import_settle, "already_known" if ScriptHandler.editor_has_dotnet() else "not_waited")
+	_assert_csharp_not_checked(second.data)
+	## C# never hot-reloads from source: the overwrite arm must not claim the
+	## running code changed, and must say why.
+	assert_eq(second.data.reloaded, false)
+	assert_eq(second.data.reload_reason, "csharp_requires_build")
+	assert_false(second.data.has("cleanup"), "overwrite omits the cleanup hint")
+
+
+func test_patch_script_csharp_is_text_only() -> void:
+	var path := "res://tests/_mcp_test_patch.cs"
+	var created := _handler.create_script({
+		"path": path,
+		"content": "public partial class P : Node\n{\n\tpublic int Hp = 1;\n}\n",
+	})
+	assert_has_key(created, "data")
+	var result := _handler.patch_script({
+		"path": path,
+		"old_text": "Hp = 1",
+		"new_text": "Hp = 2",
+	})
+	var file := FileAccess.open(path, FileAccess.READ)
+	var on_disk := file.get_as_text() if file != null else ""
+	if file != null:
+		file.close()
+	_remove_reload_helper(path)
+	assert_has_key(result, "data")
+	assert_eq(result.data.replacements, 1)
+	assert_contains(on_disk, "Hp = 2")
+	_assert_csharp_not_checked(result.data)
+	assert_eq(result.data.reloaded, false)
+	assert_eq(result.data.reload_reason, "csharp_requires_build")
+
+
+func test_patch_script_wrong_extension_names_both_languages() -> void:
+	var result := _handler.patch_script({
+		"path": "res://notes.txt",
+		"old_text": "x",
+		"new_text": "y",
+	})
+	assert_is_error(result, ErrorCodes.VALUE_OUT_OF_RANGE)
+	assert_contains(result.error.message, ".gd or .cs")
+
+
+func test_find_symbols_csharp_outline() -> void:
+	var result := _handler.find_symbols({"path": CS_TEST_PATH})
+	assert_has_key(result, "data")
+	assert_eq(result.data.language, "csharp")
+	assert_eq(result.data.class_name, "McpTestCsharp")
+	assert_eq(result.data.extends, "CharacterBody2D")
+
+	var func_names: Array[String] = []
+	for fn: Dictionary in result.data.functions:
+		func_names.append(fn.name)
+	assert_contains(func_names, "_Ready")
+	assert_contains(func_names, "MakeDefault", "expression-bodied methods count")
+	assert_contains(func_names, "Move", "generic async return types count")
+	assert_eq(result.data.function_count, 3,
+		"control flow (`if`, `else if`, `return`) and calls (`GD.Print`) are not methods: %s" % [func_names])
+
+	## Godot signal names drop the C# `EventHandler` suffix.
+	assert_eq(result.data.signal_count, 2)
+	assert_contains(result.data.signals, "HealthChanged")
+	assert_contains(result.data.signals, "Died")
+
+	var export_names: Array[String] = []
+	for exp: Dictionary in result.data.exports:
+		export_names.append(exp.name)
+	assert_eq(result.data.export_count, 3, "own-line, same-line and stacked attributes: %s" % [export_names])
+	assert_contains(export_names, "Speed")
+	assert_contains(export_names, "_maxHealth")
+	assert_contains(export_names, "Label")
+
+
+func test_find_symbols_gdscript_reports_language() -> void:
+	var result := _handler.find_symbols({"path": TEST_SCRIPT_PATH})
+	assert_has_key(result, "data")
+	assert_eq(result.data.language, "gdscript")
+
+
+func test_attach_script_csharp_without_dotnet_reports_clear_error() -> void:
+	if ScriptHandler.editor_has_dotnet():
+		skip("editor build has .NET; the non-.NET attach guard does not apply")
+		return
+	var result := _handler.attach_script({"path": "/Main", "script_path": CS_TEST_PATH})
+	## Not "Script not found" — the path is fine, the editor build is the problem.
+	assert_is_error(result, ErrorCodes.VALUE_OUT_OF_RANGE)
+	assert_contains(result.error.message, ".NET")
+	assert_contains(result.error.message, CS_TEST_PATH)
+
+
+func test_script_language_classifies_extensions() -> void:
+	assert_eq(ScriptHandler.script_language("res://a.gd"), "gdscript")
+	assert_eq(ScriptHandler.script_language("res://a.cs"), "csharp")
+	assert_eq(ScriptHandler.script_language("res://a.txt"), "")
+	assert_eq(ScriptHandler.script_language("res://a.gdshader"), "")
+
+
+func test_find_symbols_rejects_existing_non_script_without_mutation() -> void:
+	var path := "res://tests/_mcp_outline_unsupported.txt"
+	var content := "extends Node\nfunc misleading_symbol():\n\tpass\n"
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file == null:
+		assert_true(false, "could not create the disposable outline fixture")
+		return
+	file.store_string(content)
+	file.close()
+	var result := _handler.find_symbols({"path": path})
+	var after := FileAccess.get_file_as_string(path)
+	DirAccess.remove_absolute(path)
+	assert_is_error(result, ErrorCodes.VALUE_OUT_OF_RANGE)
+	assert_contains(result.error.message, ".gd or .cs")
+	assert_contains(result.error.message, path)
+	assert_contains(result.error.message, "read_text")
+	assert_eq(after, content, "refused outline must leave source bytes unchanged")
+
+
+func test_find_symbols_csharp_qualified_return_type() -> void:
+	var path := "res://tests/_mcp_qualified_outline.cs"
+	var content := "public partial class QualifiedOutline\n{\n    public System.Threading.Tasks.Task LoadAsync() => null;\n}\n"
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file == null:
+		assert_true(false, "could not create the disposable C# outline fixture")
+		return
+	file.store_string(content)
+	file.close()
+	var result := _handler.find_symbols({"path": path})
+	_remove_reload_helper(path)
+	assert_has_key(result, "data")
+	assert_eq(result.data.language, "csharp")
+	assert_eq(result.data.functions, [{"name": "LoadAsync", "line": 3}])
